@@ -13,13 +13,13 @@
 # limitations under the License.
 import copy
 import time
+from typing import Optional
 
 from nvflare.apis.dxo import DXO, from_dict
 from nvflare.apis.signal import Signal
 
 from .config import process_train_config
 from .defs import Context, ContextKey, DataSource, EventType, Executor, Filter
-from typing import Optional
 
 
 class FlareRunner:

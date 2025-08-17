@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import copy
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.fl_constant import FLMetaKey
 from nvflare.apis.shareable import ReservedHeaderKey, Shareable

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any, Dict, Hashable, List, Mapping, Optional, Sequence, Union
+from typing import Any, Hashable, Mapping, Optional, Sequence, Union
 
 import numpy as np
 from monai.config import DtypeLike, KeysCollection
@@ -30,9 +30,9 @@ class RandAdjustBrightnessAndContrast(RandomizableTransform):
 
     def __init__(
         self,
-        probs: Union[float, List[float]] = [0.15, 0.15],
-        brightness_range: Optional[List[float]] = None,
-        contrast_range: Optional[List[float]] = None,
+        probs: Union[float, list[float]] = [0.15, 0.15],
+        brightness_range: Optional[list[float]] = None,
+        contrast_range: Optional[list[float]] = None,
         dtype: DtypeLike = np.float32,
     ):
         probs = ensure_tuple_rep(probs, 2)
@@ -115,9 +115,9 @@ class RandAdjustBrightnessAndContrastd(MapTransform, RandomizableTransform):
     def __init__(
         self,
         keys: KeysCollection,
-        probs: Union[float, List[float]] = [0.15, 0.15],
-        brightness_range: Optional[List[float]] = None,
-        contrast_range: Optional[List[float]] = None,
+        probs: Union[float, list[float]] = [0.15, 0.15],
+        brightness_range: Optional[list[float]] = None,
+        contrast_range: Optional[list[float]] = None,
         dtype: DtypeLike = np.float32,
     ):
         MapTransform.__init__(self, keys)
@@ -128,7 +128,7 @@ class RandAdjustBrightnessAndContrastd(MapTransform, RandomizableTransform):
     def randomize(self) -> None:
         self.t.randomize()
 
-    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> Dict[Hashable, NdarrayOrTensor]:
+    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> dict[Hashable, NdarrayOrTensor]:
         d = dict(data)
         self.randomize()
 
@@ -199,7 +199,7 @@ class RandInverseIntensityGammad(MapTransform, RandomizableTransform):
     def randomize(self, data: Optional[Any] = None) -> None:
         self.t.randomize()
 
-    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> Dict[Hashable, NdarrayOrTensor]:
+    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> dict[Hashable, NdarrayOrTensor]:
         d = dict(data)
         self.randomize()
 

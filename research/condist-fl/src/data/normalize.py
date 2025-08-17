@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Hashable, Mapping, Optional
+from typing import Hashable, Mapping, Optional
 
 import numpy as np
 from monai.config import DtypeLike, KeysCollection
@@ -78,7 +78,7 @@ class NormalizeIntensityRanged(MapTransform):
         super().__init__(keys, allow_missing_keys)
         self.t = NormalizeIntensityRange(a_min, a_max, subtrahend, divisor, dtype=dtype)
 
-    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> Dict[Hashable, NdarrayOrTensor]:
+    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> dict[Hashable, NdarrayOrTensor]:
         d = dict(data)
         for key in self.keys:
             d[key] = self.t(d[key])

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import Union
 
 from nvflare.app_common.workflows.broadcast_and_process import BroadcastAndProcess
 
@@ -29,7 +29,7 @@ class ShareConfig(BroadcastAndProcess):
         min_responses_required: int = 0,
         wait_time_after_min_received: int = 0,
         task_timeout: int = 0,
-        clients: Union[List[str], None] = None,
+        clients: Union[list[str], None] = None,
     ):
         """A controller for sharing the NeMo config files with the clients.
 

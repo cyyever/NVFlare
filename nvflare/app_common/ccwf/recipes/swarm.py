@@ -11,6 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Optional
+
 from nvflare.apis.dxo import DataKind
 from nvflare.app_common.aggregators.intime_accumulate_model_aggregator import InTimeAccumulateWeightedAggregator
 from nvflare.app_common.ccwf.ccwf_job import CCWFJob, CrossSiteEvalConfig, SwarmClientConfig, SwarmServerConfig
@@ -18,7 +20,6 @@ from nvflare.app_common.ccwf.comps.simple_model_shareable_generator import Simpl
 from nvflare.app_opt.pt.file_model_persistor import PTFileModelPersistor
 from nvflare.job_config.script_runner import ScriptRunner
 from nvflare.recipe.spec import Recipe
-from typing import Optional
 
 
 class BaseSwarmLearningRecipe(Recipe):

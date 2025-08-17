@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import sys
-from typing import Dict, Literal
+from typing import Literal
 
 from monai.data import CacheDataset, Dataset
 from monai.data.decathlon_datalist import load_decathlon_datalist
@@ -21,7 +21,7 @@ from monai.data.decathlon_datalist import load_decathlon_datalist
 from .transforms import get_transforms
 
 
-def create_dataset(app_root: str, config: Dict, split: str, mode: Literal["train", "validate", "infer"]):
+def create_dataset(app_root: str, config: dict, split: str, mode: Literal["train", "validate", "infer"]):
     data_root = config["data_root"]
     data_list = config["data_list"]
 

@@ -14,6 +14,7 @@
 import json
 import threading
 import time
+from typing import Optional
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.apis.workspace import Workspace
@@ -24,7 +25,6 @@ from nvflare.app_common.tie.process_mgr import CommandDescriptor, ProcessManager
 from nvflare.app_opt.flower.defs import Constant
 from nvflare.fuel.utils.grpc_utils import create_channel
 from nvflare.security.logging import secure_format_exception
-from typing import Optional
 
 
 class FlowerClientApplet(CLIApplet):

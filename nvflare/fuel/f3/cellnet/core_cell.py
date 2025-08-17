@@ -19,7 +19,7 @@ import random
 import threading
 import time
 import uuid
-from typing import Union, Optional
+from typing import Optional, Union
 from urllib.parse import urlparse
 
 from nvflare.apis.fl_constant import ConnectionSecurity

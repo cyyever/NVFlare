@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional
+from typing import Optional
 
 from .data_loader import create_data_loader
 from .dataset import create_dataset
 
 
 class DataManager(object):
-    def __init__(self, app_root: str, config: Dict):
+    def __init__(self, app_root: str, config: dict):
         self.app_root = app_root
         self.config = config
 

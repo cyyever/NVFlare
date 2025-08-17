@@ -14,9 +14,9 @@
 
 import json
 from datetime import datetime
+from typing import Optional
 
 from .table import Table
-from typing import Optional
 
 LINE_END = "\x03"  # Indicates the end of the line (end of text)
 ALL_END = "\x04"  # Marks the end of a complete transmission (End of Transmission)

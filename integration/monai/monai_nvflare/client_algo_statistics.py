@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Optional
+from typing import Optional
 
 from monai.fl.client import ClientAlgoStats
 from monai.fl.utils.constants import ExtraItems, FlStatistics
@@ -62,9 +62,9 @@ class ClientAlgoStatistics(Statistics):
 
     def pre_run(
         self,
-        statistics: List[str],
-        num_of_bins: Optional[Dict[str, Optional[int]]],
-        bin_ranges: Optional[Dict[str, Optional[List[float]]]],
+        statistics: list[str],
+        num_of_bins: Optional[dict[str, Optional[int]]],
+        bin_ranges: Optional[dict[str, Optional[list[float]]]],
     ):
 
         if num_of_bins:
@@ -126,7 +126,7 @@ class ClientAlgoStatistics(Statistics):
         # convert dataset names to str to support FOBS
         return convert_dict_keys(self.stats)
 
-    def features(self) -> Dict[str, List[Feature]]:
+    def features(self) -> dict[str, list[Feature]]:
         features = {}
         for ds in self.stats:
             # convert dataset names to str to support FOBS
@@ -170,7 +170,7 @@ class ClientAlgoStatistics(Statistics):
         counts = histo["counts"]
         num_of_bins = len(counts)
 
-        histogram_bins: List[Bin] = []
+        histogram_bins: list[Bin] = []
         for j in range(num_of_bins):
             low_value = bin_edges[j]
             high_value = bin_edges[j + 1]

@@ -45,7 +45,7 @@ import random
 import numpy as np
 import torch
 from cvxopt import matrix, solvers
-from fastNLP import DataSet, cache_results
+from fastNLP import DataSet
 from numpy.random import RandomState
 from torch.utils.data import Dataset
 from transformers import (

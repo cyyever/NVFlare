@@ -13,7 +13,7 @@
 # limitations under the License.
 import uuid
 from enum import Enum
-from typing import Any, Callable, Union, Optional
+from typing import Any, Callable, Optional, Union
 
 TEN_MEGA = 10 * 1024 * 1024
 MIN_THRESHOLD = 1024

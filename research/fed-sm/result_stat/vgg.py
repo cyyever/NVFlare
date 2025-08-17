@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-from typing import Any, Dict, List, Union, cast
+from typing import Any, Union, cast
 
 import torch
 import torch.nn as nn
@@ -68,8 +68,8 @@ class VGG(nn.Module):
                 nn.init.constant_(m.bias, 0)
 
 
-def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
-    layers: List[nn.Module] = []
+def make_layers(cfg: list[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
+    layers: list[nn.Module] = []
     in_channels = 1
     for v in cfg:
         if v == "M":
@@ -85,7 +85,7 @@ def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequ
     return nn.Sequential(*layers)
 
 
-cfgs: Dict[str, List[Union[str, int]]] = {"A": [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"]}
+cfgs: dict[str, list[Union[str, int]]] = {"A": [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"]}
 
 
 def _vgg(arch: str, cfg: str, batch_norm: bool, pretrained: bool, progress: bool, **kwargs: Any) -> VGG:

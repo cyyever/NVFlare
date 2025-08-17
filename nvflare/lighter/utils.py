@@ -19,6 +19,7 @@ import random
 import shutil
 from base64 import b64decode, b64encode
 from pathlib import Path
+from typing import Optional
 
 import yaml
 from cryptography import x509
@@ -28,7 +29,6 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.x509.oid import NameOID
 
 from nvflare.lighter.tool_consts import NVFLARE_SIG_FILE, NVFLARE_SUBMITTER_CRT_FILE
-from typing import Optional
 
 
 class Identity:

@@ -18,7 +18,7 @@ import pkgutil
 import subprocess
 import sys
 import warnings
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.app_validation import AppValidator
 from nvflare.apis.client import Client

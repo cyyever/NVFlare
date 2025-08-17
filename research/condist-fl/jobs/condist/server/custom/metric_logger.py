@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from typing import Dict, Optional
+from typing import Optional
 
 from torch.utils.tensorboard import SummaryWriter
 
@@ -32,7 +32,7 @@ class GlobalMetricLogger(Widget):
         log_dir: str = "logs",
         log_name: str = "key_metric",
         val_metric_name: str = MetaKey.INITIAL_METRICS,
-        aggregation_weights: Optional[Dict] = None,
+        aggregation_weights: Optional[dict] = None,
     ):
         super().__init__()
 

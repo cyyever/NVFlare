@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any, Dict
+from typing import Any
 
 import torch
 from monai.inferers import SlidingWindowInferer
@@ -30,7 +30,7 @@ def get_fg_classes(fg_idx, classes):
 
 
 class Validator(object):
-    def __init__(self, task_config: Dict):
+    def __init__(self, task_config: dict):
         roi_size = task_config["inferer"]["roi_size"]
         sw_batch_size = task_config["inferer"]["sw_batch_size"]
 
@@ -46,7 +46,7 @@ class Validator(object):
         )
         self.metric = DiceMetric(reduction="mean_batch")
 
-    def validate_step(self, model: torch.nn.Module, batch: Dict[str, Any]) -> None:
+    def validate_step(self, model: torch.nn.Module, batch: dict[str, Any]) -> None:
         batch["image"] = batch["image"].to("cuda:0")
         batch["label"] = batch["label"].to("cuda:0")
 
@@ -59,7 +59,7 @@ class Validator(object):
         # calculate metrics
         self.metric(batch["preds"], batch["label"])
 
-    def validate_loop(self, model, data_loader) -> Dict[str, Any]:
+    def validate_loop(self, model, data_loader) -> dict[str, Any]:
         # Run inference over whole validation set
         with torch.no_grad():
             with torch.cuda.amp.autocast():
@@ -82,6 +82,6 @@ class Validator(object):
                 metrics[k] = v.tolist()
         return metrics
 
-    def run(self, model: torch.nn.Module, data_loader: DataLoader) -> Dict[str, Any]:
+    def run(self, model: torch.nn.Module, data_loader: DataLoader) -> dict[str, Any]:
         model.eval()
         return self.validate_loop(model, data_loader)

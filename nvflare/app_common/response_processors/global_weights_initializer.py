@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Optional
+
 from nvflare.apis.client import Client
 from nvflare.apis.dxo import DataKind, from_shareable
 from nvflare.apis.fl_context import FLContext
@@ -19,7 +21,6 @@ from nvflare.apis.shareable import Shareable
 from nvflare.app_common.abstract.model import make_model_learnable
 from nvflare.app_common.abstract.response_processor import ResponseProcessor
 from nvflare.app_common.app_constant import AppConstants
-from typing import Optional
 
 
 class WeightMethod(object):

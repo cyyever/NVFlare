@@ -13,6 +13,7 @@
 # limitations under the License.
 import argparse
 import logging
+from typing import Optional
 
 from nvflare.edge.simulation.config import ConfigParser
 from nvflare.edge.simulation.devices.tp import TPDeviceFactory
@@ -24,7 +25,6 @@ from nvflare.edge.web.models.result_report import ResultReport
 from nvflare.edge.web.models.selection_request import SelectionRequest
 from nvflare.edge.web.models.task_request import TaskRequest
 from nvflare.edge.web.service.query import Query
-from typing import Optional
 
 log = logging.getLogger(__name__)
 

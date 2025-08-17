@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import copy
-from typing import Any, Type
+from typing import Any
 
 import cma
 import numpy as np
@@ -48,7 +48,7 @@ class GaussFullSamplerDecomposer(Decomposer):
         recompose(): Reconstructs a GaussFullSampler from serialized data
     """
 
-    def supported_type(self) -> Type[GaussFullSampler]:
+    def supported_type(self) -> type[GaussFullSampler]:
         return GaussFullSampler
 
     def decompose(self, target: GaussFullSampler, manager: DatumManager = None) -> Any:
@@ -86,7 +86,7 @@ class CMAOptionsDecomposer(Decomposer):
         recompose(): Reconstructs a CMAOptions from serialized data
     """
 
-    def supported_type(self) -> Type[GaussFullSampler]:
+    def supported_type(self) -> type[GaussFullSampler]:
         return CMAOptions
 
     def decompose(self, target: CMAOptions, manager: DatumManager = None) -> Any:
@@ -123,7 +123,7 @@ class CMADataLoggerDecomposer(Decomposer):
         recompose(): Reconstructs a CMADataLogger from serialized data
     """
 
-    def supported_type(self) -> Type[CMADataLogger]:
+    def supported_type(self) -> type[CMADataLogger]:
         return CMADataLogger
 
     def decompose(self, target: GaussFullSampler, manager: DatumManager = None) -> Any:

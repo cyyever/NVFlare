@@ -15,6 +15,7 @@
 import base64
 import logging
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from executorch.extension.training import _load_for_executorch_for_training_from_buffer, get_sgd_optimizer
 from torch.utils.data import DataLoader, Dataset
@@ -24,7 +25,6 @@ from nvflare.edge.model_protocol import ModelBufferType, ModelEncoding, ModelNat
 from nvflare.edge.simulation.device_task_processor import DeviceTaskProcessor
 from nvflare.edge.web.models.job_response import JobResponse
 from nvflare.edge.web.models.task_response import TaskResponse
-from typing import Optional
 
 log = logging.getLogger(__name__)
 

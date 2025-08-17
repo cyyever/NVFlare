@@ -14,7 +14,7 @@
 
 import copy
 from math import sqrt
-from typing import TypeVar, Optional
+from typing import Optional, TypeVar
 
 from nvflare.app_common.abstract.statistics_spec import Bin, BinRange, DataType, Feature, Histogram, HistogramType
 from nvflare.app_common.app_constant import StatisticsConstants as StC

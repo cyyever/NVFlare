@@ -14,7 +14,7 @@
 
 from copy import deepcopy
 from pathlib import Path, PurePath
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import torch
 import torch.nn as nn
@@ -28,7 +28,7 @@ from tqdm import tqdm
 
 
 class Trainer(object):
-    def __init__(self, task_config: Dict):
+    def __init__(self, task_config: dict):
         self.init_lr = task_config["training"].get("lr", 1e-2)
         self.max_steps = task_config["training"]["max_steps"]
         self.max_rounds = task_config["training"]["max_rounds"]
@@ -66,7 +66,7 @@ class Trainer(object):
         if self.sch_state is not None:
             self.sch.load_state_dict(self.sch_state)
 
-    def training_step(self, model: nn.Module, batch: Dict, device: str = "cuda:0"):
+    def training_step(self, model: nn.Module, batch: dict, device: str = "cuda:0"):
         image = batch["image"].to(device)
         label = batch["label"].to(device)
 

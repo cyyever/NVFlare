@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Callable, Optional, Sequence, Tuple, Union
+from typing import Callable, Optional, Sequence, Union
 
 import torch
 from monai.losses import DiceCELoss, MaskedDiceLoss
@@ -79,7 +79,7 @@ class ConDistTransform(object):
 
         return mask.astype(torch.float32)
 
-    def __call__(self, preds: Tensor, targets: Tensor, ground_truth: Tensor) -> Tuple[Tensor]:
+    def __call__(self, preds: Tensor, targets: Tensor, ground_truth: Tensor) -> tuple[Tensor]:
         mask = self.generate_mask(targets, ground_truth)
 
         preds = self.softmax(preds)
@@ -106,7 +106,7 @@ class MarginalTransform(object):
         output = torch.cat([bg] + fg, dim=1)
         return output
 
-    def __call__(self, preds: Tensor, target: Tensor) -> Tuple[Tensor]:
+    def __call__(self, preds: Tensor, target: Tensor) -> tuple[Tensor]:
         n_pred_ch = preds.shape[1]
         if n_pred_ch == 1:
             # Marginal loss is not intended for single channel output

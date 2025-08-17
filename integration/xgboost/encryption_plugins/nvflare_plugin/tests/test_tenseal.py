@@ -14,7 +14,7 @@
 import ctypes
 import os
 from contextlib import contextmanager
-from typing import Generator, Tuple
+from typing import Generator
 
 import numpy as np
 
@@ -29,7 +29,7 @@ plugin_path = os.path.join(
 
 
 @contextmanager
-def load_plugin() -> Generator[Tuple[ctypes.CDLL, ctypes.c_void_p], None, None]:
+def load_plugin() -> Generator[tuple[ctypes.CDLL, ctypes.c_void_p], None, None]:
     nvflare = ctypes.cdll.LoadLibrary(plugin_path)
     nvflare.FederatedPluginCreate.restype = ctypes.c_void_p
     nvflare.FederatedPluginErrorMsg.restype = ctypes.c_char_p

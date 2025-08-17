@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.app_common.model_desc import ModelDescriptor
@@ -20,7 +21,6 @@ from nvflare.app_common.model_desc import ModelDescriptor
 from .learnable_persistor import LearnablePersistor
 from .model import ModelLearnable
 from .persistor_filter import PersistorFilter
-from typing import Optional
 
 
 class ModelPersistor(LearnablePersistor, ABC):

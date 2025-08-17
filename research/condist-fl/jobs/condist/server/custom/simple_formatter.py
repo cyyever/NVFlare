@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import traceback
-from typing import Any, Dict
+from typing import Any
 
 import numpy as np
 import torch
@@ -30,7 +30,7 @@ def array_to_list(data: Any) -> Any:
     return data
 
 
-def simplify_metrics(metrics: Dict[str, Any]) -> Dict[str, Any]:
+def simplify_metrics(metrics: dict[str, Any]) -> dict[str, Any]:
     return {k: array_to_list(v) for k, v in metrics}
 
 

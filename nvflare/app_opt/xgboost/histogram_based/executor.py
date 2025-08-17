@@ -14,6 +14,7 @@
 
 
 import os
+from typing import Optional
 
 import xgboost as xgb
 from xgboost import callback
@@ -31,7 +32,6 @@ from nvflare.app_opt.xgboost.data_loader import XGBDataLoader
 from nvflare.app_opt.xgboost.histogram_based.constants import XGB_TRAIN_TASK, XGBShareableHeader
 from nvflare.app_opt.xgboost.metrics_cb import MetricsCallback
 from nvflare.security.logging import secure_format_exception, secure_log_traceback
-from typing import Optional
 
 
 class XGBoostParams:

@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
 
 import numpy as np
 import torch
 
 
-def load_weights(model: torch.nn.Module, weights: Dict[str, np.ndarray]) -> torch.nn.Module:
+def load_weights(model: torch.nn.Module, weights: dict[str, np.ndarray]) -> torch.nn.Module:
     local_var_dict = model.state_dict()
     model_keys = weights.keys()
     for var_name in local_var_dict:
@@ -32,7 +31,7 @@ def load_weights(model: torch.nn.Module, weights: Dict[str, np.ndarray]) -> torc
     return model
 
 
-def extract_weights(model: torch.nn.Module) -> Dict[str, np.ndarray]:
+def extract_weights(model: torch.nn.Module) -> dict[str, np.ndarray]:
     local_state_dict = model.state_dict()
     local_model_dict = {}
     for var_name in local_state_dict:

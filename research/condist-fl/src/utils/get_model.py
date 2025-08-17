@@ -13,10 +13,9 @@
 # limitations under the License.
 
 from importlib import import_module
-from typing import Dict
 
 
-def get_model(config: Dict):
+def get_model(config: dict):
     module = import_module(config["path"])
     if hasattr(module, config["name"]):
         C = getattr(module, config["name"])

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
 
 import numpy as np
 import torch
@@ -76,7 +75,7 @@ class FedCEAssembler(Assembler):
         if event == EventType.START_RUN:
             self._initialize(fl_ctx)
 
-    def assemble(self, data: Dict[str, dict], fl_ctx: FLContext) -> DXO:
+    def assemble(self, data: dict[str, dict], fl_ctx: FLContext) -> DXO:
         current_round = fl_ctx.get_prop(AppConstants.CURRENT_ROUND)
         site_list = data.keys()
 

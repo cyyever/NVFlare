@@ -13,7 +13,7 @@
 # limitations under the License.
 import json
 import os.path
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.fl_constant import ConnectionSecurity
 from nvflare.edge.constants import EdgeApiStatus

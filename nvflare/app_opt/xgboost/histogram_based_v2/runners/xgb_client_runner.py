@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+from typing import Optional
 
 import matplotlib.pyplot as plt
 import shap
@@ -30,7 +31,6 @@ from nvflare.app_opt.xgboost.metrics_cb import MetricsCallback
 from nvflare.fuel.utils.config_service import ConfigService
 from nvflare.fuel.utils.log_utils import get_obj_logger
 from nvflare.utils.cli_utils import get_package_root
-from typing import Optional
 
 PLUGIN_PARAM_KEY = "federated_plugin"
 PLUGIN_KEY_NAME = "name"

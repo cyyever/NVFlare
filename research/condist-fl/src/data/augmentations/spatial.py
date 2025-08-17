@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Hashable, List, Mapping
+from typing import Hashable, Mapping
 
 import numpy as np
 import torch
@@ -104,7 +104,7 @@ class RandFlipAxes3Dd(RandomizableTransform, MapTransform):
     def randomize(self) -> None:
         self.t.randomize()
 
-    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> Dict[Hashable, NdarrayOrTensor]:
+    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> dict[Hashable, NdarrayOrTensor]:
         d = dict(data)
         self.randomize()
 
@@ -121,7 +121,7 @@ class RandFlipAxes3Dd(RandomizableTransform, MapTransform):
 class SimulateLowResolution(RandomizableTransform):
     backend = [TransformBackends.TORCH, TransformBackends.NUMPY]
 
-    def __init__(self, prob: float = 0.125, zoom_range: List[float] = [0.5, 1.0], dtype: DtypeLike = np.float32):
+    def __init__(self, prob: float = 0.125, zoom_range: list[float] = [0.5, 1.0], dtype: DtypeLike = np.float32):
         RandomizableTransform.__init__(self, prob)
 
         self.zoom_range = zoom_range
@@ -161,7 +161,7 @@ class SimulateLowResolutiond(RandomizableTransform, MapTransform):
         self,
         keys: KeysCollection,
         prob: float = 0.125,
-        zoom_range: List[float] = [0.5, 1.0],
+        zoom_range: list[float] = [0.5, 1.0],
         dtype: DtypeLike = np.float32,
     ):
         MapTransform.__init__(self, keys)
@@ -172,7 +172,7 @@ class SimulateLowResolutiond(RandomizableTransform, MapTransform):
     def randomize(self) -> None:
         self.t.randomize()
 
-    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> Dict[Hashable, NdarrayOrTensor]:
+    def __call__(self, data: Mapping[Hashable, NdarrayOrTensor]) -> dict[Hashable, NdarrayOrTensor]:
         d = dict(data)
         self.randomize()
 

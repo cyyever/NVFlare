@@ -16,7 +16,7 @@ import json
 import os
 import traceback
 from pathlib import Path
-from typing import Dict, Literal, Optional
+from typing import Literal, Optional
 
 import numpy as np
 from data import DataManager
@@ -61,7 +61,7 @@ class ConDistLearner(Learner):
         self.train_task_name = train_task_name
         self.submit_model_task_name = submit_model_task_name
 
-    def initialize(self, parts: Dict, fl_ctx: FLContext) -> None:
+    def initialize(self, parts: dict, fl_ctx: FLContext) -> None:
         self.app_root = fl_ctx.get_prop(FLContextKey.APP_ROOT)
 
         # Load configurations

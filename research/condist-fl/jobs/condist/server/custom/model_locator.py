@@ -14,7 +14,6 @@
 
 import os
 import traceback
-from typing import List
 
 import torch
 
@@ -42,7 +41,7 @@ class SimpleModelLocator(ModelLocator):
         self.model_file_name = model_name
         self.best_model_file_name = best_model_name
 
-    def get_model_names(self, fl_ctx: FLContext) -> List[str]:
+    def get_model_names(self, fl_ctx: FLContext) -> list[str]:
         return [SimpleModelLocator.SERVER_MODEL_NAME, SimpleModelLocator.SERVER_BEST_MODEL_NAME]
 
     def locate_model(self, model_name, fl_ctx: FLContext) -> DXO:
