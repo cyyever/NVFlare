@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Union
+from typing import Union
 
 from nvflare.apis.utils.fl_context_utils import generate_log_message
 from nvflare.fuel.utils.log_utils import get_obj_logger
@@ -250,7 +250,7 @@ class FLComponent(StatePersistable):
         fl_ctx.set_prop(key=FLContextKey.EVENT_DATA, value=dxo.to_shareable(), private=True, sticky=False)
         self.fire_event(event_type=event_type, fl_ctx=fl_ctx)
 
-    def register_event_handler(self, event_types: Union[str, List[str]], handler, **kwargs):
+    def register_event_handler(self, event_types: Union[str, list[str]], handler, **kwargs):
         self._self_check()
         if isinstance(event_types, str):
             event_types = [event_types]

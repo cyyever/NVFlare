@@ -22,6 +22,7 @@ from nvflare.apis.fl_context import FLContext
 from nvflare.apis.workspace import Workspace
 from nvflare.fuel.utils.log_utils import get_obj_logger
 from nvflare.fuel.utils.validation_utils import check_object_type, check_str
+from typing import Optional
 
 
 class StopMethod:
@@ -37,7 +38,7 @@ class CommandDescriptor:
         env=None,
         log_file_name: str = "",
         log_stdout: bool = True,
-        stdout_msg_prefix: str = None,
+        stdout_msg_prefix: Optional[str] = None,
         stop_method=StopMethod.KILL,
     ):
         """Constructor of CommandDescriptor.

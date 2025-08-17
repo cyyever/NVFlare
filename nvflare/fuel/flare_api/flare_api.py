@@ -15,7 +15,7 @@
 import json
 import os
 import time
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.fl_constant import AdminCommandNames
 from nvflare.apis.job_def import JobMetaKey
@@ -62,8 +62,8 @@ _VALID_TARGET_TYPES = [TargetType.ALL, TargetType.SERVER, TargetType.CLIENT]
 class Session(SessionSpec):
     def __init__(
         self,
-        username: str = None,
-        startup_path: str = None,
+        username: Optional[str] = None,
+        startup_path: Optional[str] = None,
         secure_mode: bool = True,
         debug: bool = False,
     ):
@@ -266,10 +266,10 @@ class Session(SessionSpec):
         self,
         detailed: bool = False,
         limit: Optional[int] = None,
-        id_prefix: str = None,
-        name_prefix: str = None,
+        id_prefix: Optional[str] = None,
+        name_prefix: Optional[str] = None,
         reverse: bool = False,
-    ) -> List[dict]:
+    ) -> list[dict]:
         """Get the job info from the server.
 
         Args:
@@ -336,7 +336,7 @@ class Session(SessionSpec):
         location = meta.get(MetaKey.LOCATION)
         return location
 
-    def list_job_components(self, job_id: str) -> List[str]:
+    def list_job_components(self, job_id: str) -> list[str]:
         """Get the list of additional job components for the specified job.
 
         Args:
@@ -429,7 +429,7 @@ class Session(SessionSpec):
 
         return SystemInfo(server_info=server_info, client_info=clients, job_info=jobs)
 
-    def get_client_job_status(self, client_names: List[str] = None) -> List[dict]:
+    def get_client_job_status(self, client_names: Optional[list[str]] = None) -> list[dict]:
         """Get job status info of specified FL clients.
 
         Args:
@@ -450,7 +450,7 @@ class Session(SessionSpec):
         meta = result[ResultKey.META]
         return meta.get(MetaKey.CLIENT_STATUS, None)
 
-    def restart(self, target_type: str, client_names: Optional[List[str]] = None) -> dict:
+    def restart(self, target_type: str, client_names: Optional[list[str]] = None) -> dict:
         """Restart specified system target(s).
 
         Args:
@@ -476,7 +476,7 @@ class Session(SessionSpec):
         result = self._do_command(command)
         return result[ResultKey.META]
 
-    def shutdown(self, target_type: TargetType, client_names: Optional[List[str]] = None):
+    def shutdown(self, target_type: TargetType, client_names: Optional[list[str]] = None):
         """Shut down specified system target(s).
 
         Args:
@@ -548,7 +548,7 @@ class Session(SessionSpec):
         if sys_info.server_info.status != "stopped":
             raise JobNotDone("there are still running jobs")
 
-    def ls_target(self, target: str, options: str = None, path: str = None) -> str:
+    def ls_target(self, target: str, options: Optional[str] = None, path: Optional[str] = None) -> str:
         """Run the "ls" command on the specified target and return the result.
 
         Args:
@@ -561,7 +561,7 @@ class Session(SessionSpec):
         """
         return self._shell_command_on_target("ls", target, options, path)
 
-    def cat_target(self, target: str, options: str = None, file: str = None) -> str:
+    def cat_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "cat" command on the specified target and return the result.
 
         Args:
@@ -574,7 +574,7 @@ class Session(SessionSpec):
         """
         return self._shell_command_on_target("cat", target, options, file, fp_required=True, fp_type="file")
 
-    def tail_target(self, target: str, options: str = None, file: str = None) -> str:
+    def tail_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "tail" command on the specified target and return the result.
 
         Args:
@@ -587,7 +587,7 @@ class Session(SessionSpec):
         """
         return self._shell_command_on_target("tail", target, options, file, fp_required=True, fp_type="file")
 
-    def tail_target_log(self, target: str, options: str = None) -> str:
+    def tail_target_log(self, target: str, options: Optional[str] = None) -> str:
         """Run the "tail log.txt" command on the specified target and return the result.
 
         Args:
@@ -599,7 +599,7 @@ class Session(SessionSpec):
         """
         return self.tail_target(target, options, file="log.txt")
 
-    def head_target(self, target: str, options: str = None, file: str = None) -> str:
+    def head_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "head" command on the specified target and return the result.
 
         Args:
@@ -612,7 +612,7 @@ class Session(SessionSpec):
         """
         return self._shell_command_on_target("head", target, options, file, fp_required=True, fp_type="file")
 
-    def head_target_log(self, target: str, options: str = None) -> str:
+    def head_target_log(self, target: str, options: Optional[str] = None) -> str:
         """Run the "head log.txt" command on the specified target and return the result.
 
         Args:
@@ -624,7 +624,7 @@ class Session(SessionSpec):
         """
         return self.head_target(target, options, file="log.txt")
 
-    def grep_target(self, target: str, options: str = None, pattern: str = None, file: str = None) -> str:
+    def grep_target(self, target: str, options: Optional[str] = None, pattern: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "grep" command on the specified target and return the result.
 
         Args:
@@ -708,7 +708,7 @@ class Session(SessionSpec):
                     return it.get(ProtoKey.DATA, {})
         return result
 
-    def show_stats(self, job_id: str, target_type: str, targets: Optional[List[str]] = None) -> dict:
+    def show_stats(self, job_id: str, target_type: str, targets: Optional[list[str]] = None) -> dict:
         """Show processing stats of specified job on specified targets.
 
         Args:
@@ -722,7 +722,7 @@ class Session(SessionSpec):
         """
         return self._collect_info(AdminCommandNames.SHOW_STATS, job_id, target_type, targets)
 
-    def show_errors(self, job_id: str, target_type: str, targets: Optional[List[str]] = None) -> dict:
+    def show_errors(self, job_id: str, target_type: str, targets: Optional[list[str]] = None) -> dict:
         """Show processing errors of specified job on specified targets.
 
         Args:
@@ -790,7 +790,7 @@ class Session(SessionSpec):
         reply = self._do_command(command, enforce_meta=False, props=cmd_data)
         return self._get_dict_data(reply)
 
-    def get_connected_client_list(self) -> List[ClientInfo]:
+    def get_connected_client_list(self) -> list[ClientInfo]:
         """Get the list of connected clients.
 
         Returns: a list of ClientInfo objects

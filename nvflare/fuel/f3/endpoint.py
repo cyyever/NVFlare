@@ -13,6 +13,7 @@
 # limitations under the License.
 from abc import ABC, abstractmethod
 from enum import IntEnum
+from typing import Optional
 
 
 class EndpointState(IntEnum):
@@ -28,7 +29,7 @@ class Endpoint:
     there is only one local endpoint. There may be multiple remote endpoints.
     A remote endpoint may be reachable through multiple connections"""
 
-    def __init__(self, name: str, properties: dict = None, conn_props: dict = None):
+    def __init__(self, name: str, properties: Optional[dict] = None, conn_props: Optional[dict] = None):
         """Construct an endpoint
 
         Args:

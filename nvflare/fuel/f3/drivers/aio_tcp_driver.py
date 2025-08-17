@@ -14,7 +14,7 @@
 import asyncio
 import logging
 from concurrent.futures import CancelledError
-from typing import Any, Dict, List
+from typing import Any
 
 from nvflare.fuel.f3.comm_error import CommError
 from nvflare.fuel.f3.drivers.aio_conn import AioConnection
@@ -36,11 +36,11 @@ class AioTcpDriver(BaseDriver):
         self.ssl_context = None
 
     @staticmethod
-    def supported_transports() -> List[str]:
+    def supported_transports() -> list[str]:
         return ["atcp", "satcp"]
 
     @staticmethod
-    def capabilities() -> Dict[str, Any]:
+    def capabilities() -> dict[str, Any]:
         return {DriverCap.SEND_HEARTBEAT.value: True, DriverCap.SUPPORT_SSL.value: True}
 
     def listen(self, connector: ConnectorInfo):

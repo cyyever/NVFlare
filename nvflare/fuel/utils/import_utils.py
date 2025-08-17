@@ -34,7 +34,7 @@
 Part of code is Adapted from from https://github.com/Project-MONAI/MONAI/blob/dev/monai/utils/module.py#L282
 """
 from importlib import import_module
-from typing import Any, Tuple
+from typing import Any
 
 from nvflare.security.logging import secure_format_exception
 
@@ -92,7 +92,7 @@ def optional_import(
     name: str = "",
     descriptor: str = OPTIONAL_IMPORT_MSG_FMT,
     allow_namespace_pkg: bool = False,
-) -> Tuple[Any, bool]:
+) -> tuple[Any, bool]:
     """
     Imports an optional module specified by `module` string.
     Any importing related exceptions will be stored, and exceptions raise lazily

@@ -28,10 +28,11 @@ from nvflare.fuel.utils.network_utils import get_open_ports
 from nvflare.security.logging import secure_format_exception, secure_format_traceback
 
 from .constants import XGB_TRAIN_TASK, XGBShareableHeader
+from typing import Optional
 
 
 class XGBFedController(Controller):
-    def __init__(self, train_timeout: int = 300, port: int = None):
+    def __init__(self, train_timeout: int = 300, port: Optional[int] = None):
         """Federated XGBoost training controller for histogram-base collaboration.
 
         It starts the XGBoost federated server and kicks off all the XGBoost job on

@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from nvflare.edge.web.models.base_model import BaseModel
+from typing import Optional
 
 
 class TaskResponse(BaseModel):
     def __init__(
         self,
         status: str,
-        job_id: str = None,
-        retry_wait: int = None,
-        task_id: str = None,
-        task_name: str = None,
-        task_data: dict = None,
-        cookie: dict = None,
+        job_id: Optional[str] = None,
+        retry_wait: Optional[int] = None,
+        task_id: Optional[str] = None,
+        task_name: Optional[str] = None,
+        task_data: Optional[dict] = None,
+        cookie: Optional[dict] = None,
         **kwargs,
     ):
         super().__init__()

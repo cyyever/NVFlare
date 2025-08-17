@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from enum import Enum
-from typing import List
 
 from nvflare.fuel.utils.validation_utils import check_non_negative_int
 
@@ -35,7 +34,7 @@ def _check_names(arg_name, names_to_check):
         raise ValueError(f"expect {arg_name} to be a list of str but some items are not str")
 
 
-def parallel_eval_generator(evaluators: List[str], evaluatees: List[str], max_parallel_actions: int):
+def parallel_eval_generator(evaluators: list[str], evaluatees: list[str], max_parallel_actions: int):
     """Generates parallel evaluations to be performed.
 
     Args:

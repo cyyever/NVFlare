@@ -25,13 +25,14 @@ from nvflare.app_common.abstract.model import ModelLearnableKey, make_model_lear
 from nvflare.app_common.app_constant import AppConstants
 from nvflare.app_common.shareablegenerators.full_model_shareable_generator import FullModelShareableGenerator
 from nvflare.security.logging import secure_format_exception
+from typing import Optional
 
 
 class PTFedOptModelShareableGenerator(FullModelShareableGenerator):
     def __init__(
         self,
-        optimizer_args: dict = None,
-        lr_scheduler_args: dict = None,
+        optimizer_args: Optional[dict] = None,
+        lr_scheduler_args: Optional[dict] = None,
         source_model="model",
         device=None,
     ):

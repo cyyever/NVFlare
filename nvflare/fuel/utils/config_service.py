@@ -14,7 +14,7 @@
 import argparse
 import json
 import os
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
 from nvflare.fuel.utils.config import Config, ConfigFormat
 from nvflare.fuel.utils.config_factory import ConfigFactory
@@ -39,7 +39,7 @@ def find_file_in_dir(file_basename, path) -> Union[None, str]:
     return None
 
 
-def search_file(file_basename: str, dirs: List[str]) -> Union[None, str]:
+def search_file(file_basename: str, dirs: list[str]) -> Union[None, str]:
     """
     Find a file by searching a list of dirs and return the one in the last dir.
 
@@ -77,7 +77,7 @@ class ConfigService:
     _var_values = {}
 
     @classmethod
-    def initialize(cls, section_files: Dict[str, str], config_path: List[str], parsed_args=None, var_dict=None):
+    def initialize(cls, section_files: dict[str, str], config_path: list[str], parsed_args=None, var_dict=None):
         """
         Initialize the ConfigService.
         Configuration is divided into sections, and each section must have a JSON config file.
@@ -192,8 +192,8 @@ class ConfigService:
 
     @classmethod
     def load_config_dict(
-        cls, file_basename: str, search_dirs: Optional[List] = None, raise_exception: bool = True
-    ) -> Optional[Dict]:
+        cls, file_basename: str, search_dirs: Optional[list] = None, raise_exception: bool = True
+    ) -> Optional[dict]:
         """
         Load a specified config file ( ignore extension)
 

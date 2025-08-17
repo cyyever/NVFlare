@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import shlex
-from typing import List
 
 from nvflare.fuel.hci.shell_cmd_val import (
     CatValidator,
@@ -38,7 +37,7 @@ SHELL_CMD_VALIDATORS = {
 
 
 class ShellCommandProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [SysCommandTopic.SHELL]
 
     def process(self, req: Message, app_ctx) -> Message:

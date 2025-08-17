@@ -19,7 +19,7 @@ import random
 import threading
 import time
 import uuid
-from typing import Dict, List, Tuple, Union
+from typing import Union, Optional
 from urllib.parse import urlparse
 
 from nvflare.apis.fl_constant import ConnectionSecurity
@@ -119,7 +119,7 @@ class CellAgent:
 
 
 class _Waiter(threading.Event):
-    def __init__(self, targets: List[str]):
+    def __init__(self, targets: list[str]):
         super().__init__()
         self.targets = [x for x in targets]
         self.reply_time = {}  # target_id => reply recv timestamp
@@ -282,8 +282,8 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         secure: bool,
         credentials: dict,
         create_internal_listener: bool = False,
-        parent_url: str = None,
-        parent_resources: dict = None,
+        parent_url: Optional[str] = None,
+        parent_resources: Optional[dict] = None,
         max_timeout=3600,
         bulk_check_interval=0.5,
         bulk_process_interval=0.5,
@@ -513,7 +513,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             raise ValueError(f"props must be dict but got {type(props)}")
         self.fobs_ctx.update(props)
 
-    def get_fobs_context(self, props: dict = None):
+    def get_fobs_context(self, props: Optional[dict] = None):
         """Return a new copy of the fobs context
 
         Returns: a new copy of the fobs context
@@ -1060,7 +1060,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             if reply:
                 return reply
 
-    def _try_path(self, fqcn_path: List[str]) -> Union[None, Endpoint]:
+    def _try_path(self, fqcn_path: list[str]) -> Union[None, Endpoint]:
         self.logger.debug(f"{self.my_info.fqcn}: trying path {fqcn_path} ...")
         target = FQCN.join(fqcn_path)
         agent = self.agents.get(target, None)
@@ -1075,7 +1075,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             return None
         return self._try_path(fqcn_path[:-1])
 
-    def _find_endpoint(self, target_fqcn: str, for_msg: Message) -> Tuple[str, Union[None, Endpoint]]:
+    def _find_endpoint(self, target_fqcn: str, for_msg: Message) -> tuple[str, Union[None, Endpoint]]:
         err = FQCN.validate(target_fqcn)
         if err:
             self.log_error(msg=None, log_text=f"invalid target FQCN '{target_fqcn}': {err}")
@@ -1198,8 +1198,8 @@ class CoreCell(MessageReceiver, EndpointMonitor):
 
     def _send_target_messages(
         self,
-        target_msgs: Dict[str, TargetMessage],
-    ) -> Dict[str, str]:
+        target_msgs: dict[str, TargetMessage],
+    ) -> dict[str, str]:
         if not self.running:
             raise RuntimeError("Messenger is not running")
 
@@ -1279,9 +1279,9 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         self,
         channel: str,
         topic: str,
-        targets: Union[str, List[str]],
+        targets: Union[str, list[str]],
         message: Message,
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         if isinstance(targets, str):
             targets = [targets]
         target_msgs = {}
@@ -1298,8 +1298,8 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         return result.get(target)
 
     def broadcast_multi_requests(
-        self, target_msgs: Dict[str, TargetMessage], timeout=None, secure=False, optional=False
-    ) -> Dict[str, Message]:
+        self, target_msgs: dict[str, TargetMessage], timeout=None, secure=False, optional=False
+    ) -> dict[str, Message]:
         """
         This is the core of the request/response handling. Be extremely careful when making any changes!
         To maximize the communication efficiency, we avoid the use of locks.
@@ -1402,12 +1402,12 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         self,
         channel: str,
         topic: str,
-        targets: Union[str, List[str]],
+        targets: Union[str, list[str]],
         request: Message,
         timeout=None,
         secure=False,
         optional=False,
-    ) -> Dict[str, Message]:
+    ) -> dict[str, Message]:
         """
         Send a message over a channel to specified destination cell(s), and wait for reply
 
@@ -1431,8 +1431,8 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         return self.broadcast_multi_requests(target_msgs, timeout, secure=secure, optional=optional)
 
     def fire_and_forget(
-        self, channel: str, topic: str, targets: Union[str, List[str]], message: Message, secure=False, optional=False
-    ) -> Dict[str, str]:
+        self, channel: str, topic: str, targets: Union[str, list[str]], message: Message, secure=False, optional=False
+    ) -> dict[str, str]:
         """
         Send a message over a channel to specified destination cell(s), and do not wait for replies.
 
@@ -1456,7 +1456,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
         )
         return self._send_to_targets(channel, topic, targets, message)
 
-    def queue_message(self, channel: str, topic: str, targets: Union[str, List[str]], message: Message, optional=False):
+    def queue_message(self, channel: str, topic: str, targets: Union[str, list[str]], message: Message, optional=False):
         if self.max_bulk_size <= 0:
             raise RuntimeError(f"{self.get_fqcn()}: bulk message is not enabled!")
 
@@ -1543,8 +1543,8 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             self._process_request(origin=origin, message=req)
 
     def fire_multi_requests_and_forget(
-        self, target_msgs: Dict[str, TargetMessage], optional=False, secure=False
-    ) -> Dict[str, str]:
+        self, target_msgs: dict[str, TargetMessage], optional=False, secure=False
+    ) -> dict[str, str]:
         for _, tm in target_msgs.items():
             request = tm.message
             request.add_headers(
@@ -1556,7 +1556,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             )
         return self._send_target_messages(target_msgs)
 
-    def send_reply(self, reply: Message, to_cell: str, for_req_ids: List[str], secure=False, optional=False) -> str:
+    def send_reply(self, reply: Message, to_cell: str, for_req_ids: list[str], secure=False, optional=False) -> str:
         """Send a reply to respond to one or more requests.
 
         This is useful if the request receiver needs to delay its reply as follows:
@@ -2106,7 +2106,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
                         f"exception in cell_disconnected_cb: {secure_format_exception(ex)}", None, log_except=True
                     )
 
-    def get_sub_cell_names(self) -> Tuple[List[str], List[str]]:
+    def get_sub_cell_names(self) -> tuple[list[str], list[str]]:
         """
         Get cell FQCNs of all subs, which are children or top-level client cells (if my cell is server).
 

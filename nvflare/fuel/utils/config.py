@@ -15,7 +15,7 @@
 from abc import ABC, abstractmethod
 from collections import OrderedDict
 from enum import Enum
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 
 class ConfigFormat(Enum):
@@ -39,7 +39,7 @@ class ConfigFormat(Enum):
         )
 
     @classmethod
-    def extensions(cls, target_fmt=None) -> List[str]:
+    def extensions(cls, target_fmt=None) -> list[str]:
         if target_fmt is None:
             return [ext for ext, fmt in cls.config_ext_formats().items()]
         else:
@@ -60,7 +60,7 @@ class Config(ABC):
         """
         return self.format
 
-    def get_exts(self) -> List[str]:
+    def get_exts(self) -> list[str]:
         return ConfigFormat.extensions(self.format)
 
     def get_native_conf(self):
@@ -85,7 +85,7 @@ class Config(ABC):
         return self.file_path
 
     @abstractmethod
-    def to_dict(self, resolve: Optional[bool] = True) -> Dict:
+    def to_dict(self, resolve: Optional[bool] = True) -> dict:
         """Converts underline config object to dictionary.
 
         Args:
@@ -99,7 +99,7 @@ class Config(ABC):
         """
 
     @abstractmethod
-    def to_str(self, element: Optional[Dict] = None) -> str:
+    def to_str(self, element: Optional[dict] = None) -> str:
         """Converts dict element to the str representation of the underline configuration, if element is not None
            For example, for JsonFormat, the method return json string
            for PyhoconFormat, the method return pyhocon string

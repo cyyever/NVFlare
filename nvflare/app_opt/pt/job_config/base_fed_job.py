@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
+from typing import Optional
 
 from torch import nn as nn
 
@@ -34,7 +34,7 @@ class BaseFedJob(FedJob):
         initial_model: nn.Module = None,
         name: str = "fed_job",
         min_clients: int = 1,
-        mandatory_clients: Optional[List[str]] = None,
+        mandatory_clients: Optional[list[str]] = None,
         key_metric: str = "accuracy",
         validation_json_generator: Optional[ValidationJsonGenerator] = None,
         intime_model_selector: Optional[IntimeModelSelector] = None,

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
 
 from nvflare.app_common.app_constant import StatisticsConstants as StC
 from nvflare.fuel.utils.log_utils import get_module_logger
@@ -28,7 +27,7 @@ except ImportError:
 logger = get_module_logger(name="quantile_stats")
 
 
-def get_quantiles(stats: Dict, statistic_configs: Dict, precision: int):
+def get_quantiles(stats: dict, statistic_configs: dict, precision: int):
 
     logger.info(f"get_quantiles: stats: {TDIGEST_AVAILABLE=}")
 
@@ -54,7 +53,7 @@ def get_target_quantiles(quantile_config: dict, feature_name: str):
     return percents
 
 
-def merge_quantiles(metrics: Dict[str, Dict[str, Dict]], g_digest: dict) -> dict:
+def merge_quantiles(metrics: dict[str, dict[str, dict]], g_digest: dict) -> dict:
 
     if not TDIGEST_AVAILABLE:
         return g_digest
@@ -66,7 +65,7 @@ def merge_quantiles(metrics: Dict[str, Dict[str, Dict]], g_digest: dict) -> dict
         feature_metrics = metrics[ds_name]
         for feature_name in feature_metrics:
             if feature_metrics[feature_name] is not None:
-                digest_dict: Dict = feature_metrics[feature_name].get(StC.STATS_DIGEST_COORD)
+                digest_dict: dict = feature_metrics[feature_name].get(StC.STATS_DIGEST_COORD)
                 feature_digest = TDigest.from_dict(digest_dict)
                 if feature_name not in g_digest[ds_name]:
                     g_digest[ds_name][feature_name] = feature_digest
@@ -76,7 +75,7 @@ def merge_quantiles(metrics: Dict[str, Dict[str, Dict]], g_digest: dict) -> dict
     return g_digest
 
 
-def compute_quantiles(g_digest: dict, quantile_config: Dict, precision: int) -> Dict:
+def compute_quantiles(g_digest: dict, quantile_config: dict, precision: int) -> dict:
     g_ds_metrics = {}
     if not TDIGEST_AVAILABLE:
         return g_digest

@@ -15,7 +15,7 @@
 import os
 import time
 from multiprocessing import Process, Queue
-from typing import List, NamedTuple, Optional
+from typing import NamedTuple, Optional
 
 import wandb
 
@@ -57,7 +57,7 @@ def _get_job_id_tag(fl_ctx: FLContext) -> str:
 
 class WandBReceiver(AnalyticsReceiver):
     def __init__(
-        self, wandb_args: dict, mode: str = "offline", events: Optional[List[str]] = None, process_timeout: float = 10.0
+        self, wandb_args: dict, mode: str = "offline", events: Optional[list[str]] = None, process_timeout: float = 10.0
     ):
         super().__init__(events=events)
         self.fl_ctx = None

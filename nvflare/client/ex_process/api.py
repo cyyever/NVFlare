@@ -14,7 +14,7 @@
 
 import importlib
 import os
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional
 
 from nvflare.apis.analytix import AnalyticsDataType
 from nvflare.apis.fl_constant import ConnPropKey, FLMetaKey
@@ -61,7 +61,7 @@ def _create_client_config(config: str) -> ClientConfig:
     return client_config
 
 
-def _create_pipe_using_config(client_config: ClientConfig, section: str) -> Tuple[Pipe, str]:
+def _create_pipe_using_config(client_config: ClientConfig, section: str) -> tuple[Pipe, str]:
     pipe_class_name = client_config.get_pipe_class(section)
     module_name, _, class_name = pipe_class_name.rpartition(".")
     module = importlib.import_module(module_name)
@@ -161,11 +161,11 @@ class ExProcessClientAPI(APISpec):
         if clear_cache:
             self.clear()
 
-    def system_info(self) -> Dict:
+    def system_info(self) -> dict:
         model_registry = self.get_model_registry()
         return model_registry.get_sys_info()
 
-    def get_config(self) -> Dict:
+    def get_config(self) -> dict:
         model_registry = self.get_model_registry()
         return model_registry.config.config
 

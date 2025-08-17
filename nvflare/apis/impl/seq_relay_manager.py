@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import time
-from typing import Tuple
 
 from nvflare.apis.controller_spec import ClientTask, Task, TaskCompletionStatus
 from nvflare.apis.fl_context import FLContext
@@ -93,7 +92,7 @@ class SequentialRelayTaskManager(TaskManager):
         # this client is not in the window
         return TaskCheckStatus.NO_BLOCK
 
-    def _determine_window(self, task: Task) -> Tuple[int, int]:
+    def _determine_window(self, task: Task) -> tuple[int, int]:
         """Returns two indexes (starting/ending) of a window of client candidates.
 
         When starting is negative and ending is 0, the window is closed and the task should exit
@@ -172,7 +171,7 @@ class SequentialRelayTaskManager(TaskManager):
         self.logger.debug("win_end_idx={}".format(win_end_idx))
         return win_start_idx, win_end_idx
 
-    def check_task_exit(self, task: Task) -> Tuple[bool, TaskCompletionStatus]:
+    def check_task_exit(self, task: Task) -> tuple[bool, TaskCompletionStatus]:
         """Determine whether the task should exit.
 
         Args:

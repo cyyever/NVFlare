@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-from typing import Dict, Optional
+from typing import Optional
 
 import torch.nn as nn
 
@@ -153,8 +153,8 @@ class EvaluatorConfig:
     def __init__(
         self,
         eval_frequency: int = 1,
-        torchvision_dataset: Optional[Dict] = None,
-        custom_dataset: Optional[Dict] = None,
+        torchvision_dataset: Optional[dict] = None,
+        custom_dataset: Optional[dict] = None,
     ):
         self.eval_frequency = eval_frequency
         self.torchvision_dataset = torchvision_dataset
@@ -213,7 +213,7 @@ class EdgeRecipe(Recipe):
         device_manager_config: DeviceManagerConfig,
         evaluator_config: EvaluatorConfig = None,
         simulation_config: SimulationConfig = None,
-        custom_source_root: str = None,
+        custom_source_root: Optional[str] = None,
     ):
         if not isinstance(model, nn.Module):
             raise ValueError(f"model must be a nn.Module but got {type(model)}")

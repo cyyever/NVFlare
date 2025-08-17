@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import json
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -50,7 +50,7 @@ def get_std_histogram_buckets(nums: np.ndarray, num_bins: int = 10, br: Optional
     else:
         counts, buckets = np.histogram(nums, bins=num_bins)
 
-    histogram_buckets: List[Bin] = []
+    histogram_buckets: list[Bin] = []
     for bucket_count in range(len(counts)):
         # Add any negative or positive infinities to the first and last
         # buckets in the histogram.

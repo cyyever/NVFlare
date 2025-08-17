@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Tuple
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.app_common.abstract.statistics_spec import Histogram
@@ -37,7 +36,7 @@ class HistogramBinsCleanser(FLComponent, StatisticsPrivacyCleanser):
         if self.max_bins_percent < 0 or self.max_bins_percent > 100:
             raise ValueError(f"max_bins_percent {self.max_bins_percent} is not within (0, 100) ")
 
-    def hist_bins_validate(self, client_name: str, statistics: Dict) -> Dict[str, Dict[str, bool]]:
+    def hist_bins_validate(self, client_name: str, statistics: dict) -> dict[str, dict[str, bool]]:
         result = {}
         if StC.STATS_HISTOGRAM in statistics:
             hist_statistics = statistics[StC.STATS_HISTOGRAM]
@@ -63,7 +62,7 @@ class HistogramBinsCleanser(FLComponent, StatisticsPrivacyCleanser):
                         )
         return result
 
-    def apply(self, statistics: dict, client_name: str) -> Tuple[dict, bool]:
+    def apply(self, statistics: dict, client_name: str) -> tuple[dict, bool]:
         self.logger.info(f"HistogramBinCheck for client {client_name}")
         if StC.STATS_HISTOGRAM in statistics:
             validation_result = self.hist_bins_validate(client_name, statistics)

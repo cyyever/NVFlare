@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from .config import ClientConfig
 from .constants import SYS_ATTRS
@@ -86,7 +86,7 @@ class TaskRegistry:
             self._set_task(task)
         return self.received_task
 
-    def get_sys_info(self) -> Dict:
+    def get_sys_info(self) -> dict:
         """Gets NVFlare system information.
 
         Returns:

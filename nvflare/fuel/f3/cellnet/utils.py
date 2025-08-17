@@ -13,7 +13,7 @@
 # limitations under the License.
 import copy
 import time
-from typing import Any
+from typing import Any, Optional
 
 import nvflare.fuel.utils.fobs as fobs
 from nvflare.fuel.f3.cellnet.defs import Encoding, MessageHeaderKey
@@ -128,7 +128,7 @@ def format_log_message(fqcn: str, message: Message, log: str) -> str:
     return " ".join(context) + f"] {log}"
 
 
-def encode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: dict = None) -> int:
+def encode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: Optional[dict] = None) -> int:
     """Encode the payload of the specified message.
 
     Args:
@@ -168,7 +168,7 @@ def encode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCOD
     return size
 
 
-def decode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: dict = None):
+def decode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: Optional[dict] = None):
     if isinstance(fobs_ctx, dict):
         fobs_ctx[fobs.FOBSContextKey.MESSAGE] = message
 

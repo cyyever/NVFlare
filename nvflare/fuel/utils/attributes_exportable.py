@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple
 
 from nvflare.fuel.utils.validation_utils import check_object_type
 
@@ -27,7 +26,7 @@ class AttributesExportable(ABC):
     """Export attributes."""
 
     @abstractmethod
-    def export(self, export_mode: str) -> Tuple[str, dict]:
+    def export(self, export_mode: str) -> tuple[str, dict]:
         """Exports attributes.
 
         Args:
@@ -40,8 +39,8 @@ class AttributesExportable(ABC):
 
 
 def export_components(
-    components: Dict[str, AttributesExportable],
-    reserved_keys: List[str],
+    components: dict[str, AttributesExportable],
+    reserved_keys: list[str],
     export_mode: str,
 ) -> dict:
     """Exports components.

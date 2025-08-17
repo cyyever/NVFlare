@@ -14,7 +14,7 @@
 
 """The client of the federated training process."""
 
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.executor import Executor
@@ -38,9 +38,9 @@ class FederatedClient(FederatedClientBase):
         secure_train,
         server_args=None,
         retry_timeout=30,
-        client_state_processors: Optional[List[Filter]] = None,
-        handlers: Optional[List[FLComponent]] = None,
-        executors: Optional[List[Executor]] = None,
+        client_state_processors: Optional[list[Filter]] = None,
+        handlers: Optional[list[FLComponent]] = None,
+        executors: Optional[list[Executor]] = None,
         compression=None,
         overseer_agent=None,
         args=None,

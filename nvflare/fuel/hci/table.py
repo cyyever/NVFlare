@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
+from typing import Optional
 
 
 def repeat_to_length(string_to_expand, length):
@@ -29,7 +29,7 @@ def repeat_to_length(string_to_expand, length):
 
 
 class Table(object):
-    def __init__(self, headers: Optional[List[str]] = None, meta_rows=None):
+    def __init__(self, headers: Optional[list[str]] = None, meta_rows=None):
         """A structure with header and rows of records.
 
         Note:
@@ -51,7 +51,7 @@ class Table(object):
         self.rows = rows
         self.meta_rows = meta_rows
 
-    def add_row(self, row: List[str], meta: dict = None):
+    def add_row(self, row: list[str], meta: Optional[dict] = None):
         """Adds a record."""
         self.rows.append(row)
         if meta:

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict
+from typing import Any
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_context import FLContext
@@ -37,7 +37,7 @@ class DeviceManager(FLComponent, ABC):
         self.available_devices = {}
 
     @abstractmethod
-    def update_available_devices(self, devices: Dict, fl_ctx: FLContext) -> None:
+    def update_available_devices(self, devices: dict, fl_ctx: FLContext) -> None:
         """Update the list of available devices.
         modify self.available_devices with devices input
 

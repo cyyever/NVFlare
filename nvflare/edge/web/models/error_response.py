@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from nvflare.edge.web.models.base_model import BaseModel
+from typing import Optional
 
 
 class ErrorResponse(BaseModel):
-    def __init__(self, status: str, message: str = None, details: dict = None, **kwargs):
+    def __init__(self, status: str, message: Optional[str] = None, details: Optional[dict] = None, **kwargs):
         super().__init__()
         self.status = status
         self.message = message

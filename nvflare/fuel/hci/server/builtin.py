@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 from nvflare.fuel.hci.conn import Connection
 from nvflare.fuel.hci.reg import CommandEntry, CommandModule, CommandModuleSpec, CommandSpec
@@ -60,7 +59,7 @@ class BuiltInCmdModule(CommandModule):
             conn.append_string("Description: {}".format(e.desc))
             conn.append_string("Usage: {}\n".format(e.usage))
 
-    def handle_list_commands(self, conn: Connection, args: List[str]):
+    def handle_list_commands(self, conn: Connection, args: list[str]):
         if len(args) <= 1:
             table = conn.append_table(["Scope", "Command", "Description", "Usage", "Confirm", "ClientCmd", "Visible"])
 

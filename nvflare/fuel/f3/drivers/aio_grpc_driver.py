@@ -16,7 +16,7 @@ import asyncio
 import random
 import threading
 import time
-from typing import Any, Dict, List
+from typing import Any
 
 import grpc
 
@@ -296,14 +296,14 @@ class AioGrpcDriver(BaseDriver):
         self.closing = False
 
     @staticmethod
-    def supported_transports() -> List[str]:
+    def supported_transports() -> list[str]:
         if use_aio_grpc():
             return ["grpc", "grpcs"]
         else:
             return ["agrpc", "agrpcs"]
 
     @staticmethod
-    def capabilities() -> Dict[str, Any]:
+    def capabilities() -> dict[str, Any]:
         return {DriverCap.SEND_HEARTBEAT.value: True, DriverCap.SUPPORT_SSL.value: True}
 
     async def _start_server(self, connector: ConnectorInfo, aio_ctx: AioContext, conn_ctx: _ConnCtx):

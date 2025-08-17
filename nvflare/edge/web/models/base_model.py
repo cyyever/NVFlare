@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Optional, Union
+from typing import Optional, Union
 from urllib.parse import parse_qs, urlencode
 
 
@@ -56,7 +56,7 @@ class BaseModel(dict):
         return device_info.get("device_id")
 
     @staticmethod
-    def check_keys(d: dict, keys: Union[str, List[str]]) -> str:
+    def check_keys(d: dict, keys: Union[str, list[str]]) -> str:
         if isinstance(keys, str):
             keys = [keys]
         for key in keys:

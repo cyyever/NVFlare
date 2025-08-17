@@ -20,7 +20,7 @@ import resource
 import threading
 import time
 from abc import ABC
-from typing import List, Union
+from typing import Union
 
 from nvflare.fuel.f3.cellnet.cell import Cell
 from nvflare.fuel.f3.cellnet.connector_manager import ConnectorData
@@ -73,7 +73,7 @@ class _Member:
 
 
 class SubnetMonitor(ABC):
-    def __init__(self, subnet_id: str, member_cells: List[str], trouble_alert_threshold: float):
+    def __init__(self, subnet_id: str, member_cells: list[str], trouble_alert_threshold: float):
         if not member_cells:
             raise ValueError("member cells must not be empty")
         self.agent = None
@@ -384,7 +384,7 @@ class NetAgent:
     def _do_peers(self, request: Message) -> Union[None, Message]:
         return Message(payload=list(self.cell.agents.keys()))
 
-    def get_peers(self, target_fqcn: str) -> (Union[None, dict], List[str]):
+    def get_peers(self, target_fqcn: str) -> (Union[None, dict], list[str]):
         reply = self.cell.send_request(
             channel=_CHANNEL, topic=_TOPIC_PEERS, target=target_fqcn, timeout=1.0, request=Message()
         )
@@ -455,7 +455,7 @@ class NetAgent:
         else:
             return {"error": "processing error", "reply": reply.headers}, {}
 
-    def request_cells_info(self) -> (str, List[str]):
+    def request_cells_info(self) -> (str, list[str]):
         result = [self.cell.get_fqcn()]
         err = ""
         replies = self._broadcast_to_subs(topic=_TOPIC_CELLS)

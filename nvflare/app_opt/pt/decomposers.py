@@ -90,7 +90,7 @@ class TensorDecomposer(ViaFileDecomposer):
             self.logger.error(f"exception dumping tensors to file: {e}")
             raise e
 
-    def load_from_file(self, path: str, fobs_ctx: dict, meta: dict = None) -> Any:
+    def load_from_file(self, path: str, fobs_ctx: dict, meta: Optional[dict] = None) -> Any:
         items = load_file(path)
         self.logger.debug(f"got {len(items)} tensors from file {path}")
         if meta:

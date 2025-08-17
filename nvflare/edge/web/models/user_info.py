@@ -12,16 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from nvflare.edge.web.models.base_model import BaseModel, EdgeProtoKey
+from typing import Optional
 
 
 class UserInfo(BaseModel):
     def __init__(
         self,
-        user_id: str = None,
-        user_name: str = None,
-        access_token: str = None,
-        auth_token: str = None,
-        auth_session: str = None,
+        user_id: Optional[str] = None,
+        user_name: Optional[str] = None,
+        access_token: Optional[str] = None,
+        auth_token: Optional[str] = None,
+        auth_session: Optional[str] = None,
         **kwargs,
     ):
         super().__init__()

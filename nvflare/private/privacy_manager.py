@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import Union
 
 from nvflare.apis.filter import Filter, FilterChainType, FilterContextKey, FilterSource
 from nvflare.apis.fl_constant import FilterKey
@@ -68,7 +68,7 @@ class Scope(object):
 
 class PrivacyManager(object):
     def __init__(
-        self, scopes: Union[None, List[Scope]], default_scope_name: Union[None, str], components: Union[None, dict]
+        self, scopes: Union[None, list[Scope]], default_scope_name: Union[None, str], components: Union[None, dict]
     ):
         self.name_to_scopes = {}
         self.default_scope = None

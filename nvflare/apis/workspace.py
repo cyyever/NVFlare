@@ -14,7 +14,7 @@
 
 import glob
 import os
-from typing import List, Union
+from typing import Union
 
 from nvflare.apis.fl_constant import WorkspaceConstants
 
@@ -127,7 +127,7 @@ class Workspace:
     def get_log_config_file_path(self):
         return self._fallback_path([WorkspaceConstants.LOGGING_CONFIG, WorkspaceConstants.DEFAULT_LOGGING_CONFIG])
 
-    def get_file_path_in_site_config(self, file_basename: Union[str, List[str]]):
+    def get_file_path_in_site_config(self, file_basename: Union[str, list[str]]):
         if isinstance(file_basename, str):
             return os.path.join(self.get_site_config_dir(), file_basename)
         elif isinstance(file_basename, list):

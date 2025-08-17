@@ -15,7 +15,7 @@
 import collections
 import logging
 from io import BytesIO
-from typing import Optional, Set, Tuple
+from typing import Optional
 from zipfile import ZipFile
 
 from nvflare.apis.app_validation import AppValidationKey
@@ -48,7 +48,7 @@ class JobMetaValidator(JobMetaValidatorSpec):
         self._validate_mandatory_clients(job_name, meta, clients)
         return meta
 
-    def validate(self, job_name: str, job_data: bytes) -> Tuple[bool, str, dict]:
+    def validate(self, job_name: str, job_data: bytes) -> tuple[bool, str, dict]:
         """Validate job
 
         Args:
@@ -216,7 +216,7 @@ class JobMetaValidator(JobMetaValidatorSpec):
                     raise ValueError(f"value for key {k} in resource spec is expecting a dictionary")
 
     @staticmethod
-    def _get_all_clients(site_list: Optional[list]) -> Set[str]:
+    def _get_all_clients(site_list: Optional[list]) -> set[str]:
 
         if site_list[0] == ALL_SITES:
             return {ALL_SITES}

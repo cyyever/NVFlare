@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 # version >=1.0.3
 import private_set_intersection.python as psi
@@ -23,7 +22,7 @@ class PSIServer:
     Class to represent the psi server in a two-party client, server PSI model.
     """
 
-    def __init__(self, items: List[str], fpr: float = 1e-9):
+    def __init__(self, items: list[str], fpr: float = 1e-9):
         """
         Args:
             items: the items provided by the server

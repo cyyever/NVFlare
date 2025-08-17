@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os.path
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.app_common.tie.defs import Constant
 from nvflare.app_common.widgets.external_configurator import ExternalConfigurator
@@ -33,7 +33,7 @@ class FlowerJob(FedJob):
         name: str,
         flower_content: str,
         min_clients: int = 1,
-        mandatory_clients: Optional[List[str]] = None,
+        mandatory_clients: Optional[list[str]] = None,
         database: str = "",
         superlink_ready_timeout: float = 10.0,
         configure_task_timeout=Constant.CONFIG_TASK_TIMEOUT,
@@ -45,7 +45,7 @@ class FlowerJob(FedJob):
         client_shutdown_timeout=5.0,
         stream_metrics=False,
         analytics_receiver=None,
-        extra_env: dict = None,
+        extra_env: Optional[dict] = None,
     ):
         """
         Flower Job.

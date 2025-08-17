@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Any, List
+from typing import Any, Optional
 
 from nvflare.apis.dxo import from_shareable
 from nvflare.apis.fl_context import FLContext
@@ -22,7 +22,7 @@ from nvflare.fuel.utils.log_utils import get_obj_logger
 
 
 class ParamsConverter(ABC):
-    def __init__(self, supported_tasks: List[str] = None):
+    def __init__(self, supported_tasks: Optional[list[str]] = None):
         self.supported_tasks = supported_tasks
         self.logger = get_obj_logger(self)
 

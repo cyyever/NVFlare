@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import Union
 
 from nvflare.app_common.app_constant import AppConstants
 from nvflare.app_common.response_processors.global_weights_initializer import GlobalWeightsInitializer, WeightMethod
@@ -29,7 +29,7 @@ class InitializeGlobalWeights(BroadcastAndProcess):
         task_timeout: int = 0,
         weights_prop_name=AppConstants.GLOBAL_MODEL,
         weight_method: str = WeightMethod.FIRST,
-        weights_client_name: Union[str, List[str], None] = None,
+        weights_client_name: Union[str, list[str], None] = None,
     ):
         """A controller for initializing global model weights based on reported weights from clients.
 

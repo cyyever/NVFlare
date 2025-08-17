@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.apis.dxo import DXO
 from nvflare.apis.event_type import EventType
@@ -51,7 +50,7 @@ class PTFileModelLocator(ModelLocator):
             )
         fobs.register(TensorDecomposer)
 
-    def get_model_names(self, fl_ctx: FLContext) -> List[str]:
+    def get_model_names(self, fl_ctx: FLContext) -> list[str]:
         """Returns the list of model names that should be included from server in cross site validation.add().
 
         Args:

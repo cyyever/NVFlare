@@ -16,7 +16,7 @@ import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from typing import Dict, List, Optional
+from typing import Optional
 
 import msgpack
 
@@ -67,19 +67,19 @@ class ConnManager(ConnMonitor):
         self.local_endpoint = local_endpoint
 
         # Active connectors
-        self.connectors: Dict[str, ConnectorInfo] = {}
+        self.connectors: dict[str, ConnectorInfo] = {}
 
         # A dict of SFM connections, key is connection name
-        self.sfm_conns: Dict[str, SfmConnection] = {}
+        self.sfm_conns: dict[str, SfmConnection] = {}
 
         # A dict of SfmEndpoint for finding endpoint by name
-        self.sfm_endpoints: Dict[str, SfmEndpoint] = {}
+        self.sfm_endpoints: dict[str, SfmEndpoint] = {}
 
         # A list of Endpoint monitors
-        self.monitors: List[EndpointMonitor] = []
+        self.monitors: list[EndpointMonitor] = []
 
         # App/receiver mapping
-        self.receivers: Dict[int, MessageReceiver] = {}
+        self.receivers: dict[int, MessageReceiver] = {}
 
         self.started = False
         self.stopped = False
@@ -179,7 +179,7 @@ class ConnManager(ConnMonitor):
         self.sfm_endpoints.pop(name)
         log.debug(f"Endpoint {name} is removed")
 
-    def get_connections(self, name: str) -> Optional[List[SfmConnection]]:
+    def get_connections(self, name: str) -> Optional[list[SfmConnection]]:
 
         sfm_endpoint = self.sfm_endpoints.get(name)
         if not sfm_endpoint:

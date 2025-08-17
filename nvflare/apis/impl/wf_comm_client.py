@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import uuid
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, SendOrder, Task, TaskCompletionStatus
@@ -50,7 +50,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
     ):
@@ -60,7 +60,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
         abort_signal: Signal = None,
@@ -253,7 +253,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
     ):
@@ -263,7 +263,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         abort_signal: Signal = None,
@@ -281,7 +281,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -293,7 +293,7 @@ class WFCommClient(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order=SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,

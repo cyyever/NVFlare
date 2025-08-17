@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 from nvflare.apis.executor import Executor
 from nvflare.apis.impl.controller import Controller
@@ -31,7 +30,7 @@ class ClientAppConfig(BaseAppConfig):
         super().__init__()
         self.executors: [_ExecutorDef] = []
 
-    def add_executor(self, tasks: List[str], executor: Executor):
+    def add_executor(self, tasks: list[str], executor: Executor):
         if not isinstance(executor, Executor):
             raise RuntimeError(f"workflow must be type of Executor, but got {executor.__class__}")
 

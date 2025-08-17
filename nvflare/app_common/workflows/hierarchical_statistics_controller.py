@@ -14,7 +14,7 @@
 
 import json
 import os
-from typing import Dict, List, Optional
+from typing import Optional
 
 from nvflare.apis.controller_spec import Task
 from nvflare.apis.fl_context import FLContext
@@ -30,14 +30,14 @@ from nvflare.fuel.utils import fobs
 class HierarchicalStatisticsController(StatisticsController):
     def __init__(
         self,
-        statistic_configs: Dict[str, dict],
+        statistic_configs: dict[str, dict],
         writer_id: str,
         wait_time_after_min_received: int = 1,
         result_wait_timeout: int = 10,
         precision=4,
         min_clients: Optional[int] = None,
         enable_pre_run_task: bool = True,
-        hierarchy_config: str = None,
+        hierarchy_config: Optional[str] = None,
     ):
         """Controller for hierarchical statistics.
 
@@ -316,7 +316,7 @@ class HierarchicalStatisticsController(StatisticsController):
             A dict containing inputs.
         """
         inputs = Shareable()
-        target_statistics: List[StatisticConfig] = StatisticsController._get_target_statistics(
+        target_statistics: list[StatisticConfig] = StatisticsController._get_target_statistics(
             self.statistic_configs, StC.ordered_statistics[statistic_task]
         )
         for tm in target_statistics:

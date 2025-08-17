@@ -17,7 +17,6 @@ import re
 import shutil
 import sys
 import threading
-from typing import List
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_component import FLComponent
@@ -46,6 +45,7 @@ from .client_executor import JobExecutor
 from .client_run_manager import ClientRunInfo
 from .client_status import ClientStatus
 from .fed_client import FederatedClient
+from typing import Optional
 
 
 def _remove_custom_path():
@@ -220,7 +220,7 @@ class ClientEngine(ClientEngineInternalSpec, StreamableEngine):
         channel: str,
         topic: str,
         stream_ctx: StreamContext,
-        targets: List[str],
+        targets: list[str],
         producer: ObjectProducer,
         fl_ctx: FLContext,
         optional=False,
@@ -350,8 +350,8 @@ class ClientEngine(ClientEngineInternalSpec, StreamableEngine):
         self,
         job_id: str,
         job_meta: dict,
-        allocated_resource: dict = None,
-        token: str = None,
+        allocated_resource: Optional[dict] = None,
+        token: Optional[str] = None,
         resource_manager=None,
     ) -> str:
         status = self.client_executor.get_status(job_id)

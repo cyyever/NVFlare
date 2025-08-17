@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Dict
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.app_common.model_desc import ModelDescriptor
@@ -21,10 +20,11 @@ from nvflare.app_common.model_desc import ModelDescriptor
 from .learnable_persistor import LearnablePersistor
 from .model import ModelLearnable
 from .persistor_filter import PersistorFilter
+from typing import Optional
 
 
 class ModelPersistor(LearnablePersistor, ABC):
-    def __init__(self, filter_id: str = None):
+    def __init__(self, filter_id: Optional[str] = None):
         """Abstract class.
         Implementations will need to implement the `load_model()` and `save_model()`
         methods to persist & load the current ModelLearnable.
@@ -91,7 +91,7 @@ class ModelPersistor(LearnablePersistor, ABC):
         """
         pass
 
-    def get_model_inventory(self, fl_ctx: FLContext) -> Dict[str, ModelDescriptor]:
+    def get_model_inventory(self, fl_ctx: FLContext) -> dict[str, ModelDescriptor]:
         """Get the model inventory of the ModelPersister.
 
         Args:

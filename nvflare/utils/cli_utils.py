@@ -14,7 +14,7 @@
 import os
 import pathlib
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 from pyhocon import ConfigFactory as CF
 from pyhocon import ConfigTree, HOCONConverter
@@ -247,7 +247,7 @@ def hocon_to_string(target_fmt: ConfigFormat, dst_config: ConfigTree):
         return omega_conf.to_str()
 
 
-def save_configs(app_configs: Dict[str, Tuple], keep_origin_format: bool = True):
+def save_configs(app_configs: dict[str, tuple], keep_origin_format: bool = True):
     for app_name, (dst_config, dst_path) in app_configs.items():
         save_config(dst_config, dst_path, keep_origin_format)
 
@@ -297,7 +297,7 @@ def print_hidden_config(dst_path: str, dst_config: ConfigTree):
     print(config_str)
 
 
-def find_in_list(arr: List, item) -> bool:
+def find_in_list(arr: list, item) -> bool:
     if arr is None:
         return False
 
@@ -309,7 +309,7 @@ def find_in_list(arr: List, item) -> bool:
     return found
 
 
-def append_if_not_in_list(arr: List, item) -> List:
+def append_if_not_in_list(arr: list, item) -> list:
     if item is None:
         return arr
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.apis.analytix import ANALYTIC_EVENT_TYPE, AnalyticsDataType, LogWriterName
 from nvflare.app_common.tracking.log_writer import LogWriter
@@ -29,7 +29,7 @@ class WandBWriter(LogWriter):
     def get_default_metric_data_type(self) -> AnalyticsDataType:
         return AnalyticsDataType.METRICS
 
-    def log(self, metrics: Dict[str, float], step: Optional[int] = None):
+    def log(self, metrics: dict[str, float], step: Optional[int] = None):
         """Log multiple metrics for the current run.
 
         Args:

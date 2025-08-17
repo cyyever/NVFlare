@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.fuel.hci.cmd_arg_utils import ArgValidator
 
@@ -26,7 +25,7 @@ class ShellCommandValidator(object):
         """
         self.arg_validator = arg_validator
 
-    def validate(self, args: List[str]):
+    def validate(self, args: list[str]):
         self.arg_validator.err = ""
         return self.arg_validator.validate(args)
 

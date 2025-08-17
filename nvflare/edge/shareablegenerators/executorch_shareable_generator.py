@@ -14,7 +14,7 @@
 
 import base64
 import importlib
-from typing import Any, List
+from typing import Any
 
 import numpy as np
 import torch
@@ -31,7 +31,7 @@ from nvflare.edge.models.model import export_model
 
 
 class ExecutorchShareableGenerator(ShareableGenerator):
-    def __init__(self, base_model_path: str, executorch_model_path: str, input_shape: List, output_shape: List):
+    def __init__(self, base_model_path: str, executorch_model_path: str, input_shape: list, output_shape: list):
         super().__init__()
         self.base_model_path = base_model_path
         self.executorch_model_path = executorch_model_path

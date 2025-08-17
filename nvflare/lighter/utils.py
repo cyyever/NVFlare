@@ -28,10 +28,11 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.x509.oid import NameOID
 
 from nvflare.lighter.tool_consts import NVFLARE_SIG_FILE, NVFLARE_SUBMITTER_CRT_FILE
+from typing import Optional
 
 
 class Identity:
-    def __init__(self, name: str, org: str = None, role: str = None):
+    def __init__(self, name: str, org: Optional[str] = None, role: Optional[str] = None):
         self.name = name
         self.org = org
         self.role = role

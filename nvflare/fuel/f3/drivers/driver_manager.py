@@ -16,7 +16,7 @@ import inspect
 import logging
 import os
 import sys
-from typing import Optional, Type
+from typing import Optional
 
 from nvflare.fuel.f3.comm_error import CommError
 from nvflare.fuel.f3.drivers.driver import Driver
@@ -31,7 +31,7 @@ class DriverManager:
         self.drivers = {}
         self.class_cache = set()
 
-    def register(self, driver_class: Type[Driver]):
+    def register(self, driver_class: type[Driver]):
         """Register a driver with Driver Manager
 
         Args:
@@ -95,7 +95,7 @@ class DriverManager:
                     except Exception as e:
                         log.warning(f"Driver ignored. Error loading {module}: {e}")
 
-    def find_driver_class(self, scheme_or_url: str) -> Optional[Type[Driver]]:
+    def find_driver_class(self, scheme_or_url: str) -> Optional[type[Driver]]:
         """Find the driver class based on scheme or URL
 
         Args:

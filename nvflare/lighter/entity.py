@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any, List, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.utils.format_check import name_check
 
@@ -221,7 +221,7 @@ class Entity:
 
 
 class Participant(Entity):
-    def __init__(self, type: str, name: str, org: str, props: dict = None, project: Entity = None):
+    def __init__(self, type: str, name: str, org: str, props: Optional[dict] = None, project: Entity = None):
         """Class to represent a participant.
 
         Each participant communicates to other participant.  Therefore, each participant has its
@@ -367,7 +367,7 @@ class Project(Entity):
         name: str,
         description: str,
         participants=None,
-        props: dict = None,
+        props: Optional[dict] = None,
         serialized_root_cert=None,
         root_private_key=None,
     ):
@@ -489,7 +489,7 @@ class Project(Entity):
         """
         return self.add_participant(Participant(ParticipantType.CLIENT, name, org, props))
 
-    def get_clients(self) -> List[Participant]:
+    def get_clients(self) -> list[Participant]:
         """Get all clients of the project
 
         Returns: a list of clients
@@ -510,7 +510,7 @@ class Project(Entity):
         """
         return self.add_participant(Participant(ParticipantType.RELAY, name, org, props))
 
-    def get_relays(self) -> List[Participant]:
+    def get_relays(self) -> list[Participant]:
         """Get all relays of the project
 
         Returns: the list of relays of the project
@@ -531,7 +531,7 @@ class Project(Entity):
         """
         return self.add_participant(Participant(ParticipantType.ADMIN, name, org, props))
 
-    def get_admins(self) -> List[Participant]:
+    def get_admins(self) -> list[Participant]:
         """Get the list of admin users
 
         Returns: list of admin users
@@ -539,7 +539,7 @@ class Project(Entity):
         """
         return self.get_all_participants(ParticipantType.ADMIN)
 
-    def get_all_participants(self, types: Union[None, str, List[str]] = None):
+    def get_all_participants(self, types: Union[None, str, list[str]] = None):
         """Get all participants of the project of specified types.
 
         Args:

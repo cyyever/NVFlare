@@ -14,7 +14,6 @@
 
 import json
 import os
-from typing import List
 
 from nvflare.apis.job_def import JobMetaKey
 from nvflare.apis.workspace import Workspace
@@ -29,7 +28,7 @@ from nvflare.private.fed.utils.fed_utils import get_scope_info
 
 
 class AbortAppProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.ABORT]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -44,7 +43,7 @@ class AbortAppProcessor(RequestProcessor):
 
 
 class AbortTaskProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.ABORT_TASK]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -59,7 +58,7 @@ class AbortTaskProcessor(RequestProcessor):
 
 
 class ShutdownClientProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.SHUTDOWN]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -73,7 +72,7 @@ class ShutdownClientProcessor(RequestProcessor):
 
 
 class RestartClientProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.RESTART]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -87,7 +86,7 @@ class RestartClientProcessor(RequestProcessor):
 
 
 class DeployProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.DEPLOY]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -123,7 +122,7 @@ class DeployProcessor(RequestProcessor):
 
 
 class DeleteRunNumberProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.DELETE_RUN]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -138,7 +137,7 @@ class DeleteRunNumberProcessor(RequestProcessor):
 
 
 class ConfigureJobLogProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.CONFIGURE_JOB_LOG]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -158,7 +157,7 @@ class ConfigureJobLogProcessor(RequestProcessor):
 
 
 class ClientStatusProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.CHECK_STATUS]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -171,7 +170,7 @@ class ClientStatusProcessor(RequestProcessor):
 
 
 class ScopeInfoProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.GET_SCOPES]
 
     def process(self, req: Message, app_ctx) -> Message:

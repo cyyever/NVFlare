@@ -14,7 +14,7 @@
 
 import gc
 import random
-from typing import List, Union
+from typing import Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, Task
@@ -50,7 +50,7 @@ class CyclicController(Controller):
         task_check_period: float = 0.5,
         persist_every_n_rounds: int = 1,
         snapshot_every_n_rounds: int = 1,
-        order: Union[str, List[str]] = RelayOrder.FIXED,
+        order: Union[str, list[str]] = RelayOrder.FIXED,
         allow_early_termination=False,
     ):
         """A sample implementation to demonstrate how to use relay method for Cyclic Federated Learning.
@@ -138,12 +138,12 @@ class CyclicController(Controller):
         fl_ctx.set_prop(AppConstants.NUM_ROUNDS, self._num_rounds, private=True, sticky=True)
         self.fire_event(AppEventType.INITIAL_MODEL_LOADED, fl_ctx)
 
-        self._participating_clients: List[Client] = self._engine.get_clients()
+        self._participating_clients: list[Client] = self._engine.get_clients()
         if len(self._participating_clients) <= 1:
             self.system_panic("Not enough client sites.", fl_ctx)
         self._last_client = None
 
-    def _get_relay_orders(self, fl_ctx: FLContext) -> Union[List[Client], None]:
+    def _get_relay_orders(self, fl_ctx: FLContext) -> Union[list[Client], None]:
         active_clients_map = {}
         for t in self._participating_clients:
             if not self.get_client_disconnect_time(t.name):

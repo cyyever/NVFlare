@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from typing import Any, Dict, Optional, Type
+from typing import Any, Optional
 
 from nvflare.app_opt.confidential_computing.cc_manager import (
     CC_ISSUER_ID,
@@ -64,12 +64,12 @@ class CCBuilder(Builder):
     ):
         self.project_name: Optional[str] = None
         self.project: Optional[Project] = None
-        self.cc_config: Optional[Dict[str, Any]] = None
+        self.cc_config: Optional[dict[str, Any]] = None
         # CC Manager specific
         self._cc_mgr_id = cc_mgr_id
         self._cc_enabled_sites = []
         # Map of compute environment to its builder class
-        self._cc_builders: Dict[str, Type[Builder]] = {}
+        self._cc_builders: dict[str, type[Builder]] = {}
 
     def _load_and_validate_cc_config(self, config_path):
         """Load CC configuration from YAML file."""

@@ -13,7 +13,7 @@
 # limitations under the License.
 import json
 import os
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import yaml
 
@@ -51,7 +51,7 @@ class ProvisionContext(dict):
     def get_project(self) -> Project:
         return self.get(CtxKey.PROJECT)
 
-    def load_templates(self, temp_files: Union[str, List[str]]):
+    def load_templates(self, temp_files: Union[str, list[str]]):
         if not temp_files:
             return
 
@@ -128,7 +128,7 @@ class ProvisionContext(dict):
     def build_from_template(
         self,
         dest_dir: str,
-        temp_section: Union[str, List[str]],
+        temp_section: Union[str, list[str]],
         file_name,
         replacement=None,
         mode="t",
@@ -155,7 +155,7 @@ class ProvisionContext(dict):
 
     def build_section_from_template(
         self,
-        temp_section: Union[str, List[str]],
+        temp_section: Union[str, list[str]],
         replacement=None,
         content_modify_cb=None,
         **cb_kwargs,

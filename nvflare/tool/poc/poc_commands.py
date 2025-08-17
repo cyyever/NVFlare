@@ -20,7 +20,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from typing import Dict, List, Optional, OrderedDict, Tuple
+from typing import Optional, OrderedDict
 
 import yaml
 from pyhocon import ConfigFactory as CF
@@ -53,7 +53,7 @@ CMD_STOP_POC = "stop"
 CMD_CLEAN_POC = "clean"
 
 
-def client_gpu_assignments(clients: List[str], gpu_ids: List[int]) -> Dict[str, List[int]]:
+def client_gpu_assignments(clients: list[str], gpu_ids: list[int]) -> dict[str, list[int]]:
     n_gpus = len(gpu_ids)
     n_clients = len(clients)
     gpu_assignments = {}
@@ -79,7 +79,7 @@ def client_gpu_assignments(clients: List[str], gpu_ids: List[int]) -> Dict[str, 
     return gpu_assignments
 
 
-def get_service_command(cmd_type: str, prod_dir: str, service_dir, service_config: Dict) -> str:
+def get_service_command(cmd_type: str, prod_dir: str, service_dir, service_config: dict) -> str:
     cmd = ""
     proj_admin_dir_name = service_config.get(SC.FLARE_PROJ_ADMIN, SC.FLARE_PROJ_ADMIN)
     admin_dirs = service_config.get(SC.FLARE_OTHER_ADMINS, [])
@@ -150,7 +150,7 @@ def prepare_jobs_dir(cmd_args):
     _prepare_jobs_dir(cmd_args.jobs_dir, poc_workspace)
 
 
-def _prepare_jobs_dir(jobs_dir: str, workspace: str, config_packages: Optional[Tuple] = None):
+def _prepare_jobs_dir(jobs_dir: str, workspace: str, config_packages: Optional[tuple] = None):
     project_config, service_config = config_packages if config_packages else setup_service_config(workspace)
     project_name = project_config.get("name")
     if jobs_dir is None or jobs_dir == "":
@@ -207,20 +207,20 @@ def verify_host(host_name: str) -> bool:
 
 
 def verify_hosts(project_config: OrderedDict):
-    hosts: List[str] = get_project_hosts(project_config)
+    hosts: list[str] = get_project_hosts(project_config)
     for h in hosts:
         if not verify_host(h):
             print(f"host name: '{h}' is not defined, considering modify /etc/hosts to add localhost alias")
             exit(0)
 
 
-def get_project_hosts(project_config) -> List[str]:
-    participants: List[dict] = project_config["participants"]
+def get_project_hosts(project_config) -> list[str]:
+    participants: list[dict] = project_config["participants"]
     return [p["name"] for p in participants if p["type"] == "client" or p["type"] == "server"]
 
 
 def get_fl_server_name(project_config: OrderedDict) -> str:
-    participants: List[dict] = project_config["participants"]
+    participants: list[dict] = project_config["participants"]
     servers = [p["name"] for p in participants if p["type"] == "server"]
     if len(servers) == 1:
         return servers[0]
@@ -229,7 +229,7 @@ def get_fl_server_name(project_config: OrderedDict) -> str:
 
 
 def get_fl_admins(project_config: OrderedDict, is_project_admin: bool):
-    participants: List[dict] = project_config["participants"]
+    participants: list[dict] = project_config["participants"]
     return [
         p["name"]
         for p in participants
@@ -249,20 +249,20 @@ def get_proj_admin(project_config: OrderedDict):
         raise CLIException(f"project should have only one project admin, but {len(admins)} are provided: {admins}")
 
 
-def get_fl_client_names(project_config: OrderedDict) -> List[str]:
-    participants: List[dict] = project_config["participants"]
+def get_fl_client_names(project_config: OrderedDict) -> list[str]:
+    participants: list[dict] = project_config["participants"]
     client_names = [p["name"] for p in participants if p["type"] == "client"]
     return client_names
 
 
 def local_provision(
-    clients: List[str],
+    clients: list[str],
     number_of_clients: int,
     workspace: str,
     docker_image: str,
     use_he: bool = False,
     project_conf_path: str = "",
-) -> Tuple:
+) -> tuple:
     user_provided_project_config = False
     if project_conf_path:
         src_project_file = project_conf_path
@@ -361,10 +361,10 @@ def add_he_builder(use_he: bool, project_config: OrderedDict):
     return project_config
 
 
-def update_clients(clients: List[str], n_clients: int, project_config: OrderedDict) -> OrderedDict:
+def update_clients(clients: list[str], n_clients: int, project_config: OrderedDict) -> OrderedDict:
     requested_clients = prepare_clients(clients, n_clients)
 
-    participants: List[dict] = project_config["participants"]
+    participants: list[dict] = project_config["participants"]
     new_participants = [p for p in participants if p["type"] != "client"]
 
     for client in requested_clients:
@@ -431,10 +431,10 @@ def prepare_poc(cmd_args):
 
 
 def _prepare_poc(
-    clients: List[str],
+    clients: list[str],
     number_of_clients: int,
     workspace: str,
-    docker_image: str = None,
+    docker_image: Optional[str] = None,
     use_he: bool = False,
     project_conf_path: str = "",
     examples_dir: Optional[str] = None,
@@ -489,14 +489,14 @@ def get_or_create_hidden_nvflare_config_path() -> str:
 
 
 def prepare_poc_provision(
-    clients: List[str],
+    clients: list[str],
     number_of_clients: int,
     workspace: str,
     docker_image: str,
     use_he: bool = False,
     project_conf_path: str = "",
     examples_dir: Optional[str] = None,
-) -> Dict:
+) -> dict:
     os.makedirs(workspace, exist_ok=True)
     os.makedirs(os.path.join(workspace, "data"), exist_ok=True)
     project_config, service_config = local_provision(
@@ -574,7 +574,7 @@ def validate_gpu_ids(gpu_ids: list, host_gpu_ids: list):
             )
 
 
-def get_gpu_ids(user_input_gpu_ids, host_gpu_ids) -> List[int]:
+def get_gpu_ids(user_input_gpu_ids, host_gpu_ids) -> list[int]:
     if type(user_input_gpu_ids) == int and user_input_gpu_ids == -1:
         gpu_ids = host_gpu_ids
     else:
@@ -616,7 +616,7 @@ def get_service_list(cmd_args):
     return services_list
 
 
-def _start_poc(poc_workspace: str, gpu_ids: List[int], excluded=None, services_list=None):
+def _start_poc(poc_workspace: str, gpu_ids: list[int], excluded=None, services_list=None):
     project_config, service_config = setup_service_config(poc_workspace)
     if services_list is None:
         services_list = []
@@ -640,7 +640,7 @@ def _start_poc(poc_workspace: str, gpu_ids: List[int], excluded=None, services_l
     )
 
 
-def validate_services(project_config, services_list: List, excluded: List):
+def validate_services(project_config, services_list: list, excluded: list):
     participant_names = [p["name"] for p in project_config["participants"]]
     validate_participants(participant_names, services_list)
     validate_participants(participant_names, excluded)
@@ -653,7 +653,7 @@ def validate_participants(participant_names, list_participants):
             exit(1)
 
 
-def setup_service_config(poc_workspace) -> Tuple:
+def setup_service_config(poc_workspace) -> tuple:
     project_file = os.path.join(poc_workspace, "project.yml")
     if os.path.isfile(project_file):
         project_config = load_yaml(project_file)
@@ -683,7 +683,7 @@ def _stop_poc(poc_workspace: str, excluded=None, services_list=None):
     validate_services(project_config, services_list, excluded)
 
     validate_poc_workspace(poc_workspace, service_config, project_config)
-    gpu_ids: List[int] = []
+    gpu_ids: list[int] = []
     project_name = project_config.get("name")
     prod_dir = get_prod_dir(poc_workspace, project_name)
 
@@ -705,7 +705,7 @@ def _stop_poc(poc_workspace: str, excluded=None, services_list=None):
     )
 
 
-def _get_clients(service_commands: list, service_config) -> List[str]:
+def _get_clients(service_commands: list, service_config) -> list[str]:
     clients = [
         service_dir_name
         for service_dir_name, _ in service_commands
@@ -759,7 +759,7 @@ def _build_commands(
     return _sort_service_cmds(cmd_type, service_commands, service_config)
 
 
-def prepare_env(service_name, gpu_ids: Optional[List[int]], service_config: Dict):
+def prepare_env(service_name, gpu_ids: Optional[list[int]], service_config: dict):
     import os
 
     my_env = None
@@ -779,7 +779,7 @@ def prepare_env(service_name, gpu_ids: Optional[List[int]], service_config: Dict
     return my_env
 
 
-def async_process(service_name, cmd_path, gpu_ids: Optional[List[int]], service_config: Dict):
+def async_process(service_name, cmd_path, gpu_ids: Optional[list[int]], service_config: dict):
     my_env = prepare_env(service_name, gpu_ids, service_config)
     if my_env:
         subprocess.Popen(cmd_path.split(" "), env=my_env)
@@ -795,9 +795,9 @@ def sync_process(service_name, cmd_path):
 def _run_poc(
     cmd_type: str,
     poc_workspace: str,
-    gpu_ids: List[int],
-    service_config: Dict,
-    project_config: Dict,
+    gpu_ids: list[int],
+    service_config: dict,
+    project_config: dict,
     excluded: list,
     services_list=None,
 ):
@@ -805,7 +805,7 @@ def _run_poc(
         services_list = []
     service_commands = _build_commands(cmd_type, poc_workspace, service_config, project_config, excluded, services_list)
     clients = _get_clients(service_commands, service_config)
-    gpu_assignments: Dict[str, List[int]] = client_gpu_assignments(clients, gpu_ids)
+    gpu_assignments: dict[str, list[int]] = client_gpu_assignments(clients, gpu_ids)
     for service_name, cmd_path in service_commands:
         if service_name == service_config[SC.FLARE_PROJ_ADMIN]:
             # give other commands a chance to start first

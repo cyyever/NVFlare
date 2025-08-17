@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import Union, Optional
 
 import numpy as np
 
@@ -23,7 +23,7 @@ from nvflare.apis.shareable import Shareable
 
 
 class PercentilePrivacy(DXOFilter):
-    def __init__(self, percentile=10, gamma=0.01, data_kinds: List[str] = None):
+    def __init__(self, percentile=10, gamma=0.01, data_kinds: Optional[list[str]] = None):
         """Implementation of "largest percentile to share" privacy preserving policy.
 
         Shokri and Shmatikov, Privacy-preserving deep learning, CCS '15

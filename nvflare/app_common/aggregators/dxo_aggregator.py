@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from nvflare.apis.dxo import DXO, DataKind, MetaKey
 from nvflare.apis.fl_component import FLComponent
@@ -26,7 +26,7 @@ class DXOAggregator(FLComponent):
     def __init__(
         self,
         exclude_vars: Optional[str] = None,
-        aggregation_weights: Optional[Dict[str, Any]] = None,
+        aggregation_weights: Optional[dict[str, Any]] = None,
         expected_data_kind: DataKind = DataKind.WEIGHT_DIFF,
         name_postfix: str = "",
         weigh_by_local_iter: bool = True,

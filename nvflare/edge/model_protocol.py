@@ -34,7 +34,7 @@ Example:
 """
 
 import logging
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.apis.dxo import DXO
 
@@ -128,7 +128,7 @@ def verify_payload(
     expected_type: Optional[str] = None,
     expected_format: Optional[str] = None,
     expected_encoding: Optional[str] = None,
-) -> Dict:
+) -> dict:
     """Verify that the task data payload follows the model exchange protocol.
 
     Args:

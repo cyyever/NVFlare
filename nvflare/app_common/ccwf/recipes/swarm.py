@@ -18,6 +18,7 @@ from nvflare.app_common.ccwf.comps.simple_model_shareable_generator import Simpl
 from nvflare.app_opt.pt.file_model_persistor import PTFileModelPersistor
 from nvflare.job_config.script_runner import ScriptRunner
 from nvflare.recipe.spec import Recipe
+from typing import Optional
 
 
 class BaseSwarmLearningRecipe(Recipe):
@@ -46,7 +47,7 @@ class SimpleSwarmLearningRecipe(BaseSwarmLearningRecipe):
         initial_model,
         num_rounds: int,
         train_script: str,
-        train_args: dict = None,
+        train_args: Optional[dict] = None,
         do_cross_site_eval: bool = False,
         cross_site_eval_timeout: float = 300,
     ):

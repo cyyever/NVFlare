@@ -13,7 +13,7 @@
 # limitations under the License.
 import logging
 import threading
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.fuel.f3.endpoint import Endpoint
 from nvflare.fuel.f3.sfm.sfm_conn import SfmConnection
@@ -32,7 +32,7 @@ class SfmEndpoint:
         self.endpoint = endpoint
         self.stream_id: int = RESERVED_STREAM_ID
         self.lock = threading.Lock()
-        self.connections: List[SfmConnection] = []
+        self.connections: list[SfmConnection] = []
 
     def add_connection(self, sfm_conn: SfmConnection):
 

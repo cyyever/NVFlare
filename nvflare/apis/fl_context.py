@@ -13,7 +13,7 @@
 # limitations under the License.
 import copy
 import threading
-from typing import Any, Dict, List
+from typing import Any
 
 from nvflare.fuel.utils.log_utils import get_obj_logger
 
@@ -75,13 +75,13 @@ class FLContext(object):
         self.props = {}
         self.logger = get_obj_logger(self)
 
-    def get_prop_keys(self) -> List[str]:
+    def get_prop_keys(self) -> list[str]:
         return list(self.props.keys())
 
     def public_key_exists(self, key) -> bool:
         return key in self.props and not is_private(self.props[key][M])
 
-    def get_all_public_props(self) -> Dict[str, Any]:
+    def get_all_public_props(self) -> dict[str, Any]:
         result = {}
         with _update_lock:
             for k, v in self.props.items():

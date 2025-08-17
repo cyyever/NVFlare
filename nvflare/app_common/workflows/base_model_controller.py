@@ -15,7 +15,7 @@
 import gc
 import random
 from abc import ABC, abstractmethod
-from typing import Callable, List, Union
+from typing import Callable, Union, Optional
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, OperatorMethod, Task, TaskOperatorKey
@@ -102,13 +102,13 @@ class BaseModelController(Controller, FLComponentWrapper, ABC):
         self,
         data,
         task_name: str = AppConstants.TASK_TRAIN,
-        targets: Union[List[Client], List[str], None] = None,
-        min_responses: int = None,
+        targets: Union[list[Client], list[str], None] = None,
+        min_responses: Optional[int] = None,
         timeout: int = 0,
         wait_time_after_min_received: int = 0,
         blocking: bool = True,
-        callback: Callable[[FLModel], None] = None,
-    ) -> List:
+        callback: Optional[Callable[[FLModel], None]] = None,
+    ) -> list:
         """Send a task with data to a list of targets.
 
         Args:
@@ -354,7 +354,7 @@ class BaseModelController(Controller, FLComponentWrapper, ABC):
         else:
             self.error("persistor not configured, model will not be saved")
 
-    def sample_clients(self, num_clients: int = None) -> List[str]:
+    def sample_clients(self, num_clients: Optional[int] = None) -> list[str]:
         clients = [client.name for client in self.engine.get_clients()]
 
         if num_clients:

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import time
-from typing import Dict
 
 import numpy as np
 
@@ -144,7 +143,7 @@ class BuffModelManager(ModelManager):
         fl_ctx.set_prop(AppConstants.CURRENT_ROUND, self.current_model_version, private=True, sticky=True)
         self.fire_event(AppEventType.GLOBAL_WEIGHTS_UPDATED, fl_ctx)
 
-    def process_updates(self, model_updates: Dict[int, ModelUpdate], fl_ctx: FLContext) -> bool:
+    def process_updates(self, model_updates: dict[int, ModelUpdate], fl_ctx: FLContext) -> bool:
         accepted = True
         for model_version, model_update in model_updates.items():
             if model_version <= 0:

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.fl_constant import FLMetaKey
 from nvflare.fuel.utils.validation_utils import check_non_negative_int, check_object_type
@@ -45,11 +45,11 @@ class FLModel:
         params_type: Union[None, str, ParamsType] = None,
         params: Any = None,
         optimizer_params: Any = None,
-        metrics: Optional[Dict] = None,
+        metrics: Optional[dict] = None,
         start_round: Optional[int] = 0,
         current_round: Optional[int] = None,
         total_rounds: Optional[int] = None,
-        meta: Optional[Dict] = None,
+        meta: Optional[dict] = None,
     ):
         """FLModel is a standardize data structure for NVFlare to communicate with external systems.
 
@@ -101,7 +101,7 @@ class FLModel:
         self.meta = meta
         self._summary: dict = {}
 
-    def _add_to_summary(self, kvs: Dict):
+    def _add_to_summary(self, kvs: dict):
         for key, value in kvs.items():
             if value:
                 if isinstance(value, dict):

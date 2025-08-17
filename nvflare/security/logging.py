@@ -16,6 +16,7 @@ import logging
 import os
 import sys
 import traceback
+from typing import Optional
 
 SECURE_LOGGING_VAR_NAME = "NVFLARE_SECURE_LOGGING"
 
@@ -96,7 +97,7 @@ def secure_format_traceback() -> str:
         return traceback.format_exc()
 
 
-def secure_log_traceback(logger: logging.Logger = None):
+def secure_log_traceback(logger: Optional[logging.Logger] = None):
     """Logs the traceback.
 
     If secure mode is set, the traceback only includes file names, line numbers and func names;

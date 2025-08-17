@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import json
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.fuel.utils.config import Config, ConfigFormat, ConfigLoader
 from nvflare.fuel.utils.log_utils import get_obj_logger
@@ -21,13 +21,13 @@ from nvflare.security.logging import secure_format_exception
 
 
 class JsonConfig(Config):
-    def __init__(self, conf: Dict, file_path: Optional[str] = None):
+    def __init__(self, conf: dict, file_path: Optional[str] = None):
         super(JsonConfig, self).__init__(conf, ConfigFormat.JSON, file_path)
 
-    def to_dict(self, resolve: Optional[bool] = True) -> Dict:
+    def to_dict(self, resolve: Optional[bool] = True) -> dict:
         return self.conf
 
-    def to_str(self, element: Optional[Dict] = None) -> str:
+    def to_str(self, element: Optional[dict] = None) -> str:
         if element is None:
             return json.dumps(self.conf)
         else:
@@ -54,7 +54,7 @@ class JsonConfigLoader(ConfigLoader):
     def load_config_from_dict(self, config_dict: dict) -> Config:
         return JsonConfig(config_dict)
 
-    def _from_file(self, path) -> Dict:
+    def _from_file(self, path) -> dict:
         with open(path, "r") as file:
             try:
                 return json.load(file)

@@ -11,13 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 from nvflare.apis.client import Client
 from nvflare.fuel.utils.tree_utils import build_forest
 
 
-def build_client_hierarchy(clients: List[Client]):
+def build_client_hierarchy(clients: list[Client]):
     """Build client hierarchy from a list of clients based on their FQSNs.
 
     Args:

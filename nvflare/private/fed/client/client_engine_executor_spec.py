@@ -14,7 +14,7 @@
 
 import time
 from abc import ABC, abstractmethod
-from typing import Dict, List, Union
+from typing import Union
 
 from nvflare.apis.client_engine_spec import ClientEngineSpec
 from nvflare.apis.engine_spec import EngineSpec
@@ -87,7 +87,7 @@ class ClientEngineExecutorSpec(ClientEngineSpec, EngineSpec, ABC):
     @abstractmethod
     def send_aux_request(
         self,
-        targets: Union[None, str, List[str]],
+        targets: Union[None, str, list[str]],
         topic: str,
         request: Shareable,
         timeout: float,
@@ -119,7 +119,7 @@ class ClientEngineExecutorSpec(ClientEngineSpec, EngineSpec, ABC):
     def multicast_aux_requests(
         self,
         topic: str,
-        target_requests: Dict[str, Shareable],
+        target_requests: dict[str, Shareable],
         timeout: float,
         fl_ctx: FLContext,
         optional: bool = False,

@@ -13,7 +13,7 @@
 # limitations under the License.
 import json
 import os.path
-from typing import Tuple, Union
+from typing import Union, Optional
 
 from nvflare.apis.fl_constant import ConnectionSecurity
 from nvflare.edge.constants import EdgeApiStatus
@@ -46,7 +46,7 @@ from .utils import (
 
 class Query:
 
-    def __init__(self, lcp_mapping_file: str = None, ca_cert_file: str = None):
+    def __init__(self, lcp_mapping_file: Optional[str] = None, ca_cert_file: Optional[str] = None):
         ssl_credentials = None
         if ca_cert_file:
             if not os.path.isfile(ca_cert_file):
@@ -68,7 +68,7 @@ class Query:
     def _add_lcp(self, name: str, addr: str):
         self.lcp_list.append((name, addr))
 
-    def _map(self, device_id: str) -> Tuple[str, str]:
+    def _map(self, device_id: str) -> tuple[str, str]:
         uniform_hash = UniformHash(len(self.lcp_list))
         index = uniform_hash.hash(device_id)
         return self.lcp_list[index]

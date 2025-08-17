@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple
 
 import nvflare.app_opt.xgboost.histogram_based_v2.proto.federated_pb2 as pb2
 from nvflare.apis.fl_context import FLContext
@@ -80,7 +79,7 @@ class GrpcServerAdaptor(XGBServerAdaptor):
         self._server_stopped = True
         self.stop_runner()
 
-    def _is_stopped(self) -> Tuple[bool, int]:
+    def _is_stopped(self) -> tuple[bool, int]:
         runner_stopped, ec = self.is_runner_stopped()
         if runner_stopped:
             return runner_stopped, ec

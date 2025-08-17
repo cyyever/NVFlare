@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-from typing import List
 
 from nvflare.apis.fl_constant import FLContextKey
 from nvflare.apis.fl_context import FLContext
@@ -40,7 +39,7 @@ class FilePSIWriter(PSIWriter):
 
     def save(
         self,
-        intersection: List[str],
+        intersection: list[str],
         overwrite_existing,
         fl_ctx: FLContext,
     ):

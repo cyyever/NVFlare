@@ -17,7 +17,7 @@ import json
 import os
 import re
 import sys
-from typing import Any, Type
+from typing import Any, Optional
 
 from nvflare.edge.simulation.device_task_processor import DeviceTaskProcessor
 from nvflare.fuel.utils.validation_utils import check_positive_int, check_positive_number, check_str
@@ -25,7 +25,7 @@ from nvflare.fuel.utils.validation_utils import check_positive_int, check_positi
 VAR_PATTERN = re.compile(r"\{(.*?)}")
 
 
-def load_class(class_path) -> Type:
+def load_class(class_path) -> type:
 
     try:
         if "." in class_path:
@@ -50,7 +50,7 @@ class ConfigParser:
         self.processor_args = None
         self.parse(config_file)
 
-    def get_processor(self, variables: dict = None) -> DeviceTaskProcessor:
+    def get_processor(self, variables: Optional[dict] = None) -> DeviceTaskProcessor:
 
         if self.processor_args:
             args = self._variable_substitution(self.processor_args, variables)

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import copy
-from typing import List, Union
+from typing import Union, Optional
 
 from nvflare.apis.fl_constant import FLMetaKey
 from nvflare.apis.shareable import ReservedHeaderKey, Shareable
@@ -43,7 +43,7 @@ _KEY_DXO = "DXO"
 
 
 class DXO(object):
-    def __init__(self, data_kind: str, data: dict, meta: dict = None):
+    def __init__(self, data_kind: str, data: dict, meta: Optional[dict] = None):
         """Init the DXO.
 
         The Data Exchange Object standardizes the data passed between communicating parties.
@@ -76,7 +76,7 @@ class DXO(object):
             self.meta = {}
         self.meta[key] = value
 
-    def remove_meta_props(self, keys: List[str]):
+    def remove_meta_props(self, keys: list[str]):
         if self.meta and keys:
             for k in keys:
                 self.meta.pop(k, None)
@@ -137,7 +137,7 @@ class DXO(object):
 
         return ""
 
-    def add_filter_history(self, filter_name: Union[str, List[str]]):
+    def add_filter_history(self, filter_name: Union[str, list[str]]):
         if not filter_name:
             return
         hist = self.get_meta_prop(MetaKey.FILTER_HISTORY)

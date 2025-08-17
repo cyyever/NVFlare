@@ -14,7 +14,6 @@
 
 import json
 import time
-from typing import List
 
 from nvflare.apis.client import Client
 from nvflare.apis.fl_constant import AdminCommandNames, ReservedTopic, SiteType
@@ -132,7 +131,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
 
         return result
 
-    def shutdown(self, conn: Connection, args: List[str]):
+    def shutdown(self, conn: Connection, args: list[str]):
         target_type = args[1]
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngine):
@@ -179,7 +178,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
         conn.append_success("")
 
     # Remove Clients
-    def remove_client(self, conn: Connection, args: List[str]):
+    def remove_client(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngineInternalSpec):
             raise TypeError("engine must be ServerEngineInternalSpec but got {}".format(type(engine)))
@@ -200,7 +199,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
         # engine.remove_clients(clients)
         return self._process_replies_to_string(conn, replies)
 
-    def restart(self, conn: Connection, args: List[str]):
+    def restart(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngine):
             raise TypeError("engine must be ServerEngine but got {}".format(type(engine)))
@@ -246,7 +245,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
         conn.append_success("")
 
     # Check status
-    def check_status(self, conn: Connection, args: List[str]):
+    def check_status(self, conn: Connection, args: list[str]):
         # TODO:: Need more discussion on what status to be shown
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngineInternalSpec):
@@ -353,7 +352,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
                     meta={MetaKey.CLIENT_NAME: client_name, MetaKey.STATUS: MetaStatusValue.NO_REPLY},
                 )
 
-    def _add_scope_info(self, table, site_name, scope_names: List[str], default_scope: str):
+    def _add_scope_info(self, table, site_name, scope_names: list[str], default_scope: str):
         if not scope_names:
             names = ""
         else:
@@ -388,7 +387,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
             else:
                 self._add_scope_info(table, client_name, [], "no reply")
 
-    def show_scopes(self, conn: Connection, args: List[str]):
+    def show_scopes(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngineInternalSpec):
             raise TypeError("engine must be ServerEngineInternalSpec but got {}".format(type(engine)))

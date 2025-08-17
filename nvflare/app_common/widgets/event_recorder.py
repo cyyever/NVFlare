@@ -14,7 +14,6 @@
 
 import logging
 import os
-from typing import Dict
 
 from nvflare.apis.client_engine_spec import ClientEngineSpec
 from nvflare.apis.event_type import EventType
@@ -52,8 +51,8 @@ class _EventReq(object):
 
     def __init__(
         self,
-        ctx_reqs: Dict[str, _CtxPropReq],
-        peer_ctx_reqs: Dict[str, _CtxPropReq],
+        ctx_reqs: dict[str, _CtxPropReq],
+        peer_ctx_reqs: dict[str, _CtxPropReq],
         ctx_block_list: [str] = None,
         peer_ctx_block_list: [str] = None,
     ):

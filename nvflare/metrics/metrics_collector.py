@@ -15,7 +15,6 @@
 
 import time
 from abc import ABC, abstractmethod
-from typing import Dict, List
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_context import FLContext
@@ -39,11 +38,11 @@ class MetricsCollector(FLComponent, ABC):
         self.event_start_time = {}
 
     @abstractmethod
-    def get_single_events() -> List[str]:
+    def get_single_events() -> list[str]:
         pass
 
     @abstractmethod
-    def get_pair_events() -> Dict:
+    def get_pair_events() -> dict:
         pass
 
     def collect_event_metrics(self, event: str, tags, fl_ctx: FLContext):

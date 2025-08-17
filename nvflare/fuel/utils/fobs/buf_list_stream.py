@@ -12,10 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from nvflare.fuel.utils.buffer_list import BufferList
+from typing import Optional
 
 
 class BufListStream:
-    def __init__(self, buf_list: list = None):
+    def __init__(self, buf_list: Optional[list] = None):
         self.buffer_list = BufferList(buf_list)
         self.pos = 0
         self.size = self.buffer_list.get_size()

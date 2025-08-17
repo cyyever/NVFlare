@@ -17,7 +17,7 @@ import time
 import uuid
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
 from nvflare.apis.signal import Signal
 
@@ -70,7 +70,7 @@ class Task(object):
         self,
         name: str,
         data: Shareable,
-        props: Optional[Dict] = None,
+        props: Optional[dict] = None,
         timeout: int = 0,
         before_task_sent_cb=None,
         after_task_sent_cb=None,
@@ -320,7 +320,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
     ):
@@ -364,7 +364,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
         abort_signal: Signal = None,
@@ -391,7 +391,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
     ):
         """Schedule a broadcast task that never ends until timeout or explicitly cancelled.
 
@@ -412,7 +412,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
     ):
@@ -444,7 +444,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         abort_signal: Signal = None,
@@ -470,7 +470,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -496,7 +496,7 @@ class ControllerSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order=SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,

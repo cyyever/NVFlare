@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Optional
+from typing import Optional
 
 from .fl_context import FLContext
 from .job_def import Job
@@ -42,8 +42,8 @@ class DispatchInfo:
 class JobSchedulerSpec(ABC):
     @abstractmethod
     def schedule_job(
-        self, job_manager: JobDefManagerSpec, job_candidates: List[Job], fl_ctx: FLContext
-    ) -> (Optional[Job], Optional[Dict[str, DispatchInfo]]):
+        self, job_manager: JobDefManagerSpec, job_candidates: list[Job], fl_ctx: FLContext
+    ) -> (Optional[Job], Optional[dict[str, DispatchInfo]]):
         """Try to schedule a Job.
 
         Args:

@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import uuid
-from typing import List
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_constant import EventScope, FLContextKey
@@ -24,7 +23,7 @@ _KEY_EVENT_DEPTH = "###event_depth"
 _MAX_EVENT_DEPTH = 20
 
 
-def fire_event_to_components(event: str, components: List[FLComponent], ctx: FLContext):
+def fire_event_to_components(event: str, components: list[FLComponent], ctx: FLContext):
     """Fires the specified event and invokes the list of handlers.
 
     Args:

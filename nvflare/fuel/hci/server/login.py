@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import traceback
-from typing import List
 
 from nvflare.fuel.f3.cellnet.defs import MessageHeaderKey
 from nvflare.fuel.f3.message import Message as CellMessage
@@ -66,7 +65,7 @@ class LoginModule(CommandModule, CommandFilter):
             ],
         )
 
-    def handle_cert_login(self, conn: Connection, args: List[str]):
+    def handle_cert_login(self, conn: Connection, args: list[str]):
         if len(args) != 2:
             conn.append_string("REJECT")
             return
@@ -118,14 +117,14 @@ class LoginModule(CommandModule, CommandFilter):
         conn.append_string("OK")
         conn.append_token(token)
 
-    def handle_logout(self, conn: Connection, args: List[str]):
+    def handle_logout(self, conn: Connection, args: list[str]):
         if self.session_mgr:
             token = conn.get_prop(ConnProps.TOKEN)
             if token:
                 self.session_mgr.end_session_by_token(token)
         conn.append_string("OK")
 
-    def pre_command(self, conn: Connection, args: List[str]):
+    def pre_command(self, conn: Connection, args: list[str]):
         if args[0] in [InternalCommands.CERT_LOGIN, InternalCommands.CHECK_SESSION]:
             # skip login and check session commands
             return True

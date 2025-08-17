@@ -15,6 +15,7 @@ from nvflare.edge.constants import EdgeApiStatus
 from nvflare.edge.web.models.base_model import BaseModel, EdgeProtoKey
 from nvflare.edge.web.models.device_info import DeviceInfo
 from nvflare.edge.web.models.user_info import UserInfo
+from typing import Optional
 
 
 class ResultReport(BaseModel):
@@ -24,10 +25,10 @@ class ResultReport(BaseModel):
         user_info: UserInfo,
         job_id: str,
         task_id: str,
-        task_name: str = None,
+        task_name: Optional[str] = None,
         status: str = EdgeApiStatus.OK,
-        result: dict = None,
-        cookie: dict = None,
+        result: Optional[dict] = None,
+        cookie: Optional[dict] = None,
         **kwargs,
     ):
         super().__init__()

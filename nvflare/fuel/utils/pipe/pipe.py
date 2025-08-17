@@ -15,7 +15,7 @@
 import re
 import uuid
 from abc import ABC, abstractmethod
-from typing import Any, Tuple, Union
+from typing import Any, Union
 
 from nvflare.fuel.utils.attributes_exportable import AttributesExportable, ExportMode
 from nvflare.fuel.utils.constants import Mode
@@ -184,7 +184,7 @@ class Pipe(AttributesExportable, ABC):
         """
         return 0
 
-    def export(self, export_mode: str) -> Tuple[str, dict]:
+    def export(self, export_mode: str) -> tuple[str, dict]:
         if export_mode == ExportMode.SELF:
             mode = self.mode
         else:

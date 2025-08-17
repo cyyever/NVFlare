@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os.path
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, model_validator
 
@@ -26,7 +26,7 @@ WORKSPACE_ROOT = "/tmp/nvflare/simulation"
 # Internal — not part of the public API
 class _SimEnvValidator(BaseModel):
     num_clients: int  # num_clients is always an integer
-    clients: Optional[List[str]] = None
+    clients: Optional[list[str]] = None
     num_threads: int
     gpu_config: Optional[str] = None
     log_config: Optional[str] = None
@@ -54,10 +54,10 @@ class SimEnv(ExecEnv):
         self,
         *,
         num_clients: int = 0,
-        clients: Optional[List[str]] = None,
+        clients: Optional[list[str]] = None,
         num_threads: int = 0,
-        gpu_config: str = None,
-        log_config: str = None,
+        gpu_config: Optional[str] = None,
+        log_config: Optional[str] = None,
     ):
         """Initialize simulation execution environment.
 

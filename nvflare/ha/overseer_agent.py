@@ -14,7 +14,7 @@
 
 import threading
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from requests import Request, RequestException, Response, Session, codes
 from requests.adapters import HTTPAdapter
@@ -61,7 +61,7 @@ class HttpOverseerAgent(OverseerAgent):
         self._heartbeat_interval = heartbeat_interval
 
     def _send(
-        self, api_point, headers: Optional[Dict[str, Any]] = None, payload: Optional[Dict[str, Any]] = None
+        self, api_point, headers: Optional[dict[str, Any]] = None, payload: Optional[dict[str, Any]] = None
     ) -> Response:
         try_count = 0
         while not self._asked_to_stop_retrying:

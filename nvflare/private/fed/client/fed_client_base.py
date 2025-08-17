@@ -14,7 +14,7 @@
 
 import threading
 import time
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.filter import Filter
 from nvflare.apis.fl_component import FLComponent
@@ -51,8 +51,8 @@ class FederatedClientBase:
         secure_train,
         server_args=None,
         retry_timeout=30,
-        client_state_processors: Optional[List[Filter]] = None,
-        handlers: Optional[List[FLComponent]] = None,
+        client_state_processors: Optional[list[Filter]] = None,
+        handlers: Optional[list[FLComponent]] = None,
         compression=None,
         overseer_agent=None,
         args=None,

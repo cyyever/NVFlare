@@ -14,7 +14,7 @@
 import os.path
 import tempfile
 import uuid
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 from nvflare.fuel.f3.cellnet.cell import Cell
 from nvflare.fuel.f3.streaming.obj_downloader import Consumer, ObjDownloader, Producer, ProduceRC, download_object
@@ -112,7 +112,7 @@ class FileDownloader(ObjDownloader):
         )
 
     @classmethod
-    def _tx_timeout(cls, tx_id: str, objs: List[Any], app_timeout_cb, **cb_kwargs):
+    def _tx_timeout(cls, tx_id: str, objs: list[Any], app_timeout_cb, **cb_kwargs):
         if app_timeout_cb:
             file_names = [obj.name for obj in objs]
             app_timeout_cb(tx_id, file_names, **cb_kwargs)
@@ -164,7 +164,7 @@ class FileDownloader(ObjDownloader):
         ref_id: str,
         per_request_timeout: float,
         cell: Cell,
-        location: str = None,
+        location: Optional[str] = None,
         secure=False,
         optional=False,
         abort_signal=None,
@@ -241,7 +241,7 @@ def download_file(
     ref_id: str,
     per_request_timeout: float,
     cell: Cell,
-    location: str = None,
+    location: Optional[str] = None,
     secure=False,
     optional=False,
     abort_signal=None,

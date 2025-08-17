@@ -14,7 +14,7 @@
 
 import os
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from nvflare.apis.analytix import AnalyticsDataType
 from nvflare.apis.fl_constant import FLMetaKey
@@ -63,7 +63,7 @@ class InProcessClientAPI(APISpec):
         self.rank = None
         self.receive_called = False  # to check if users have call received for a new model
 
-    def init(self, rank: Optional[str] = None, config: Optional[Dict] = None):
+    def init(self, rank: Optional[str] = None, config: Optional[dict] = None):
         """Initializes NVFlare Client API environment.
 
         Args:
@@ -139,10 +139,10 @@ class InProcessClientAPI(APISpec):
             self.fl_model = None
             self.receive_called = False
 
-    def system_info(self) -> Dict:
+    def system_info(self) -> dict:
         return self.sys_info
 
-    def get_config(self) -> Dict:
+    def get_config(self) -> dict:
         return self.client_config.get_config()
 
     def get_job_id(self) -> str:

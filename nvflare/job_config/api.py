@@ -14,7 +14,7 @@
 import os.path
 import re
 import uuid
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.executor import Executor
 from nvflare.apis.filter import Filter
@@ -47,10 +47,10 @@ class FedApp:
     def get_app_config(self):
         return self.app_config
 
-    def add_task_result_filter(self, tasks: List[str], task_filter: Filter):
+    def add_task_result_filter(self, tasks: list[str], task_filter: Filter):
         self.app_config.add_task_result_filter(tasks, task_filter)
 
-    def add_task_data_filter(self, tasks: List[str], task_filter: Filter):
+    def add_task_data_filter(self, tasks: list[str], task_filter: Filter):
         self.app_config.add_task_data_filter(tasks, task_filter)
 
     def add_component(self, component, comp_id=None):
@@ -106,7 +106,7 @@ class FedApp:
     def add_file_source(self, src_path: str, dest_dir=None, app_folder_type=None):
         self.app_config.add_file_source(src_path, dest_dir, app_folder_type)
 
-    def add_params(self, args: Dict[str, any]):
+    def add_params(self, args: dict[str, any]):
         """Add additional system configuration parameters to be included in the generated JSON configs.
 
         Args:
@@ -124,7 +124,7 @@ class FedApp:
         else:
             raise ValueError(f"cannot add resource: invalid resource {resource}: it must be either a directory or file")
 
-    def add_resources(self, resources: List[str]):
+    def add_resources(self, resources: list[str]):
         """Add resources to the job. To be used by job component programmer.
 
         Args:
@@ -172,8 +172,8 @@ class FedJob:
         self,
         name: str = "fed_job",
         min_clients: int = 1,
-        mandatory_clients: Optional[List[str]] = None,
-        meta_props: Optional[Dict[str, Any]] = None,
+        mandatory_clients: Optional[list[str]] = None,
+        meta_props: Optional[dict[str, Any]] = None,
     ) -> None:
         """FedJob allows users to generate job configurations in a Pythonic way.
         The `to()` routine allows users to send different components to either the server or clients.
@@ -203,7 +203,7 @@ class FedJob:
         self._deployed = False
         self._components = {}
 
-    def set_app_packages(self, app_packages: List[str]):
+    def set_app_packages(self, app_packages: list[str]):
         """Set app packages.
         When generating job config, code from these packages will not be included into "custom" folder.
 
@@ -383,7 +383,7 @@ class FedJob:
         else:
             app.add_controller(obj, ctx.comp_id)
 
-    def add_executor(self, obj: Executor, tasks: List[str], ctx: JobCtx):
+    def add_executor(self, obj: Executor, tasks: list[str], ctx: JobCtx):
         """Add an executor to the job. To be used by executor programmer.
 
         Args:
@@ -420,7 +420,7 @@ class FedJob:
                 f"Select from `FilterType.TASK_RESULT` or `FilterType.TASK_DATA`."
             )
 
-    def add_resources(self, resources: List[str], ctx: JobCtx):
+    def add_resources(self, resources: list[str], ctx: JobCtx):
         """Add resources to the job. To be used by job component programmer.
 
         Args:
@@ -448,7 +448,7 @@ class FedJob:
         app = self._get_app(ctx)
         app.add_file_source(src_path, dest_dir, app_folder_type)
 
-    def add_params(self, args: Dict[str, any], ctx: JobCtx):
+    def add_params(self, args: dict[str, any], ctx: JobCtx):
         """Add additional system configuration parameters to the job. To be used by job component programmer.
 
         Args:
@@ -575,7 +575,7 @@ class FedJob:
         self,
         workspace: str,
         n_clients: Optional[int] = None,
-        clients: Optional[List[str]] = None,
+        clients: Optional[list[str]] = None,
         threads: Optional[int] = None,
         gpu: Optional[str] = None,
         log_config: Optional[str] = None,

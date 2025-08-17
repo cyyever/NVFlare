@@ -15,7 +15,7 @@
    Federated Averaging for Logistic Regression with Newton-Raphson method
    using Numpy
 """
-from typing import List, Optional
+from typing import Optional
 
 import numpy as np
 
@@ -130,7 +130,7 @@ class FedAvgLR(BaseFedAvg):
 
         self.info("Finished FedAvg.")
 
-    def newton_raphson_aggregator_fn(self, results: List[FLModel]):
+    def newton_raphson_aggregator_fn(self, results: list[FLModel]):
         """
         Custom aggregator function for second order Newton-Raphson
         optimization.

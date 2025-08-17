@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-from typing import Dict, Tuple
 
 from nvflare.apis.app_validation import AppValidationKey, AppValidator
 from nvflare.apis.fl_constant import JobConstants, SiteType, WorkspaceConstants
@@ -38,7 +37,7 @@ class DefaultAppValidator(AppValidator):
         self._site_type = site_type
         self._config_folder = config_folder
 
-    def validate(self, app_folder: str) -> Tuple[str, Dict]:
+    def validate(self, app_folder: str) -> tuple[str, dict]:
         result = dict()
         app_root = os.path.abspath(app_folder)
         if not os.path.exists(os.path.join(app_root, self._config_folder)):

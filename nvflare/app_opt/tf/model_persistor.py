@@ -21,10 +21,11 @@ from nvflare.apis.fl_context import FLContext
 from nvflare.app_common.abstract.model import ModelLearnable, ModelLearnableKey, make_model_learnable
 from nvflare.app_common.abstract.model_persistor import ModelPersistor
 from nvflare.app_opt.tf.utils import flat_layer_weights_dict, unflat_layer_weights_dict
+from typing import Optional
 
 
 class TFModelPersistor(ModelPersistor):
-    def __init__(self, model: tf.keras.Model, save_name="tf_model.weights.h5", filter_id: str = None):
+    def __init__(self, model: tf.keras.Model, save_name="tf_model.weights.h5", filter_id: Optional[str] = None):
         super().__init__(
             filter_id=filter_id,
         )

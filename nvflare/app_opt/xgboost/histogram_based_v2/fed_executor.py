@@ -19,6 +19,7 @@ from nvflare.app_opt.xgboost.histogram_based_v2.runners.xgb_client_runner import
 
 from .executor import XGBExecutor
 from .sec.client_handler import ClientSecurityHandler
+from typing import Optional
 
 
 class FedXGBHistogramExecutor(XGBExecutor):
@@ -28,7 +29,7 @@ class FedXGBHistogramExecutor(XGBExecutor):
         per_msg_timeout=60.0,
         tx_timeout=600.0,
         model_file_name="model.json",
-        metrics_writer_id: str = None,
+        metrics_writer_id: Optional[str] = None,
         in_process=True,
     ):
         XGBExecutor.__init__(

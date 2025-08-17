@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 from nvflare.fuel.hci.conn import Connection
 from nvflare.fuel.sec.audit import Auditor
@@ -34,7 +33,7 @@ class CommandAudit(CommandFilter):
         assert isinstance(auditor, Auditor), "auditor must be Auditor but got {}".format(type(auditor))
         self.auditor = auditor
 
-    def pre_command(self, conn: Connection, args: List[str]):
+    def pre_command(self, conn: Connection, args: list[str]):
         user_name = conn.get_prop(ConnProps.USER_NAME, "?")
 
         event_id = self.auditor.add_event(

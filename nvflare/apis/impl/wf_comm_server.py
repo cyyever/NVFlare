@@ -14,7 +14,7 @@
 import threading
 import time
 from threading import Lock
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, SendOrder, Task, TaskCompletionStatus
@@ -49,7 +49,7 @@ def _check_positive_int(name, value):
         raise ValueError("{} must >= 0.".format(name))
 
 
-def _check_inputs(task: Task, fl_ctx: FLContext, targets: Union[List[Client], List[str], None]):
+def _check_inputs(task: Task, fl_ctx: FLContext, targets: Union[list[Client], list[str], None]):
     if not isinstance(task, Task):
         raise TypeError("task must be an instance of Task, but got {}".format(type(task)))
 
@@ -123,7 +123,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         )
         self._task_monitor.start()
 
-    def _try_again(self) -> Tuple[str, str, Optional[Shareable]]:
+    def _try_again(self) -> tuple[str, str, Optional[Shareable]]:
         # TODO: how to tell client no shareable available now?
         return "", "", None
 
@@ -165,7 +165,7 @@ class WFCommServer(FLComponent, WFCommSpec):
             else:
                 self.log_warning(fl_ctx, f"discarded dead client report {client_name=}: already on watch list")
 
-    def process_task_request(self, client: Client, fl_ctx: FLContext) -> Tuple[str, str, Shareable]:
+    def process_task_request(self, client: Client, fl_ctx: FLContext) -> tuple[str, str, Shareable]:
         """Called by runner when a client asks for a task.
 
         .. note::
@@ -187,7 +187,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         with self._controller_lock:
             return self._do_process_task_request(client, fl_ctx)
 
-    def _do_process_task_request(self, client: Client, fl_ctx: FLContext) -> Tuple[str, str, Shareable]:
+    def _do_process_task_request(self, client: Client, fl_ctx: FLContext) -> tuple[str, str, Shareable]:
         if not isinstance(client, Client):
             raise TypeError("client must be an instance of Client, but got {}".format(type(client)))
 
@@ -442,7 +442,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         task: Task,
         fl_ctx: FLContext,
         manager: TaskManager,
-        targets: Union[List[Client], List[str], None],
+        targets: Union[list[Client], list[str], None],
         allow_dup_targets: bool = False,
     ):
         if task.schedule_time is not None:
@@ -495,7 +495,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 1,
         wait_time_after_min_received: int = 0,
     ):
@@ -536,7 +536,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 1,
         wait_time_after_min_received: int = 0,
         abort_signal: Optional[Signal] = None,
@@ -568,7 +568,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         )
         self.wait_for_task(task, abort_signal)
 
-    def broadcast_forever(self, task: Task, fl_ctx: FLContext, targets: Union[List[Client], List[str], None] = None):
+    def broadcast_forever(self, task: Task, fl_ctx: FLContext, targets: Union[list[Client], list[str], None] = None):
         """Schedule a broadcast task.  This is a non-blocking call.
 
         The task is scheduled into a task list.  Clients can request tasks and controller will dispatch
@@ -590,7 +590,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
     ):
@@ -646,7 +646,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         abort_signal: Signal = None,
@@ -736,7 +736,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -819,7 +819,7 @@ class WFCommServer(FLComponent, WFCommSpec):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order=SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,

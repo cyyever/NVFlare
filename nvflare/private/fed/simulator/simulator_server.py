@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-from typing import Dict, List, Optional
+from typing import Optional
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_constant import FLContextKey, ReservedKey, ReservedTopic, ServerCommandKey, SiteType
@@ -61,7 +61,7 @@ class SimulatorServerEngine(ServerEngine):
     def multicast_aux_requests(
         self,
         topic: str,
-        target_requests: Dict[str, Shareable],
+        target_requests: dict[str, Shareable],
         timeout: float,
         fl_ctx: FLContext,
         optional: bool = False,
@@ -101,7 +101,7 @@ class SimulatorServer(FederatedServer):
         max_num_clients=10,
         cmd_modules=None,
         heart_beat_timeout=600,
-        handlers: Optional[List[FLComponent]] = None,
+        handlers: Optional[list[FLComponent]] = None,
         args=None,
         secure_train=False,
         enable_byoc=False,

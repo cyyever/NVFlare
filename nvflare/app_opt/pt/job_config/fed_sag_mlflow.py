@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List, Optional
+from typing import Optional
 
 import torch.nn as nn
 
@@ -32,7 +32,7 @@ class SAGMLFlowJob(BaseFedJob):
         num_rounds: int,
         name: str = "fed_job",
         min_clients: int = 1,
-        mandatory_clients: Optional[List[str]] = None,
+        mandatory_clients: Optional[list[str]] = None,
         key_metric: str = "accuracy",
         tracking_uri=None,
         kwargs=None,

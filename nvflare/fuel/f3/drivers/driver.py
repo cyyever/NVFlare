@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any
 
 from nvflare.fuel.f3.connection import Connection, ConnState
 from nvflare.fuel.f3.drivers.connector_info import ConnectorInfo
@@ -54,7 +54,7 @@ class Driver(ABC):
 
     @staticmethod
     @abstractmethod
-    def supported_transports() -> List[str]:
+    def supported_transports() -> list[str]:
         """Return a list of transports supported by this driver, for example
         ["http", "https", "ws", "wss"]
         """
@@ -62,7 +62,7 @@ class Driver(ABC):
 
     @staticmethod
     @abstractmethod
-    def capabilities() -> Dict[str, Any]:
+    def capabilities() -> dict[str, Any]:
         """Return a dictionary of capabilities of the driver."""
         pass
 

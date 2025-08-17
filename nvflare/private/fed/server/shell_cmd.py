@@ -14,7 +14,6 @@
 
 import re
 import shlex
-from typing import List
 
 from nvflare.apis.fl_constant import SiteType
 from nvflare.fuel.hci.cmd_arg_utils import join_args, validate_text_file_name
@@ -44,7 +43,7 @@ class _CommandExecutor(object):
         self.cmd_name = cmd_name
         self.validator = validator
 
-    def authorize_command(self, conn: Connection, args: List[str]):
+    def authorize_command(self, conn: Connection, args: list[str]):
         if len(args) < 2:
             conn.append_error("syntax error: missing target")
             return PreAuthzReturnCode.ERROR
@@ -78,10 +77,10 @@ class _CommandExecutor(object):
             # client site authorization will be done by the client itself
             return PreAuthzReturnCode.OK
 
-    def validate_shell_command(self, args: List[str], parse_result) -> str:
+    def validate_shell_command(self, args: list[str], parse_result) -> str:
         return ""
 
-    def execute_command(self, conn: Connection, args: List[str]):
+    def execute_command(self, conn: Connection, args: list[str]):
         target = conn.get_prop("target_site")
         shell_cmd = conn.get_prop("shell_cmd")
         if target == SiteType.SERVER:
@@ -140,7 +139,7 @@ class _NoArgCmdExecutor(_CommandExecutor):
     def __init__(self, cmd_name: str):
         _CommandExecutor.__init__(self, cmd_name, None)
 
-    def validate_shell_command(self, args: List[str], parse_result):
+    def validate_shell_command(self, args: list[str], parse_result):
         if len(args) != 1:
             return "this command does not accept extra args"
 
@@ -161,7 +160,7 @@ class _FileCmdExecutor(_CommandExecutor):
         self.single_file_only = single_file_only
         self.file_required = file_required
 
-    def validate_shell_command(self, args: List[str], parse_result):
+    def validate_shell_command(self, args: list[str], parse_result):
         if self.file_required or parse_result.files:
             if not hasattr(parse_result, "files"):
                 return "a file is required as an argument"

@@ -13,7 +13,7 @@
 # limitations under the License.
 import threading
 import time
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.filter import Filter
@@ -53,7 +53,7 @@ class Communicator:
         self,
         client_config=None,
         secure_train=False,
-        client_state_processors: Optional[List[Filter]] = None,
+        client_state_processors: Optional[list[Filter]] = None,
         compression=None,
         cell: Cell = None,
         client_register_interval=2,

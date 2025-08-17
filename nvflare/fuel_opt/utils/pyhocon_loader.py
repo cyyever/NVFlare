@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.fuel.utils.config import Config, ConfigFormat, ConfigLoader
 
@@ -21,10 +21,10 @@ class PyhoconConfig(Config):
     def __init__(self, conf, file_path: Optional[str] = None):
         super(PyhoconConfig, self).__init__(conf, ConfigFormat.PYHOCON, file_path)
 
-    def to_dict(self, resolve: Optional[bool] = True) -> Dict:
+    def to_dict(self, resolve: Optional[bool] = True) -> dict:
         return self._convert_conf_item(self.conf)
 
-    def to_str(self, element: Optional[Dict] = None) -> str:
+    def to_str(self, element: Optional[dict] = None) -> str:
         from pyhocon import ConfigFactory as CF
         from pyhocon.converter import HOCONConverter
 

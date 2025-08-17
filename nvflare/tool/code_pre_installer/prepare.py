@@ -18,6 +18,7 @@ import shutil
 import tempfile
 from pathlib import Path
 from zipfile import ZipFile
+from typing import Optional
 
 
 def define_prepare_parser(cmd_name: str, sub_cmd):
@@ -34,7 +35,7 @@ def define_prepare_parser(cmd_name: str, sub_cmd):
     return parser
 
 
-def prepare_app_code(job_folder: Path, output_dir: Path, shared_lib: Path = None, requirements: Path = None) -> None:
+def prepare_app_code(job_folder: Path, output_dir: Path, shared_lib: Optional[Path] = None, requirements: Optional[Path] = None) -> None:
     """Package NVFLARE application code for pre-installation.
 
     Args:

@@ -18,6 +18,7 @@ from nvflare.app_opt.flower.connectors.grpc_client_connector import GrpcClientCo
 from nvflare.fuel.utils.validation_utils import check_object_type
 
 from .defs import Constant
+from typing import Optional
 
 
 class FlowerExecutor(TieExecutor):
@@ -28,7 +29,7 @@ class FlowerExecutor(TieExecutor):
         per_msg_timeout=10.0,
         tx_timeout=100.0,
         client_shutdown_timeout=5.0,
-        extra_env: dict = None,
+        extra_env: Optional[dict] = None,
     ):
         """FlowerExecutor constructor
 

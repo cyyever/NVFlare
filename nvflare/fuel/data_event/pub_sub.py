@@ -11,11 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any, Callable, List
+from typing import Any, Callable
 
 
 class EventPubSub:
-    def subscribe(self, topics: List[str], callback: Callable[[str, Any, "DataBus"], None]) -> None:
+    def subscribe(self, topics: list[str], callback: Callable[[str, Any, "DataBus"], None]) -> None:
         """
         Subscribe a callback function to one or more topics.
 
@@ -24,7 +24,7 @@ class EventPubSub:
             callback (Callable): The callback function to be called when messages are published to the subscribed topics.
         """
 
-    def publish(self, topics: List[str], datum: Any) -> None:
+    def publish(self, topics: list[str], datum: Any) -> None:
         """
         Publish a message to one or more topics, notifying all subscribed callbacks.
 

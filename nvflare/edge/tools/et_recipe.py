@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import json
-from typing import Dict
 
 from nvflare.edge.models.model import DeviceModel
 from nvflare.edge.tools.edge_recipe import (
@@ -25,6 +24,7 @@ from nvflare.edge.tools.edge_recipe import (
 )
 from nvflare.edge.tools.et_job import ETJob
 from nvflare.job_config.file_source import FileSource
+from typing import Optional
 
 _TRAINER_NAME = "trainer"
 _DEVICE_CONFIG_FILE_NAME = "device_config.json"
@@ -42,8 +42,8 @@ class ETRecipe(EdgeRecipe):
         device_manager_config: DeviceManagerConfig,
         evaluator_config: EvaluatorConfig = None,
         simulation_config: SimulationConfig = None,
-        device_training_params: Dict = None,
-        custom_source_root: str = None,
+        device_training_params: Optional[dict] = None,
+        custom_source_root: Optional[str] = None,
     ):
         self.device_model = device_model
         self.input_shape = input_shape

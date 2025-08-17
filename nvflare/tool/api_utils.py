@@ -13,7 +13,6 @@
 # limitations under the License.
 import os
 import time
-from typing import List
 
 from nvflare.fuel.flare_api.api_spec import JobNotFound, NoConnection
 from nvflare.fuel.flare_api.flare_api import Session
@@ -51,7 +50,7 @@ def shutdown_system_by_session(sess: Session, timeout_in_sec: int = 20):
     wait_for_system_shutdown(sess, timeout_in_sec=timeout_in_sec)
 
 
-def get_running_job_ids(jobs: list) -> List[str]:
+def get_running_job_ids(jobs: list) -> list[str]:
     if len(jobs) > 0:
         running_job_ids = [job for job in jobs if job["status"] == "RUNNING"]
         return running_job_ids

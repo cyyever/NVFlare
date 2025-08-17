@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import importlib
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 import torch
 import torch.nn as nn
@@ -36,8 +36,8 @@ class GlobalEvaluator(Widget):
         self,
         model_path: Union[str, nn.Module],
         eval_frequency: int = 1,
-        torchvision_dataset: Optional[Dict] = None,
-        custom_dataset: Optional[Dict] = None,
+        torchvision_dataset: Optional[dict] = None,
+        custom_dataset: Optional[dict] = None,
     ):
         """Initialize the evaluator with either a dataset path or custom dataset.
 
@@ -127,7 +127,7 @@ class GlobalEvaluator(Widget):
                 self.batch_size = len(data)
             self.data_loader = torch.utils.data.DataLoader(dataset, batch_size=self.batch_size)
 
-    def _eval_model(self) -> Dict[str, float]:
+    def _eval_model(self) -> dict[str, float]:
         self.model.to(DEVICE)
         self.model.eval()
 

@@ -16,7 +16,7 @@ import os
 import shutil
 import traceback
 from tempfile import mkdtemp
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from pyhocon import ConfigFactory as CF
 from pyhocon import ConfigTree
@@ -376,7 +376,7 @@ def submit_job(cmd_args):
                 shutil.rmtree(temp_job_dir)
 
 
-def find_admin_user_and_dir() -> Tuple[str, str]:
+def find_admin_user_and_dir() -> tuple[str, str]:
     startup_kit_dir = get_startup_kit_dir()
     fed_admin_config = ConfigFactory.load_config("fed_admin.json", [startup_kit_dir])
 
@@ -539,7 +539,7 @@ def define_create_job_parser(job_subparser):
     job_sub_cmd_parser[CMD_CREATE_JOB] = create_parser
 
 
-def prepare_job_config(cmd_args, app_names: List[str], tmp_job_dir: Optional[str] = None):
+def prepare_job_config(cmd_args, app_names: list[str], tmp_job_dir: Optional[str] = None):
     merged_conf, config_modified = merge_configs_from_cli(cmd_args, app_names)
     need_save_config = config_modified is True or tmp_job_dir is not None
 
@@ -626,7 +626,7 @@ def dst_config_path(job_folder, config_filename, app_name: str = "app"):
     return dst_path
 
 
-def get_config_dirs(job_folder: str, app_names: List[str]) -> List[str]:
+def get_config_dirs(job_folder: str, app_names: list[str]) -> list[str]:
     config_dirs = []
     if app_names:
         for app_name in app_names:
@@ -643,7 +643,7 @@ def get_config_dir(job_folder: str, app_name: str) -> str:
     return config_dir
 
 
-def convert_args_list_to_dict(kvs: Optional[List[str]] = None) -> dict:
+def convert_args_list_to_dict(kvs: Optional[list[str]] = None) -> dict:
     """
     Convert a list of key-value strings to a dictionary.
 
@@ -709,7 +709,7 @@ def prepare_app_scripts(job_folder, app_custom_dirs, cmd_args):
                 raise ValueError(f"{cmd_args.script_dir} doesn't exists")
 
 
-def prepare_app_dirs(job_folder: str, app_names: List[str]) -> List[str]:
+def prepare_app_dirs(job_folder: str, app_names: list[str]) -> list[str]:
     app_names = ["app"] if not app_names else app_names
     app_custom_dirs = []
     for app_name in app_names:

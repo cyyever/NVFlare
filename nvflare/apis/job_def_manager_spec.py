@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_context import FLContext
@@ -24,7 +24,7 @@ class JobDefManagerSpec(FLComponent, ABC):
     """Job Definition Management API."""
 
     @abstractmethod
-    def create(self, meta: dict, uploaded_content: Union[str, bytes], fl_ctx: FLContext) -> Dict[str, Any]:
+    def create(self, meta: dict, uploaded_content: Union[str, bytes], fl_ctx: FLContext) -> dict[str, Any]:
         """Create a new job permanently.
 
         The caller must have validated the content already and created initial meta. Receives bytes of uploaded folder,
@@ -42,7 +42,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def clone(self, from_jid: str, meta: dict, fl_ctx: FLContext) -> Dict[str, Any]:
+    def clone(self, from_jid: str, meta: dict, fl_ctx: FLContext) -> dict[str, Any]:
         """Create a new job by cloning an existing job.
 
         Args:
@@ -153,7 +153,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def list_components(self, jid: str, fl_ctx: FLContext) -> List[str]:
+    def list_components(self, jid: str, fl_ctx: FLContext) -> list[str]:
         """Get list of all the components for the specified job.
 
         Args:
@@ -179,7 +179,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def get_jobs_to_schedule(self, fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_to_schedule(self, fl_ctx: FLContext) -> list[Job]:
         """Get job candidates for scheduling.
 
         Args:
@@ -191,7 +191,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def get_all_jobs(self, fl_ctx: FLContext) -> List[Job]:
+    def get_all_jobs(self, fl_ctx: FLContext) -> list[Job]:
         """Gets all Jobs in the system.
 
         Args:
@@ -203,7 +203,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def get_jobs_by_status(self, run_status: Union[RunStatus, List[RunStatus]], fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_by_status(self, run_status: Union[RunStatus, list[RunStatus]], fl_ctx: FLContext) -> list[Job]:
         """Gets Jobs of a specified status.
 
         Args:
@@ -216,7 +216,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def get_jobs_waiting_for_review(self, reviewer_name: str, fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_waiting_for_review(self, reviewer_name: str, fl_ctx: FLContext) -> list[Job]:
         """Gets Jobs waiting for review for the specified user.
 
         Args:
@@ -231,7 +231,7 @@ class JobDefManagerSpec(FLComponent, ABC):
     @abstractmethod
     def set_approval(
         self, jid: str, reviewer_name: str, approved: bool, note: str, fl_ctx: FLContext
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Sets the approval for the specified user for a certain Job.
 
         Args:
@@ -258,7 +258,7 @@ class JobDefManagerSpec(FLComponent, ABC):
         pass
 
     @abstractmethod
-    def save_workspace(self, jid: str, data: Union[bytes, str, List[str]], fl_ctx: FLContext) -> str:
+    def save_workspace(self, jid: str, data: Union[bytes, str, list[str]], fl_ctx: FLContext) -> str:
         """Save the job workspace to the job storage.
 
         Args:

@@ -15,7 +15,7 @@
 import datetime
 import threading
 import time
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_component import FLComponent
@@ -57,8 +57,8 @@ class DefaultJobScheduler(JobSchedulerSpec, FLComponent):
         self.lock = threading.Lock()
 
     def _check_client_resources(
-        self, job: Job, resource_reqs: Dict[str, dict], fl_ctx: FLContext
-    ) -> Dict[str, Tuple[bool, str]]:
+        self, job: Job, resource_reqs: dict[str, dict], fl_ctx: FLContext
+    ) -> dict[str, tuple[bool, str]]:
         """Checks resources on each site.
 
         Args:
@@ -80,7 +80,7 @@ class DefaultJobScheduler(JobSchedulerSpec, FLComponent):
         return result
 
     def _cancel_resources(
-        self, resource_reqs: Dict[str, dict], resource_check_results: Dict[str, Tuple[bool, str]], fl_ctx: FLContext
+        self, resource_reqs: dict[str, dict], resource_check_results: dict[str, tuple[bool, str]], fl_ctx: FLContext
     ):
         """Cancels any reserved resources based on resource check results.
 
@@ -98,7 +98,7 @@ class DefaultJobScheduler(JobSchedulerSpec, FLComponent):
         self.log_debug(fl_ctx, f"cancel client resources using check results: {resource_check_results}")
         return False, None
 
-    def _try_job(self, job: Job, fl_ctx: FLContext) -> (int, Optional[Dict[str, DispatchInfo]], str):
+    def _try_job(self, job: Job, fl_ctx: FLContext) -> (int, Optional[dict[str, DispatchInfo]], str):
         engine = fl_ctx.get_engine()
         online_clients = engine.get_clients()
         online_site_names = [x.name for x in online_clients]
@@ -254,8 +254,8 @@ class DefaultJobScheduler(JobSchedulerSpec, FLComponent):
                     self.scheduled_jobs.remove(job_id)
 
     def schedule_job(
-        self, job_manager: JobDefManagerSpec, job_candidates: List[Job], fl_ctx: FLContext
-    ) -> (Optional[Job], Optional[Dict[str, DispatchInfo]]):
+        self, job_manager: JobDefManagerSpec, job_candidates: list[Job], fl_ctx: FLContext
+    ) -> (Optional[Job], Optional[dict[str, DispatchInfo]]):
         failed_jobs = []
         blocked_jobs = []
         try:
@@ -302,8 +302,8 @@ class DefaultJobScheduler(JobSchedulerSpec, FLComponent):
         job.meta[JobMetaKey.LAST_SCHEDULE_TIME.value] = time.time()
 
     def _do_schedule_job(
-        self, job_candidates: List[Job], fl_ctx: FLContext, failed_jobs: list, blocked_jobs: list
-    ) -> (Optional[Job], Optional[Dict[str, DispatchInfo]]):
+        self, job_candidates: list[Job], fl_ctx: FLContext, failed_jobs: list, blocked_jobs: list
+    ) -> (Optional[Job], Optional[dict[str, DispatchInfo]]):
         self.log_debug(fl_ctx, f"Current scheduled_jobs is {self.scheduled_jobs}")
         if self._exceed_max_jobs(fl_ctx=fl_ctx):
             self.log_debug(fl_ctx, f"skipped scheduling since there are {self.max_jobs} concurrent job(s) already")

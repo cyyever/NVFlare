@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import operator
-from typing import Callable, Optional, Tuple
+from typing import Callable, Optional
 
 operator_mapping = {
     ">=": operator.ge,
@@ -23,7 +23,7 @@ operator_mapping = {
 }
 
 
-def parse_compare_criteria(compare_expr: Optional[str] = None) -> Tuple[str, float, Callable]:
+def parse_compare_criteria(compare_expr: Optional[str] = None) -> tuple[str, float, Callable]:
     """Parses the compare expression into individual component.
 
         The compare expression is in the format of string literal : "<key> <op> <value>"

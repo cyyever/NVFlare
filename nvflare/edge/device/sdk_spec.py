@@ -13,13 +13,13 @@
 # limitations under the License.
 import copy
 import time
-from typing import List
 
 from nvflare.apis.dxo import DXO, from_dict
 from nvflare.apis.signal import Signal
 
 from .config import process_train_config
 from .defs import Context, ContextKey, DataSource, EventType, Executor, Filter
+from typing import Optional
 
 
 class FlareRunner:
@@ -31,9 +31,9 @@ class FlareRunner:
         device_info: dict,
         user_info: dict,
         job_timeout: float,
-        in_filters: List[Filter] = None,
-        out_filters: List[Filter] = None,
-        resolver_registry: dict = None,
+        in_filters: Optional[list[Filter]] = None,
+        out_filters: Optional[list[Filter]] = None,
+        resolver_registry: Optional[dict] = None,
     ):
         """Constructor of FlareRunner
 

@@ -14,7 +14,7 @@
 import logging
 import threading
 from abc import ABC
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.fuel.f3.comm_error import CommError
 from nvflare.fuel.f3.connection import Connection, ConnState
@@ -30,7 +30,7 @@ class BaseDriver(Driver, ABC):
 
     def __init__(self):
         super().__init__()
-        self.connections: Dict[str, Connection] = {}
+        self.connections: dict[str, Connection] = {}
         self.connector: Optional[ConnectorInfo] = None
         self.conn_lock = threading.Lock()
 

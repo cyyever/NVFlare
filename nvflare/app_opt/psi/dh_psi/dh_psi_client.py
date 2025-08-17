@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 # version>= 1.0.3
 import private_set_intersection.python as psi
@@ -23,7 +22,7 @@ class PSIClient:
     Class to represent the psi Client in a two-party client, server PSI model.
     """
 
-    def __init__(self, items: List[str]):
+    def __init__(self, items: list[str]):
         """
         Args:
             items: the items provided by the client
@@ -53,7 +52,7 @@ class PSIClient:
         request = self.psi_client.CreateRequest(items).SerializeToString()
         return request
 
-    def get_intersection(self, server_response_msg: str) -> List[str]:
+    def get_intersection(self, server_response_msg: str) -> list[str]:
         """Returns the intersection of client and server items.
 
         Args: server_response_msg (PsiProtoResponse): The server response serialized string

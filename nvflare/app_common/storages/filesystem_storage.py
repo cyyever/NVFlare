@@ -20,12 +20,12 @@ import shutil
 import tempfile
 import uuid
 from pathlib import Path
-from typing import List, Tuple
 
 from nvflare.apis.storage import DATA, META, StorageException, StorageSpec
 from nvflare.apis.utils.format_check import validate_class_methods_args
 from nvflare.fuel.utils.zip_utils import zip_directory_to_file
 from nvflare.security.logging import secure_format_exception
+from typing import Optional
 
 log = logging.getLogger(__name__)
 
@@ -76,7 +76,7 @@ def _write(path: str, content, mv_file=True):
         os.rename(tmp_path, path)
 
 
-def _write_multi(output_zip_file_name: str, content: List[str]):
+def _write_multi(output_zip_file_name: str, content: list[str]):
     with tempfile.TemporaryDirectory() as td:
         for c in content:
             if os.path.isfile(c):
@@ -256,7 +256,7 @@ class FilesystemStorage(StorageSpec):
             prev_meta.update(meta)
             _write(os.path.join(full_uri, META), _encode_meta(prev_meta))
 
-    def list_objects(self, path: str, without_tag=None) -> List[str]:
+    def list_objects(self, path: str, without_tag=None) -> list[str]:
         """List all objects in the specified path.
 
         Args:
@@ -310,7 +310,7 @@ class FilesystemStorage(StorageSpec):
 
         return _decode_meta(_read(os.path.join(full_uri, META)))
 
-    def list_components_of_object(self, uri: str) -> List[str]:
+    def list_components_of_object(self, uri: str) -> list[str]:
         """Gets all components of the specified object.
 
         Args:
@@ -356,7 +356,7 @@ class FilesystemStorage(StorageSpec):
 
         return _read(os.path.join(full_uri, component_name))
 
-    def get_data_for_download(self, uri: str, component_name: str = DATA, download_file: str = None):
+    def get_data_for_download(self, uri: str, component_name: str = DATA, download_file: Optional[str] = None):
         full_uri = self._object_path(uri)
 
         if not StorageSpec.is_valid_component(component_name):
@@ -373,7 +373,7 @@ class FilesystemStorage(StorageSpec):
         else:
             log.debug(f"{src} does not exist, skipping the creation of the symlink {download_file} for download.")
 
-    def get_detail(self, uri: str) -> Tuple[dict, bytes]:
+    def get_detail(self, uri: str) -> tuple[dict, bytes]:
         """Gets both data and meta of the specified object.
 
         Args:

@@ -15,7 +15,7 @@
 import enum
 import time
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import Optional
 
 
 class MonitorReturnCode(int, enum.Enum):
@@ -115,7 +115,7 @@ class JobInfo:
 
 
 class SystemInfo:
-    def __init__(self, server_info: ServerInfo, client_info: List[ClientInfo], job_info: List[JobInfo]):
+    def __init__(self, server_info: ServerInfo, client_info: list[ClientInfo], job_info: list[JobInfo]):
         self.server_info = server_info
         self.client_info = client_info
         self.job_info = job_info
@@ -168,7 +168,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def list_jobs(self, detailed: bool = False, all: bool = False) -> List[dict]:
+    def list_jobs(self, detailed: bool = False, all: bool = False) -> list[dict]:
         """Get the job info from the server
 
         Args:
@@ -198,7 +198,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def list_job_components(self, job_id: str) -> List[str]:
+    def list_job_components(self, job_id: str) -> list[str]:
         """Get the list of additional job components for the specified job.
 
         Args:
@@ -258,7 +258,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def get_client_job_status(self, client_names: List[str] = None) -> List[dict]:
+    def get_client_job_status(self, client_names: Optional[list[str]] = None) -> list[dict]:
         """Get job status info of specified FL clients
 
         Args:
@@ -272,7 +272,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def restart(self, target_type: str, client_names: Optional[List[str]] = None) -> dict:
+    def restart(self, target_type: str, client_names: Optional[list[str]] = None) -> dict:
         """
         Restart specified system target(s)
 
@@ -290,7 +290,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def shutdown(self, target_type: TargetType, client_names: Optional[List[str]] = None):
+    def shutdown(self, target_type: TargetType, client_names: Optional[list[str]] = None):
         """Shut down specified system target(s)
 
         Args:
@@ -348,7 +348,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def ls_target(self, target: str, options: str = None, path: str = None) -> str:
+    def ls_target(self, target: str, options: Optional[str] = None, path: Optional[str] = None) -> str:
         """Run the "ls" command on the specified target and return result
 
         Args:
@@ -362,7 +362,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def cat_target(self, target: str, options: str = None, file: str = None) -> str:
+    def cat_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "cat" command on the specified target and return result
 
         Args:
@@ -376,7 +376,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def tail_target(self, target: str, options: str = None, file: str = None) -> str:
+    def tail_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "tail" command on the specified target and return result
 
         Args:
@@ -390,7 +390,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def tail_target_log(self, target: str, options: str = None) -> str:
+    def tail_target_log(self, target: str, options: Optional[str] = None) -> str:
         """Run the "tail log.txt" command on the specified target and return result
 
         Args:
@@ -403,7 +403,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def head_target(self, target: str, options: str = None, file: str = None) -> str:
+    def head_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "head" command on the specified target and return result
 
         Args:
@@ -417,7 +417,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def head_target_log(self, target: str, options: str = None) -> str:
+    def head_target_log(self, target: str, options: Optional[str] = None) -> str:
         """Run the "head log.txt" command on the specified target and return result
 
         Args:
@@ -430,7 +430,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def grep_target(self, target: str, options: str = None, pattern: str = None, file: str = None) -> str:
+    def grep_target(self, target: str, options: Optional[str] = None, pattern: Optional[str] = None, file: Optional[str] = None) -> str:
         """Run the "grep" command on the specified target and return result
 
         Args:
@@ -457,7 +457,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def show_stats(self, job_id: str, target_type: str, targets: Optional[List[str]] = None) -> dict:
+    def show_stats(self, job_id: str, target_type: str, targets: Optional[list[str]] = None) -> dict:
         """Show processing stats of specified job on specified targets
 
         Args:
@@ -472,7 +472,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def show_errors(self, job_id: str, target_type: str, targets: Optional[List[str]] = None) -> dict:
+    def show_errors(self, job_id: str, target_type: str, targets: Optional[list[str]] = None) -> dict:
         """Show processing errors of specified job on specified targets
 
         Args:
@@ -499,7 +499,7 @@ class SessionSpec(ABC):
         pass
 
     @abstractmethod
-    def get_connected_client_list(self) -> List[ClientInfo]:
+    def get_connected_client_list(self) -> list[ClientInfo]:
         """Get the list of connected clients
 
         Returns: a list of ClientInfo objects

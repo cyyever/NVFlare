@@ -15,7 +15,7 @@
 import os
 import time
 import timeit
-from typing import Dict, List, Optional
+from typing import Optional
 
 import mlflow
 from mlflow.entities import Metric, Param, RunTag
@@ -47,7 +47,7 @@ class MLflowReceiver(AnalyticsReceiver):
         tracking_uri: Optional[str] = None,
         kw_args: Optional[dict] = None,
         artifact_location: Optional[str] = None,
-        events: Optional[List[str]] = None,
+        events: Optional[list[str]] = None,
         buffer_flush_time=1,
     ):
         """MLflowReceiver receives log events from clients and deliver them to the MLflow tracking server.
@@ -81,7 +81,7 @@ class MLflowReceiver(AnalyticsReceiver):
         self.kw_args = kw_args if kw_args else {}
         self.tracking_uri = tracking_uri
         self.mlflow = mlflow
-        self.mlflow_clients: Dict[str, MlflowClient] = {}
+        self.mlflow_clients: dict[str, MlflowClient] = {}
         self.experiment_id = None
         self.run_ids = {}
         self.buffer = {}
@@ -144,7 +144,7 @@ class MLflowReceiver(AnalyticsReceiver):
 
         self.log_info(fl_ctx, "MLflow tracking initialization completed successfully")
 
-    def _mlflow_setup(self, art_full_path, experiment_name, experiment_tags, site_names: List[str], fl_ctx: FLContext):
+    def _mlflow_setup(self, art_full_path, experiment_name, experiment_tags, site_names: list[str], fl_ctx: FLContext):
         """Set up an MlflowClient for each receiving site and create an experiment and run.
 
         Args:
@@ -170,7 +170,7 @@ class MLflowReceiver(AnalyticsReceiver):
                 run = mlflow_client.create_run(experiment_id=self.experiment_id, run_name=run_name, tags=tags)
                 self.run_ids[site_name] = run.info.run_id
 
-    def _init_buffer(self, site_names: List[str]):
+    def _init_buffer(self, site_names: list[str]):
         """For each site, create a buffer (dict) consisting of a list each for metrics, parameters, and tags."""
         for site_name in site_names:
             self.buffer[site_name] = {
@@ -333,7 +333,7 @@ class MLflowReceiver(AnalyticsReceiver):
         self.time_start = 0
         self.time_since_flush = 0
 
-    def flush_buffer(self, log_buffer: List):
+    def flush_buffer(self, log_buffer: list):
         item_arr = list(log_buffer)
         log_buffer.clear()
         return item_arr

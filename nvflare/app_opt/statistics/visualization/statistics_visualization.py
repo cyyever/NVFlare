@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict
 
 from nvflare.fuel.utils.import_utils import optional_import
 
@@ -71,7 +70,7 @@ class Visualization:
             else:
                 print(f"not supported plot type: '{plot_type}'")
 
-    def get_histogram_dataframes(self, data, display_format="sample_count", white_list_features=None) -> Dict:
+    def get_histogram_dataframes(self, data, display_format="sample_count", white_list_features=None) -> dict:
         if white_list_features is None:
             white_list_features = []
         display, pd = self.import_modules()

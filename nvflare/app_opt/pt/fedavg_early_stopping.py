@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any, Optional
 
 import torch
 
@@ -85,7 +85,7 @@ class PTFedAvgEarlyStopping(BaseFedAvg):
 
             clients = self.sample_clients(self.num_clients)
 
-            results: List[FLModel] = self.send_model_and_wait(
+            results: list[FLModel] = self.send_model_and_wait(
                 task_name=self.task_to_optimize, targets=clients, data=model
             )
 
@@ -112,7 +112,7 @@ class PTFedAvgEarlyStopping(BaseFedAvg):
 
         self.info("Finished FedAvg.")
 
-    def should_stop(self, metrics: Optional[Dict] = None) -> bool:
+    def should_stop(self, metrics: Optional[dict] = None) -> bool:
         """Checks whether the current FL experiment should stop.
 
         Args:

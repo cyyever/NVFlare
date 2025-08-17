@@ -13,18 +13,17 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Tuple
 
 from nvflare.app_common.app_constant import StatisticsConstants as StC
 
 
 class StatisticsPrivacyCleanser(ABC):
     @abstractmethod
-    def apply(self, statistics: dict, client_name: str) -> Tuple[dict, bool]:
+    def apply(self, statistics: dict, client_name: str) -> tuple[dict, bool]:
         pass
 
     def cleanse(
-        self, statistics: dict, statistic_keys: List[str], validation_result: Dict[str, Dict[str, bool]]
+        self, statistics: dict, statistic_keys: list[str], validation_result: dict[str, dict[str, bool]]
     ) -> (dict, bool):
         """
         Args:

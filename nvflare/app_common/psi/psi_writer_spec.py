@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import List
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_context import FLContext
@@ -23,7 +22,7 @@ class PSIWriter(FLComponent, ABC):
     """Interface for saving PSI intersection."""
 
     @abstractmethod
-    def save(self, intersection: List[str], overwrite_existing: bool, fl_ctx: FLContext):
+    def save(self, intersection: list[str], overwrite_existing: bool, fl_ctx: FLContext):
         """Saves PSI intersection.
 
         Args:

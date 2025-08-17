@@ -16,7 +16,7 @@ import os
 import re
 import time
 from functools import wraps
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Optional
 
 from nvflare.apis.fl_constant import AdminCommandNames
 from nvflare.fuel.hci.client.api import AdminAPI
@@ -101,7 +101,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         admin_config: dict,
         upload_dir: str = "",
         download_dir: str = "",
-        cmd_modules: Optional[List] = None,
+        cmd_modules: Optional[list] = None,
         debug=False,
         auto_login_max_tries: int = 5,
     ):
@@ -138,7 +138,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         self.download_dir = download_dir
         self._error_buffer = None
 
-    def _process_targets_into_str(self, targets: List[str]) -> str:
+    def _process_targets_into_str(self, targets: list[str]) -> str:
         if not isinstance(targets, list):
             raise APISyntaxError("targets is not a list.")
         if not all(isinstance(t, str) for t in targets):
@@ -200,7 +200,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
             raise APISyntaxError(err)
         return file
 
-    def _get_processed_cmd_reply_data(self, command) -> Tuple[bool, str, Dict[str, Any]]:
+    def _get_processed_cmd_reply_data(self, command) -> tuple[bool, str, dict[str, Any]]:
         """Executes the specified command through the underlying AdminAPI's do_command() and checks the response to
         raise common errors.
 
@@ -246,7 +246,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         return success_in_data, reply_data_full_response, reply
 
     def _parse_section_of_response_text(
-        self, data, start_string: str, offset: int = None, end_string: str = None, end_index=None
+        self, data, start_string: str, offset: Optional[int] = None, end_string: Optional[str] = None, end_index=None
     ) -> str:
         """Convenience method to get portion of string based on parameters."""
         if not offset:
@@ -258,7 +258,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         return data[data.find(start_string) + offset :]
 
     def _parse_section_of_response_text_as_int(
-        self, data, start_string: str, offset: int = None, end_string: str = None, end_index=None
+        self, data, start_string: str, offset: Optional[int] = None, end_string: Optional[str] = None, end_index=None
     ) -> int:
         try:
             return int(
@@ -274,7 +274,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         self._error_buffer = error
 
     @wrap_with_return_exception_responses
-    def check_status(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def check_status(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         if target_type == TargetType.SERVER:
             return self._check_status_server()
         elif target_type == TargetType.CLIENT:
@@ -310,7 +310,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
             APIStatus.ERROR_RUNTIME, {"message": "Runtime error: could not handle server reply."}, reply
         )
 
-    def _check_status_client(self, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def _check_status_client(self, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         if targets:
             processed_targets_str = self._process_targets_into_str(targets)
             command = AdminCommandNames.CHECK_STATUS + " client " + processed_targets_str
@@ -369,7 +369,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def list_jobs(self, options: str = None) -> FLAdminAPIResponse:
+    def list_jobs(self, options: Optional[str] = None) -> FLAdminAPIResponse:
         command = AdminCommandNames.LIST_JOBS
         if options:
             options = self._validate_options_string(options)
@@ -450,7 +450,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def abort(self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def abort(self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         if not job_id:
             raise APISyntaxError("job_id is required but not specified.")
         if not isinstance(job_id, str):
@@ -489,7 +489,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def restart(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def restart(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         if target_type == TargetType.ALL:
             command = AdminCommandNames.RESTART + " " + "all"
         elif target_type == TargetType.SERVER:
@@ -515,7 +515,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def shutdown(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def shutdown(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         if target_type == TargetType.ALL:
             command = AdminCommandNames.SHUTDOWN + " " + "all"
         elif target_type == TargetType.SERVER:
@@ -543,7 +543,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def remove_client(self, targets: List[str]) -> FLAdminAPIResponse:
+    def remove_client(self, targets: list[str]) -> FLAdminAPIResponse:
         if not targets:
             raise APISyntaxError("targets needs to be provided as a list of client names.")
         processed_targets_str = self._process_targets_into_str(targets)
@@ -579,7 +579,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         return FLAdminAPIResponse(APIStatus.SUCCESS, {"app_list": dir_list})
 
     @wrap_with_return_exception_responses
-    def ls_target(self, target: str, options: str = None, path: str = None) -> FLAdminAPIResponse:
+    def ls_target(self, target: str, options: Optional[str] = None, path: Optional[str] = None) -> FLAdminAPIResponse:
         target = self._validate_required_target_string(target)
         command = "ls " + target
         if options:
@@ -596,7 +596,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def cat_target(self, target: str, options: str = None, file: str = None) -> FLAdminAPIResponse:
+    def cat_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> FLAdminAPIResponse:
         if not file:
             raise APISyntaxError("file is required but not specified.")
         file = self._validate_file_string(file)
@@ -615,7 +615,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
         )
 
     @wrap_with_return_exception_responses
-    def tail_target_log(self, target: str, options: str = None) -> FLAdminAPIResponse:
+    def tail_target_log(self, target: str, options: Optional[str] = None) -> FLAdminAPIResponse:
         target = self._validate_required_target_string(target)
         command = "tail " + target
         if options:
@@ -642,7 +642,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
 
     @wrap_with_return_exception_responses
     def grep_target(
-        self, target: str, options: str = None, pattern: str = None, file: str = None
+        self, target: str, options: Optional[str] = None, pattern: Optional[str] = None, file: Optional[str] = None
     ) -> FLAdminAPIResponse:
         if not file:
             raise APISyntaxError("file is required but not specified.")
@@ -666,7 +666,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
 
     @wrap_with_return_exception_responses
     def show_stats(
-        self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None
+        self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None
     ) -> FLAdminAPIResponse:
         if not job_id:
             raise APISyntaxError("job_id is required but not specified.")
@@ -697,7 +697,7 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
 
     @wrap_with_return_exception_responses
     def show_errors(
-        self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None
+        self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None
     ) -> FLAdminAPIResponse:
         if not job_id:
             raise APISyntaxError("job_id is required but not specified.")
@@ -758,8 +758,8 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
     def wait_until_server_status(
         self,
         interval: int = 20,
-        timeout: int = None,
-        callback: Callable[[FLAdminAPIResponse, Optional[List]], bool] = default_server_status_handling_cb,
+        timeout: Optional[int] = None,
+        callback: Callable[[FLAdminAPIResponse, Optional[list]], bool] = default_server_status_handling_cb,
         fail_attempts: int = 3,
         **kwargs,
     ) -> FLAdminAPIResponse:
@@ -795,8 +795,8 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
     def wait_until_client_status(
         self,
         interval: int = 10,
-        timeout: int = None,
-        callback: Callable[[FLAdminAPIResponse, Optional[List]], bool] = default_client_status_handling_cb,
+        timeout: Optional[int] = None,
+        callback: Callable[[FLAdminAPIResponse, Optional[list]], bool] = default_client_status_handling_cb,
         fail_attempts: int = 6,
         **kwargs,
     ) -> FLAdminAPIResponse:
@@ -852,8 +852,8 @@ class FLAdminAPI(AdminAPI, FLAdminAPISpec):
     def wait_until_server_stats(
         self,
         interval: int = 10,
-        timeout: int = None,
-        callback: Callable[[FLAdminAPIResponse, Optional[List]], bool] = default_stats_handling_cb,
+        timeout: Optional[int] = None,
+        callback: Callable[[FLAdminAPIResponse, Optional[list]], bool] = default_stats_handling_cb,
         fail_attempts: int = 6,
         **kwargs,
     ) -> FLAdminAPIResponse:

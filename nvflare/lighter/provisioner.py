@@ -14,7 +14,7 @@
 import os
 import shutil
 import traceback
-from typing import List, Optional
+from typing import Optional
 
 from .constants import CtxKey, ProvisionMode, WorkDir
 from .ctx import ProvisionContext
@@ -23,7 +23,7 @@ from .spec import Builder, Packager
 
 
 class Provisioner:
-    def __init__(self, root_dir: str, builders: List[Builder], packager: Optional[Packager] = None):
+    def __init__(self, root_dir: str, builders: list[Builder], packager: Optional[Packager] = None):
         """Workflow class that drive the provision process.
 
         Provisioner's tasks:

@@ -16,7 +16,6 @@
 
 import time
 from abc import ABC, abstractmethod
-from typing import List
 
 from nvflare.apis.fl_constant import (
     AdminCommandNames,
@@ -499,7 +498,7 @@ class AppCommandProcessor(CommandProcessor):
 class ServerCommands(object):
     """AdminCommands contains all the commands for processing the commands from the parent process."""
 
-    commands: List[CommandProcessor] = [
+    commands: list[CommandProcessor] = [
         AbortCommand(),
         ByeCommand(),
         GetRunInfoCommand(),

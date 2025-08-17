@@ -20,7 +20,7 @@ import socket
 import subprocess
 import tempfile
 import time
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional
 
 import grpc
 from requests import Request, RequestException, Response, Session, codes
@@ -79,7 +79,7 @@ def _create_http_session(ca_path=None, cert_path=None, prv_key_path=None):
 
 
 def _send_request(
-    session, api_point, headers: Optional[Dict[str, Any]] = None, payload: Optional[Dict[str, Any]] = None
+    session, api_point, headers: Optional[dict[str, Any]] = None, payload: Optional[dict[str, Any]] = None
 ) -> Response:
     req = Request("POST", api_point, json=payload, headers=headers)
     prepared = session.prepare_request(req)
@@ -155,7 +155,7 @@ def split_by_len(item, max_len):
 
 def check_overseer_running(
     startup: str, overseer_agent_args: dict, role: str, retry: int = 3
-) -> Tuple[Optional[Response], Optional[str]]:
+) -> tuple[Optional[Response], Optional[str]]:
     """Checks if overseer is running."""
     session = _create_http_session(
         ca_path=os.path.join(startup, _get_ca_cert_file_name()),

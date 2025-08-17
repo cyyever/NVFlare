@@ -14,7 +14,7 @@
 import importlib
 import inspect
 import pkgutil
-from typing import Dict, List, Optional
+from typing import Optional
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.fuel.common.excepts import ConfigError
@@ -48,7 +48,7 @@ def instantiate_class(class_path, init_params):
 
 
 class ModuleScanner:
-    def __init__(self, base_pkgs: List[str], module_names: List[str], exclude_libs=True):
+    def __init__(self, base_pkgs: list[str], module_names: list[str], exclude_libs=True):
         """Loads specified modules from base packages and then constructs a class to module name mapping.
 
         Args:
@@ -64,7 +64,7 @@ class ModuleScanner:
         self._class_table = create_classes_table_static()
 
     def create_classes_table(self):
-        class_table: Dict[str, list[str]] = {}
+        class_table: dict[str, list[str]] = {}
         for base in self.base_pkgs:
             package = importlib.import_module(base)
 

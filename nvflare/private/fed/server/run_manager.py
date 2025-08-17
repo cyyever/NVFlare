@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from nvflare.apis.client import Client
 from nvflare.apis.engine_spec import EngineSpec
@@ -39,7 +39,7 @@ class RunManager(EngineSpec):
         workspace: Workspace,
         components: {str: FLComponent},
         client_manager: Optional[ClientManager] = None,
-        handlers: Optional[List[FLComponent]] = None,
+        handlers: Optional[list[FLComponent]] = None,
     ):
         """Manage run.
 
@@ -108,7 +108,7 @@ class RunManager(EngineSpec):
     def get_cell(self):
         return self.cell
 
-    def validate_targets(self, client_names: List[str]) -> Tuple[List[Client], List[str]]:
+    def validate_targets(self, client_names: list[str]) -> tuple[list[Client], list[str]]:
         return self.client_manager.get_all_clients_from_inputs(client_names)
 
     def create_job_processing_context_properties(self, workspace, job_id):

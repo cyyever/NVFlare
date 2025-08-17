@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.apis.dxo import DXO
 from nvflare.apis.fl_component import FLComponent
@@ -20,7 +19,7 @@ from nvflare.apis.fl_context import FLContext
 
 
 class ModelLocator(FLComponent):
-    def get_model_names(self, fl_ctx: FLContext) -> List[str]:
+    def get_model_names(self, fl_ctx: FLContext) -> list[str]:
         """List the name of the models.
 
         Args:

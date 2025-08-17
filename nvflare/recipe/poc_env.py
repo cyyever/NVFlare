@@ -16,7 +16,7 @@ import os
 import shutil
 import tempfile
 import time
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, model_validator
 
@@ -43,8 +43,8 @@ DEFAULT_ADMIN_USER = "admin@nvidia.com"
 # Internal — not part of the public API
 class _PocEnvValidator(BaseModel):
     num_clients: int
-    clients: Optional[List[str]] = None
-    gpu_ids: Optional[List[int]] = None
+    clients: Optional[list[str]] = None
+    gpu_ids: Optional[list[int]] = None
     auto_stop: bool = True
     monitor_duration: int = 0
     use_he: bool = False
@@ -81,12 +81,12 @@ class POCEnv(ExecEnv):
         self,
         *,
         num_clients: int = 2,
-        clients: Optional[List[str]] = None,
-        gpu_ids: Optional[List[int]] = None,
+        clients: Optional[list[str]] = None,
+        gpu_ids: Optional[list[int]] = None,
         auto_stop: bool = True,
         monitor_duration: int = 0,
         use_he: bool = False,
-        docker_image: str = None,
+        docker_image: Optional[str] = None,
         project_conf_path: str = "",
     ):
         """Initialize POC execution environment.

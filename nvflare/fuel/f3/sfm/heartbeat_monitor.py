@@ -14,7 +14,6 @@
 import logging
 import time
 from threading import Event, Thread
-from typing import Dict
 
 from nvflare.fuel.f3.comm_config import CommConfigurator
 from nvflare.fuel.f3.drivers.driver_params import DriverCap
@@ -28,7 +27,7 @@ DEFAULT_HEARTBEAT_INTERVAL = 60
 
 
 class HeartbeatMonitor(Thread):
-    def __init__(self, conns: Dict[str, SfmConnection]):
+    def __init__(self, conns: dict[str, SfmConnection]):
         Thread.__init__(self, name="hb_mon", daemon=True)
         self.conns = conns
         self.stopped = Event()

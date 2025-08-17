@@ -18,7 +18,7 @@ import shutil
 import tempfile
 import time
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.client_engine_spec import ClientEngineSpec
 from nvflare.apis.fl_context import FLContext
@@ -127,7 +127,7 @@ class SimpleJobDefManager(JobDefManagerSpec):
     def job_uri(self, jid: str):
         return os.path.join(self.uri_root, jid)
 
-    def create(self, meta: dict, uploaded_content: Union[str, bytes], fl_ctx: FLContext) -> Dict[str, Any]:
+    def create(self, meta: dict, uploaded_content: Union[str, bytes], fl_ctx: FLContext) -> dict[str, Any]:
         # validate meta to make sure it has:
         jid = meta.get(JobMetaKey.JOB_ID.value, None)
         if not jid:
@@ -147,7 +147,7 @@ class SimpleJobDefManager(JobDefManagerSpec):
         store.create_object(self.job_uri(jid), uploaded_content, meta, overwrite_existing=True)
         return meta
 
-    def clone(self, from_jid: str, meta: dict, fl_ctx: FLContext) -> Dict[str, Any]:
+    def clone(self, from_jid: str, meta: dict, fl_ctx: FLContext) -> dict[str, Any]:
         jid = meta.get(JobMetaKey.JOB_ID.value, None)
         if not jid:
             jid = new_job_id()
@@ -256,7 +256,7 @@ class SimpleJobDefManager(JobDefManagerSpec):
         except StorageException:
             return None
 
-    def list_components(self, jid: str, fl_ctx: FLContext) -> List[str]:
+    def list_components(self, jid: str, fl_ctx: FLContext) -> list[str]:
         store = self._get_job_store(fl_ctx)
         self.log_debug(
             fl_ctx, f"list_components called for {jid}: {store.list_components_of_object(self.job_uri(jid))}"
@@ -306,12 +306,12 @@ class SimpleJobDefManager(JobDefManagerSpec):
         if meta:
             self.update_meta(job.job_id, meta, fl_ctx)
 
-    def get_all_jobs(self, fl_ctx: FLContext) -> List[Job]:
+    def get_all_jobs(self, fl_ctx: FLContext) -> list[Job]:
         job_filter = _AllJobsFilter()
         self._scan(job_filter, fl_ctx)
         return job_filter.result
 
-    def get_jobs_to_schedule(self, fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_to_schedule(self, fl_ctx: FLContext) -> list[Job]:
         job_filter = _ScheduleJobFilter(self._get_job_store(fl_ctx))
         self._scan(job_filter, fl_ctx, skip_tag=_OBJ_TAG_SCHEDULED)
         return job_filter.result
@@ -332,7 +332,7 @@ class SimpleJobDefManager(JobDefManagerSpec):
                 if not ok:
                     break
 
-    def get_jobs_by_status(self, status: Union[RunStatus, List[RunStatus]], fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_by_status(self, status: Union[RunStatus, list[RunStatus]], fl_ctx: FLContext) -> list[Job]:
         """Get jobs that are in the specified status
 
         Args:
@@ -346,14 +346,14 @@ class SimpleJobDefManager(JobDefManagerSpec):
         self._scan(job_filter, fl_ctx)
         return job_filter.result
 
-    def get_jobs_waiting_for_review(self, reviewer_name: str, fl_ctx: FLContext) -> List[Job]:
+    def get_jobs_waiting_for_review(self, reviewer_name: str, fl_ctx: FLContext) -> list[Job]:
         job_filter = _ReviewerFilter(reviewer_name)
         self._scan(job_filter, fl_ctx)
         return job_filter.result
 
     def set_approval(
         self, jid: str, reviewer_name: str, approved: bool, note: str, fl_ctx: FLContext
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         meta = self.get_job(jid, fl_ctx).meta
         if meta:
             approvals = meta.get(JobMetaKey.APPROVALS)
@@ -366,7 +366,7 @@ class SimpleJobDefManager(JobDefManagerSpec):
             store.update_meta(self.job_uri(jid), updated_meta, replace=False)
         return meta
 
-    def save_workspace(self, jid: str, data: Union[bytes, str, List[str]], fl_ctx: FLContext):
+    def save_workspace(self, jid: str, data: Union[bytes, str, list[str]], fl_ctx: FLContext):
         store = self._get_job_store(fl_ctx)
         return store.update_object(self.job_uri(jid), data, WORKSPACE)
 

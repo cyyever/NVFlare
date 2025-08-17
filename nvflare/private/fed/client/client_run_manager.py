@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Optional, Union
+from typing import Optional, Union
 
 from nvflare.apis.client import from_dict
 from nvflare.apis.fl_component import FLComponent
@@ -61,8 +61,8 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
         job_id: str,
         workspace: Workspace,
         client: FederatedClient,
-        components: Dict[str, FLComponent],
-        handlers: Optional[List[FLComponent]] = None,
+        components: dict[str, FLComponent],
+        handlers: Optional[list[FLComponent]] = None,
         conf: ClientJsonConfigurator = None,
     ) -> None:
         """To init the ClientRunManager.
@@ -216,7 +216,7 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
 
     def send_aux_request(
         self,
-        targets: Union[None, str, List[str]],
+        targets: Union[None, str, list[str]],
         topic: str,
         request: Shareable,
         timeout: float,
@@ -248,7 +248,7 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
         else:
             return None
 
-    def _to_aux_msg_targets(self, target_names: List[str]):
+    def _to_aux_msg_targets(self, target_names: list[str]):
         if not target_names:
             return [AuxMsgTarget.server_target()]
 
@@ -287,7 +287,7 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
     def multicast_aux_requests(
         self,
         topic: str,
-        target_requests: Dict[str, Shareable],
+        target_requests: dict[str, Shareable],
         timeout: float,
         fl_ctx: FLContext,
         optional: bool = False,
@@ -343,7 +343,7 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
         channel: str,
         topic: str,
         stream_ctx: StreamContext,
-        targets: List[str],
+        targets: list[str],
         producer: ObjectProducer,
         fl_ctx: FLContext,
         optional=False,

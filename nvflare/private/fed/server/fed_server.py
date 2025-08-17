@@ -18,7 +18,7 @@ import threading
 import time
 from abc import ABC, abstractmethod
 from threading import Lock
-from typing import Dict, List, Optional
+from typing import Optional
 
 from nvflare.apis.client import Client
 from nvflare.apis.event_type import EventType
@@ -100,7 +100,7 @@ class BaseServer(ABC):
         min_num_clients=2,
         max_num_clients=10,
         heart_beat_timeout=600,
-        handlers: Optional[List[FLComponent]] = None,
+        handlers: Optional[list[FLComponent]] = None,
         shutdown_period=30.0,
     ):
         """Base server that provides the clients management and server deployment."""
@@ -131,7 +131,7 @@ class BaseServer(ABC):
 
         self.logger = get_obj_logger(self)
 
-    def get_all_clients(self) -> Dict[str, Client]:
+    def get_all_clients(self) -> dict[str, Client]:
         """Get the list of registered clients.
 
         Returns:
@@ -285,7 +285,7 @@ class FederatedServer(BaseServer):
         max_num_clients=10,
         cmd_modules=None,
         heart_beat_timeout=600,
-        handlers: Optional[List[FLComponent]] = None,
+        handlers: Optional[list[FLComponent]] = None,
         args=None,
         secure_train=False,
         snapshot_persistor=None,

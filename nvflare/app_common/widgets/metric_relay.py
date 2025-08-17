@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple
 
 from nvflare.apis.analytix import ANALYTIC_EVENT_TYPE
 from nvflare.apis.dxo import DXO
@@ -86,7 +85,7 @@ class MetricRelay(Widget, AttributesExportable):
             self.logger.error(f"bad metric data: expect DXO but got {type(msg.data)}")
         send_analytic_dxo(self, msg.data, self._fl_ctx, self._event_type, fire_fed_event=self._fed_event)
 
-    def export(self, export_mode: str) -> Tuple[str, dict]:
+    def export(self, export_mode: str) -> tuple[str, dict]:
         pipe_export_class, pipe_export_args = self.pipe.export(export_mode)
         config_dict = {
             ConfigKey.PIPE_CHANNEL_NAME: self.pipe_channel_name,

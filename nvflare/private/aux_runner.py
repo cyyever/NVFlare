@@ -14,7 +14,6 @@
 
 import time
 from threading import Lock
-from typing import List, Tuple
 
 from nvflare.apis.client import Client
 from nvflare.apis.fl_component import FLComponent
@@ -212,7 +211,7 @@ class AuxRunner(FLComponent):
     def multicast_aux_requests(
         self,
         topic: str,
-        target_requests: List[Tuple[AuxMsgTarget, Shareable]],
+        target_requests: list[tuple[AuxMsgTarget, Shareable]],
         timeout: float,
         fl_ctx: FLContext,
         optional: bool = False,
@@ -247,7 +246,7 @@ class AuxRunner(FLComponent):
     def _send_multi_requests(
         self,
         topic: str,
-        target_requests: List[Tuple[AuxMsgTarget, Shareable]],
+        target_requests: list[tuple[AuxMsgTarget, Shareable]],
         timeout: float,
         fl_ctx: FLContext,
         optional: bool = False,
@@ -291,7 +290,7 @@ class AuxRunner(FLComponent):
 
     def send_aux_request(
         self,
-        targets: List[AuxMsgTarget],
+        targets: list[AuxMsgTarget],
         topic: str,
         request: Shareable,
         timeout: float,
@@ -343,7 +342,7 @@ class AuxRunner(FLComponent):
 
     def _send_to_cell(
         self,
-        targets: List[AuxMsgTarget],
+        targets: list[AuxMsgTarget],
         channel: str,
         topic: str,
         request: Shareable,

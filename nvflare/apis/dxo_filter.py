@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Union
+from typing import Union
 
 from .dxo import DXO, DataKind, from_shareable
 from .filter import Filter, FilterContextKey
@@ -28,7 +28,7 @@ class DXOFilter(Filter, ABC):
     This is the base class for DXO-based filters
     """
 
-    def __init__(self, supported_data_kinds: Union[None, List[str]], data_kinds_to_filter: Union[None, List[str]]):
+    def __init__(self, supported_data_kinds: Union[None, list[str]], data_kinds_to_filter: Union[None, list[str]]):
         """
 
         Args:
@@ -114,7 +114,7 @@ class DXOFilter(Filter, ABC):
 
         return result
 
-    def _filter_dxos(self, dxo_collection: Union[List[DXO], Dict[str, DXO]], shareable, fl_ctx):
+    def _filter_dxos(self, dxo_collection: Union[list[DXO], dict[str, DXO]], shareable, fl_ctx):
         if isinstance(dxo_collection, list):
             for i in range(len(dxo_collection)):
                 v = dxo_collection[i]

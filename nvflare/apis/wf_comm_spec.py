@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import SendOrder, Task, TaskCompletionStatus
@@ -27,7 +27,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
     ):
@@ -71,7 +71,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 0,
         wait_time_after_min_received: int = 0,
         abort_signal: Signal = None,
@@ -98,7 +98,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
     ):
         """Schedule a broadcast task that never ends until timeout or explicitly cancelled.
 
@@ -119,7 +119,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
     ):
@@ -151,7 +151,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         abort_signal: Signal = None,
@@ -177,7 +177,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -203,7 +203,7 @@ class WFCommSpec(ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order=SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -255,7 +255,7 @@ class WFCommSpec(ABC):
         """Checks if tasks should be exited."""
         raise NotImplementedError
 
-    def process_task_request(self, client: Client, fl_ctx: FLContext) -> Tuple[str, str, Shareable]:
+    def process_task_request(self, client: Client, fl_ctx: FLContext) -> tuple[str, str, Shareable]:
         """Called by the Engine when a task request is received from a client.
 
         Args:

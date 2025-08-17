@@ -18,6 +18,7 @@ from nvflare.fuel.flare_api.flare_api import new_insecure_session
 from nvflare.job_config.api import FedJob
 
 from .spec import ExecEnv
+from typing import Optional
 
 
 class ProdEnv(ExecEnv):
@@ -26,7 +27,7 @@ class ProdEnv(ExecEnv):
         self,
         startup_kit_dir: str,
         login_timeout: float = 5.0,
-        monitor_job_duration: int = None,
+        monitor_job_duration: Optional[int] = None,
     ):
         self.startup_kit_dir = startup_kit_dir
         self.login_timeout = login_timeout

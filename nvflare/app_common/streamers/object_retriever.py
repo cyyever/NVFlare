@@ -15,7 +15,7 @@ import threading
 import time
 import uuid
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_component import FLComponent
@@ -49,7 +49,7 @@ class ObjectRetriever(FLComponent, ABC):
 
     def __init__(
         self,
-        topic: str = None,
+        topic: Optional[str] = None,
     ):
         FLComponent.__init__(self)
         class_name = self.__class__.__name__

@@ -15,7 +15,7 @@
 import os
 import threading
 from concurrent import futures
-from typing import Any, Dict, List, Union
+from typing import Any, Union
 
 import grpc
 
@@ -222,14 +222,14 @@ class GrpcDriver(BaseDriver):
         self.logger.debug(f"GRPC Config: max_workers={self.max_workers}, options={self.options}")
 
     @staticmethod
-    def supported_transports() -> List[str]:
+    def supported_transports() -> list[str]:
         if use_aio_grpc():
             return ["nagrpc", "nagrpcs"]
         else:
             return ["grpc", "grpcs"]
 
     @staticmethod
-    def capabilities() -> Dict[str, Any]:
+    def capabilities() -> dict[str, Any]:
         return {DriverCap.SEND_HEARTBEAT.value: True, DriverCap.SUPPORT_SSL.value: True}
 
     def listen(self, connector: ConnectorInfo):

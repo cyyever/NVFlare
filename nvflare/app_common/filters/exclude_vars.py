@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import re
-from typing import List, Union
+from typing import Union, Optional
 
 from nvflare.apis.dxo import DataKind
 from nvflare.apis.dxo_filter import DXO, DXOFilter
@@ -22,7 +22,7 @@ from nvflare.apis.shareable import Shareable
 
 
 class ExcludeVars(DXOFilter):
-    def __init__(self, exclude_vars: Union[List[str], str, None] = None, data_kinds: List[str] = None):
+    def __init__(self, exclude_vars: Union[list[str], str, None] = None, data_kinds: Optional[list[str]] = None):
         """Exclude/Remove variables from Shareable.
 
         Args:

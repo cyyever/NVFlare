@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from nvflare.apis.analytix import AnalyticsDataType
 from nvflare.app_common.abstract.fl_model import FLModel
@@ -77,7 +77,7 @@ class APISpec(ABC):
         pass
 
     @abstractmethod
-    def system_info(self) -> Dict:
+    def system_info(self) -> dict:
         """Gets NVFlare system information.
 
         System information will be available after a valid FLModel is received.
@@ -99,7 +99,7 @@ class APISpec(ABC):
         pass
 
     @abstractmethod
-    def get_config(self) -> Dict:
+    def get_config(self) -> dict:
         """Gets the ClientConfig dictionary.
 
         Returns:

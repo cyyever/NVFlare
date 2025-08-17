@@ -14,7 +14,7 @@
 
 import copy
 from math import sqrt
-from typing import Dict, List, TypeVar
+from typing import TypeVar, Optional
 
 from nvflare.app_common.abstract.statistics_spec import Bin, BinRange, DataType, Feature, Histogram, HistogramType
 from nvflare.app_common.app_constant import StatisticsConstants as StC
@@ -517,7 +517,7 @@ def get_hierarchical_stddevs(global_metrics: dict) -> dict:
     return global_metrics
 
 
-def get_hierarchical_levels(data: dict, level: int = 0, levels_dict: dict = None) -> dict:
+def get_hierarchical_levels(data: dict, level: int = 0, levels_dict: Optional[dict] = None) -> dict:
     """Calculate number of hierarchical levels from the given hierarchy config.
 
     Args:
@@ -577,7 +577,7 @@ def get_client_hierarchy(hierarchy_config: dict, client_name: str, path=None) ->
     return None
 
 
-def bins_to_dict(bins: List[Bin]) -> Dict[BinRange, float]:
+def bins_to_dict(bins: list[Bin]) -> dict[BinRange, float]:
     """Convert histogram bins to a 'dict'.
 
     Args:
@@ -593,7 +593,7 @@ def bins_to_dict(bins: List[Bin]) -> Dict[BinRange, float]:
     return buckets
 
 
-def filter_numeric_features(ds_features: Dict[str, List[Feature]]) -> Dict[str, List[Feature]]:
+def filter_numeric_features(ds_features: dict[str, list[Feature]]) -> dict[str, list[Feature]]:
     """Filter numeric features.
 
     Args:
@@ -604,7 +604,7 @@ def filter_numeric_features(ds_features: Dict[str, List[Feature]]) -> Dict[str, 
     """
     numeric_ds_features = {}
     for ds_name in ds_features:
-        features: List[Feature] = ds_features[ds_name]
+        features: list[Feature] = ds_features[ds_name]
         n_features = [f for f in features if (f.data_type == DataType.INT or f.data_type == DataType.FLOAT)]
         numeric_ds_features[ds_name] = n_features
 

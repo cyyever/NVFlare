@@ -16,7 +16,7 @@ import concurrent.futures
 import copy
 import threading
 import uuid
-from typing import Dict, List, Union
+from typing import Union, Optional
 
 from nvflare.apis.signal import Signal
 from nvflare.fuel.f3.cellnet.core_cell import CoreCell, TargetMessage
@@ -124,7 +124,7 @@ class Cell(StreamCell):
     def update_fobs_context(self, props: dict):
         self.core_cell.update_fobs_context(props)
 
-    def get_fobs_context(self, props: dict = None):
+    def get_fobs_context(self, props: Optional[dict] = None):
         """Return a new copy of the fobs context. If props is specified, they will be set into the context.
 
         Returns: a new copy of the fobs context
@@ -160,13 +160,13 @@ class Cell(StreamCell):
         self,
         channel: str,
         topic: str,
-        targets: Union[str, List[str]],
+        targets: Union[str, list[str]],
         request: Message,
         timeout=None,
         secure=False,
         optional=False,
         abort_signal: Signal = None,
-    ) -> Dict[str, Message]:
+    ) -> dict[str, Message]:
         """
         Send a message over a channel to specified destination cell(s), and wait for reply
 
@@ -224,11 +224,11 @@ class Cell(StreamCell):
         self,
         channel: str,
         topic: str,
-        targets: Union[str, List[str]],
+        targets: Union[str, list[str]],
         message: Message,
         secure=False,
         optional=False,
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """
         Send a message over a channel to specified destination cell(s), and do not wait for replies.
 

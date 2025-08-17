@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Tuple
 
 from nvflare.apis.fl_constant import AdminCommandNames as AC
 from nvflare.fuel.sec.authz import Authorizer, AuthzContext
@@ -78,5 +77,5 @@ class EmptyAuthorizer(Authorizer):
     def __init__(self):
         Authorizer.__init__(self, "dummy")
 
-    def authorize(self, ctx: AuthzContext) -> Tuple[bool, str]:
+    def authorize(self, ctx: AuthzContext) -> tuple[bool, str]:
         return True, ""

@@ -24,10 +24,11 @@ from nvflare.app_common.tie.process_mgr import CommandDescriptor, ProcessManager
 from nvflare.app_opt.flower.defs import Constant
 from nvflare.fuel.utils.grpc_utils import create_channel
 from nvflare.security.logging import secure_format_exception
+from typing import Optional
 
 
 class FlowerClientApplet(CLIApplet):
-    def __init__(self, extra_env: dict = None):
+    def __init__(self, extra_env: Optional[dict] = None):
         """Constructor of FlowerClientApplet, which extends CLIApplet."""
         CLIApplet.__init__(self, stop_method="term")
         self.extra_env = extra_env

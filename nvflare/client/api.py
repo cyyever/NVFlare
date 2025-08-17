@@ -14,7 +14,7 @@
 
 import logging
 from threading import Lock
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.analytix import AnalyticsDataType
 from nvflare.app_common.abstract.fl_model import FLModel
@@ -109,7 +109,7 @@ def send(model: FLModel, clear_cache: bool = True, ctx: Optional[APIContext] = N
     return local_ctx.api.send(model, clear_cache)
 
 
-def system_info(ctx: Optional[APIContext] = None) -> Dict:
+def system_info(ctx: Optional[APIContext] = None) -> dict:
     """Gets NVFlare system information.
 
     System information will be available after a valid FLModel is received.
@@ -126,7 +126,7 @@ def system_info(ctx: Optional[APIContext] = None) -> Dict:
     return local_ctx.api.system_info()
 
 
-def get_config(ctx: Optional[APIContext] = None) -> Dict:
+def get_config(ctx: Optional[APIContext] = None) -> dict:
     """Gets the ClientConfig dictionary.
 
     Returns:

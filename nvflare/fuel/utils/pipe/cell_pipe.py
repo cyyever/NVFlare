@@ -15,7 +15,7 @@
 import queue
 import threading
 import time
-from typing import Tuple, Union
+from typing import Union
 
 from nvflare.apis.fl_constant import ConnPropKey, FLMetaKey, SystemVarName
 from nvflare.fuel.data_event.utils import get_scope_property
@@ -412,7 +412,7 @@ class CellPipe(Pipe):
             self.ci.close_pipe(self)
             self.closed = True
 
-    def export(self, export_mode: str) -> Tuple[str, dict]:
+    def export(self, export_mode: str) -> tuple[str, dict]:
         if export_mode == ExportMode.SELF:
             mode = self.mode
         else:

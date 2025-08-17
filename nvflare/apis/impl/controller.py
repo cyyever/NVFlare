@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from abc import ABC
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ControllerSpec, SendOrder, Task, TaskCompletionStatus
@@ -56,7 +56,7 @@ class Controller(FLComponent, ControllerSpec, ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 1,
         wait_time_after_min_received: int = 0,
     ):
@@ -66,7 +66,7 @@ class Controller(FLComponent, ControllerSpec, ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         min_responses: int = 1,
         wait_time_after_min_received: int = 0,
         abort_signal: Optional[Signal] = None,
@@ -75,14 +75,14 @@ class Controller(FLComponent, ControllerSpec, ABC):
             task, fl_ctx, targets, min_responses, wait_time_after_min_received, abort_signal
         )
 
-    def broadcast_forever(self, task: Task, fl_ctx: FLContext, targets: Union[List[Client], List[str], None] = None):
+    def broadcast_forever(self, task: Task, fl_ctx: FLContext, targets: Union[list[Client], list[str], None] = None):
         return self.communicator.broadcast_forever(task, fl_ctx, targets)
 
     def send(
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
     ):
@@ -92,7 +92,7 @@ class Controller(FLComponent, ControllerSpec, ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         abort_signal: Signal = None,
@@ -103,7 +103,7 @@ class Controller(FLComponent, ControllerSpec, ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order: SendOrder = SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,
@@ -117,7 +117,7 @@ class Controller(FLComponent, ControllerSpec, ABC):
         self,
         task: Task,
         fl_ctx: FLContext,
-        targets: Union[List[Client], List[str], None] = None,
+        targets: Union[list[Client], list[str], None] = None,
         send_order=SendOrder.SEQUENTIAL,
         task_assignment_timeout: int = 0,
         task_result_timeout: int = 0,

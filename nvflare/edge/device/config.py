@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import inspect
-from typing import Any, List
+from typing import Any
 
 
 class ConfigError(Exception):
@@ -229,7 +229,7 @@ def _resolve_ref(ref, obj_table: dict):
     return obj_table.get(referenced_name)
 
 
-def _process_refs(refs: List[str], obj_table: dict):
+def _process_refs(refs: list[str], obj_table: dict):
     for i, r in enumerate(refs):
         obj = _resolve_ref(r, obj_table)
         if not obj:

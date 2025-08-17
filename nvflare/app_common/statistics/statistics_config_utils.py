@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.app_common.app_constant import StatisticsConstants as StC
 
 
-def get_feature_bin_range(feature_name: str, hist_config: dict) -> Optional[List[float]]:
+def get_feature_bin_range(feature_name: str, hist_config: dict) -> Optional[list[float]]:
     bin_range = None
     if feature_name in hist_config:
         if StC.STATS_BIN_RANGE in hist_config[feature_name]:

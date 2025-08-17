@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Optional, Tuple
+from typing import Optional
 
 from nvflare.apis.app_validation import AppValidator
 
@@ -20,7 +20,7 @@ from .default_app_validator import DefaultAppValidator
 
 
 class FLAppValidator(AppValidator):
-    def __init__(self, site_type: str, custom_validators: Optional[List[AppValidator]] = None):
+    def __init__(self, site_type: str, custom_validators: Optional[list[AppValidator]] = None):
         super().__init__()
         self.validators = [DefaultAppValidator(site_type=site_type)]
         if custom_validators:
@@ -31,7 +31,7 @@ class FLAppValidator(AppValidator):
                     raise TypeError("validator must be AppValidator, but got {}".format(type(validator)))
                 self.validators.append(validator)
 
-    def validate(self, app_folder: str) -> Tuple[str, Dict]:
+    def validate(self, app_folder: str) -> tuple[str, dict]:
         final_result = {}
         for v in self.validators:
             err, result = v.validate(app_folder)

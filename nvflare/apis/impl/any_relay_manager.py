@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import time
-from typing import Tuple
 
 from nvflare.apis.controller_spec import ClientTask, Task, TaskCompletionStatus
 from nvflare.apis.fl_context import FLContext
@@ -107,7 +106,7 @@ class AnyRelayTaskManager(TaskManager):
         sent_target_count[client_name] = send_count + 1
         return TaskCheckStatus.SEND
 
-    def check_task_exit(self, task: Task) -> Tuple[bool, TaskCompletionStatus]:
+    def check_task_exit(self, task: Task) -> tuple[bool, TaskCompletionStatus]:
         """Determine whether the task should exit.
 
         Args:

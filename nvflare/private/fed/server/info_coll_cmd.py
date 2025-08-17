@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import json
-from typing import List
 
 from nvflare.apis.fl_constant import AdminCommandNames
 from nvflare.fuel.hci.conn import Connection
@@ -71,7 +70,7 @@ class InfoCollectorCommandModule(JobCommandModule, CommandUtil):
             ],
         )
 
-    def authorize_info_collection(self, conn: Connection, args: List[str]):
+    def authorize_info_collection(self, conn: Connection, args: list[str]):
         if len(args) < 3:
             cmd_entry = conn.get_prop(ConnProps.CMD_ENTRY)
             conn.append_error(f"Usage: {cmd_entry.usage}", meta=make_meta(MetaStatusValue.SYNTAX_ERROR))
@@ -114,11 +113,11 @@ class InfoCollectorCommandModule(JobCommandModule, CommandUtil):
             return PreAuthzReturnCode.ERROR
         return rt
 
-    def show_stats(self, conn: Connection, args: List[str]):
+    def show_stats(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         self._collect_stats(conn, args, stats_func=engine.show_stats, msg_topic=InfoCollectorTopic.SHOW_STATS)
 
-    def _collect_stats(self, conn: Connection, args: List[str], stats_func, msg_topic):
+    def _collect_stats(self, conn: Connection, args: list[str], stats_func, msg_topic):
         job_id = conn.get_prop(self.JOB_ID)
         target_type = args[2]
         result = {}
@@ -133,11 +132,11 @@ class InfoCollectorCommandModule(JobCommandModule, CommandUtil):
             self._process_stats_replies(conn, replies, result)
         conn.append_any(result)
 
-    def show_errors(self, conn: Connection, args: List[str]):
+    def show_errors(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         self._collect_stats(conn, args, stats_func=engine.get_errors, msg_topic=InfoCollectorTopic.SHOW_ERRORS)
 
-    def reset_errors(self, conn: Connection, args: List[str]):
+    def reset_errors(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         self._collect_stats(conn, args, stats_func=engine.reset_errors, msg_topic=InfoCollectorTopic.RESET_ERRORS)
 

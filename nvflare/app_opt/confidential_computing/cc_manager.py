@@ -14,7 +14,6 @@
 
 import threading
 import time
-from typing import Dict, List, Tuple
 
 from nvflare.apis.app_validation import AppValidationKey
 from nvflare.apis.event_type import EventType
@@ -48,11 +47,11 @@ CC_VERIFICATION_FAILED = "not meeting CC requirements"
 class CCManager(FLComponent):
     def __init__(
         self,
-        cc_issuers_conf: List[Dict[str, str]],
-        cc_verifier_ids: List[str],
+        cc_issuers_conf: list[dict[str, str]],
+        cc_verifier_ids: list[str],
         verify_frequency: int = 600,
         critical_level=SHUTDOWN_JOB,
-        cc_enabled_sites: List[str] = [],
+        cc_enabled_sites: list[str] = [],
     ):
         """Manage all confidential computing related tasks.
 
@@ -306,7 +305,7 @@ class CCManager(FLComponent):
         self.logger.info(f"{self.site_name=} set PEER_CTX_CC_TOKEN with {participants_tokens=}")
         return ""
 
-    def _collect_participants_tokens(self, participants: List[str]) -> Dict[str, List[Dict[str, str]]]:
+    def _collect_participants_tokens(self, participants: list[str]) -> dict[str, list[dict[str, str]]]:
         """Collects tokens from all participants including itself.
 
         Args:
@@ -358,7 +357,7 @@ class CCManager(FLComponent):
 
                 self.token_submitted = False
 
-    def _validate_participants_tokens(self, participants_tokens: Dict[str, List[Dict[str, str]]]) -> str:
+    def _validate_participants_tokens(self, participants_tokens: dict[str, list[dict[str, str]]]) -> str:
         self.logger.debug(f"Validating participant tokens {participants_tokens=}")
         _, invalid_participant_list = self._verify_participants_tokens(participants_tokens)
         if invalid_participant_list:
@@ -369,8 +368,8 @@ class CCManager(FLComponent):
             return ""
 
     def _verify_participants_tokens(
-        self, participants_tokens: Dict[str, List[Dict[str, str]]]
-    ) -> Tuple[Dict[str, bool], List[str]]:
+        self, participants_tokens: dict[str, list[dict[str, str]]]
+    ) -> tuple[dict[str, bool], list[str]]:
         """Verifies tokens for all participants.
 
         Args:

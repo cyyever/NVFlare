@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any
+from typing import Any, Optional
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.apis.shareable import ReturnCode, Shareable
@@ -24,7 +24,7 @@ from .object_retriever import ObjectRetriever
 class ContainerRetriever(ObjectRetriever):
     def __init__(
         self,
-        topic: str = None,
+        topic: Optional[str] = None,
         stream_msg_optional=False,
         stream_msg_secure=False,
         entry_timeout=None,

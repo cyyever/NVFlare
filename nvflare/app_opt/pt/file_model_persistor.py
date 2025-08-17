@@ -16,7 +16,6 @@ import json
 import os
 import re
 from collections import OrderedDict
-from typing import Dict
 
 import torch
 
@@ -31,6 +30,7 @@ from nvflare.app_common.model_desc import ModelDescriptor
 from nvflare.app_opt.pt.decomposers import TensorDecomposer
 from nvflare.app_opt.pt.model_persistence_format_manager import PTModelPersistenceFormatManager
 from nvflare.fuel.utils import fobs
+from typing import Optional
 
 
 class PTFileModelPersistor(ModelPersistor):
@@ -41,7 +41,7 @@ class PTFileModelPersistor(ModelPersistor):
         global_model_file_name=DefaultCheckpointFileName.GLOBAL_MODEL,
         best_global_model_file_name=DefaultCheckpointFileName.BEST_GLOBAL_MODEL,
         source_ckpt_file_full_name=None,
-        filter_id: str = None,
+        filter_id: Optional[str] = None,
         load_weights_only: bool = False,
         allow_numpy_conversion: bool = True,
     ):
@@ -285,7 +285,7 @@ class PTFileModelPersistor(ModelPersistor):
             self.log_exception(fl_ctx, "error loading checkpoint from {}".format(location))
             return None
 
-    def get_model_inventory(self, fl_ctx: FLContext) -> Dict[str, ModelDescriptor]:
+    def get_model_inventory(self, fl_ctx: FLContext) -> dict[str, ModelDescriptor]:
         model_inventory = {}
         location = os.path.join(self.log_dir, self.global_model_file_name)
         if os.path.exists(location):

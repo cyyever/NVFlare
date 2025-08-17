@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.fuel.common.ctx import BaseContext
 
 from .proto import Buffer, ProtoKey
 from .table import Table
+from typing import Optional
 
 
 class Connection(BaseContext):
@@ -33,19 +33,19 @@ class Connection(BaseContext):
         if props:
             self.set_props(props)
 
-    def append_table(self, headers: List[str], name=None) -> Table:
+    def append_table(self, headers: list[str], name=None) -> Table:
         return self.buffer.append_table(headers, name=name)
 
-    def append_string(self, data: str, meta: dict = None):
+    def append_string(self, data: str, meta: Optional[dict] = None):
         self.buffer.append_string(data, meta=meta)
 
-    def append_success(self, data: str, meta: dict = None):
+    def append_success(self, data: str, meta: Optional[dict] = None):
         self.buffer.append_success(data, meta=meta)
 
-    def append_dict(self, data: dict, meta: dict = None):
+    def append_dict(self, data: dict, meta: Optional[dict] = None):
         self.buffer.append_dict(data, meta=meta)
 
-    def append_error(self, data: str, meta: dict = None):
+    def append_error(self, data: str, meta: Optional[dict] = None):
         self.buffer.append_error(data, meta=meta)
 
     def append_command(self, cmd: str):
@@ -57,7 +57,7 @@ class Connection(BaseContext):
     def append_shutdown(self, msg: str):
         self.buffer.append_shutdown(msg)
 
-    def append_any(self, data, meta: dict = None):
+    def append_any(self, data, meta: Optional[dict] = None):
         if data is None:
             return
 

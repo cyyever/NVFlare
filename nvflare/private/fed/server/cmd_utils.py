@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.apis.job_def import JobMetaKey
 from nvflare.apis.server_engine_spec import ServerEngineSpec
@@ -38,10 +37,10 @@ class CommandUtil(object):
     JOB_ID = "job_id"
     JOB = "job"
 
-    def command_authz_required(self, conn: Connection, args: List[str]) -> PreAuthzReturnCode:
+    def command_authz_required(self, conn: Connection, args: list[str]) -> PreAuthzReturnCode:
         return PreAuthzReturnCode.REQUIRE_AUTHZ
 
-    def authorize_client_operation(self, conn: Connection, args: List[str]) -> PreAuthzReturnCode:
+    def authorize_client_operation(self, conn: Connection, args: list[str]) -> PreAuthzReturnCode:
         auth_args = [args[0], self.TARGET_TYPE_CLIENT]
         auth_args.extend(args[1:])
 
@@ -52,7 +51,7 @@ class CommandUtil(object):
 
         return PreAuthzReturnCode.REQUIRE_AUTHZ
 
-    def validate_command_targets(self, conn: Connection, args: List[str]) -> str:
+    def validate_command_targets(self, conn: Connection, args: list[str]) -> str:
         """Validate specified args and determine and set target type and target names in the Connection.
 
         The args must be like this:
@@ -125,7 +124,7 @@ class CommandUtil(object):
         conn.set_prop(self.TARGET_CLIENTS, all_clients)
         return ""
 
-    def must_be_project_admin(self, conn: Connection, args: List[str]):
+    def must_be_project_admin(self, conn: Connection, args: list[str]):
         role = conn.get_prop(ConnProps.USER_ROLE, "")
         if role not in ["project_admin"]:
             conn.append_error(
@@ -135,7 +134,7 @@ class CommandUtil(object):
         else:
             return PreAuthzReturnCode.OK
 
-    def authorize_server_operation(self, conn: Connection, args: List[str]):
+    def authorize_server_operation(self, conn: Connection, args: list[str]):
         err = self.validate_command_targets(conn, args[1:])
         if err:
             conn.append_error(err, meta=make_meta(MetaStatusValue.INVALID_TARGET, info=err))

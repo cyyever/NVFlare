@@ -13,7 +13,7 @@
 # limitations under the License.
 import uuid
 from enum import Enum
-from typing import Any, Callable, Dict, Union
+from typing import Any, Callable, Union, Optional
 
 TEN_MEGA = 10 * 1024 * 1024
 MIN_THRESHOLD = 1024
@@ -87,7 +87,7 @@ class DatumRef:
 
 
 class DatumManager:
-    def __init__(self, threshold=None, fobs_ctx: dict = None):
+    def __init__(self, threshold=None, fobs_ctx: Optional[dict] = None):
         if not threshold:
             threshold = TEN_MEGA
 
@@ -101,7 +101,7 @@ class DatumManager:
             fobs_ctx = {}
 
         self.threshold = threshold
-        self.datums: Dict[str, Datum] = {}
+        self.datums: dict[str, Datum] = {}
         self.fobs_ctx = fobs_ctx
 
         # some decomposers (e.g. Shareable, Learnable, etc.) make a shallow copy of the original object before

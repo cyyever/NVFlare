@@ -14,7 +14,7 @@
 
 from abc import ABC, abstractmethod
 from threading import Lock
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.analytix import ANALYTIC_EVENT_TYPE, AnalyticsDataType, LogWriterName, TrackConst
 from nvflare.apis.event_type import EventType
@@ -77,7 +77,7 @@ class AnalyticsSender(Widget):
 
 
 class AnalyticsReceiver(Widget, ABC):
-    def __init__(self, events: Optional[List[str]] = None):
+    def __init__(self, events: Optional[list[str]] = None):
         """Receives analytic data.
 
         Args:

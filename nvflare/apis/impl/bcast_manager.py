@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import time
-from typing import Tuple
 
 from nvflare.apis.controller_spec import ClientTask, Task, TaskCompletionStatus
 from nvflare.apis.fl_context import FLContext
@@ -39,7 +38,7 @@ class BcastTaskManager(TaskManager):
         task.props[_KEY_WAIT_TIME_AFTER_MIN_RESPS] = wait_time_after_min_received
         task.props[_KEY_MIN_RESPS_RCV_TIME] = None
 
-    def check_task_exit(self, task: Task) -> Tuple[bool, TaskCompletionStatus]:
+    def check_task_exit(self, task: Task) -> tuple[bool, TaskCompletionStatus]:
         """Determine if the task should exit.
 
         Args:
@@ -112,7 +111,7 @@ class BcastForeverTaskManager(TaskManager):
         else:
             return TaskCheckStatus.NO_BLOCK
 
-    def check_task_exit(self, task: Task) -> Tuple[bool, TaskCompletionStatus]:
+    def check_task_exit(self, task: Task) -> tuple[bool, TaskCompletionStatus]:
         """Determine whether the task should exit.
 
         Args:

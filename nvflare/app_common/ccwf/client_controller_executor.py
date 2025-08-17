@@ -14,7 +14,6 @@
 import copy
 import threading
 import time
-from typing import List
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.executor import Executor
@@ -35,7 +34,7 @@ from nvflare.security.logging import secure_format_exception
 class ClientControllerExecutor(Executor):
     def __init__(
         self,
-        controller_id_list: List,
+        controller_id_list: list,
         task_name_prefix: str = "",
         persistor_id=AppConstants.DEFAULT_PERSISTOR_ID,
         final_result_ack_timeout=Constant.FINAL_RESULT_ACK_TIMEOUT,

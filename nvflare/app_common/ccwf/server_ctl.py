@@ -14,7 +14,6 @@
 
 import time
 from datetime import datetime
-from typing import List
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, Task
@@ -44,6 +43,7 @@ from nvflare.fuel.utils.validation_utils import (
     validate_candidates,
 )
 from nvflare.security.logging import secure_format_traceback
+from typing import Optional
 
 
 class ClientStatus:
@@ -69,7 +69,7 @@ class ServerSideController(Controller):
         starting_client: str = "",
         starting_client_policy: str = DefaultValuePolicy.ANY,
         participating_clients=None,
-        result_clients: List[str] = None,
+        result_clients: Optional[list[str]] = None,
         result_clients_policy: str = DefaultValuePolicy.ALL,
         max_status_report_interval: float = Constant.PER_CLIENT_STATUS_REPORT_TIMEOUT,
         progress_timeout: float = Constant.WORKFLOW_PROGRESS_TIMEOUT,

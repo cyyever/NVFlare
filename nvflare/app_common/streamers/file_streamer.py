@@ -14,7 +14,7 @@
 import os
 import tempfile
 import uuid
-from typing import Any, Dict, List, Tuple
+from typing import Any, Optional
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.apis.shareable import ReturnCode, Shareable, make_reply
@@ -50,7 +50,7 @@ class _ChunkConsumer(ObjectConsumer):
         shareable: Shareable,
         stream_ctx: StreamContext,
         fl_ctx: FLContext,
-    ) -> Tuple[bool, Shareable]:
+    ) -> tuple[bool, Shareable]:
         data = shareable.get(_KEY_DATA)
         data_size = shareable.get(_KEY_DATA_SIZE)
 
@@ -107,7 +107,7 @@ class _ChunkProducer(ObjectProducer):
         self,
         stream_ctx: StreamContext,
         fl_ctx: FLContext,
-    ) -> Tuple[Shareable, float]:
+    ) -> tuple[Shareable, float]:
         chunk = self.file.read(self.chunk_size)
         size = 0
         if chunk:
@@ -125,7 +125,7 @@ class _ChunkProducer(ObjectProducer):
 
     def process_replies(
         self,
-        replies: Dict[str, Shareable],
+        replies: dict[str, Shareable],
         stream_ctx: StreamContext,
         fl_ctx: FLContext,
     ) -> Any:
@@ -156,7 +156,7 @@ class FileStreamer(StreamerBase):
         fl_ctx: FLContext,
         channel: str,
         topic: str,
-        dest_dir: str = None,
+        dest_dir: Optional[str] = None,
         stream_done_cb=None,
         chunk_consumed_cb=None,
         **cb_kwargs,
@@ -201,7 +201,7 @@ class FileStreamer(StreamerBase):
         channel: str,
         topic: str,
         stream_ctx: StreamContext,
-        targets: List[str],
+        targets: list[str],
         file_name: str,
         fl_ctx: FLContext,
         chunk_size=None,

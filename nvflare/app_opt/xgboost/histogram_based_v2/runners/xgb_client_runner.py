@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os
-from typing import Tuple
 
 import matplotlib.pyplot as plt
 import shap
@@ -31,6 +30,7 @@ from nvflare.app_opt.xgboost.metrics_cb import MetricsCallback
 from nvflare.fuel.utils.config_service import ConfigService
 from nvflare.fuel.utils.log_utils import get_obj_logger
 from nvflare.utils.cli_utils import get_package_root
+from typing import Optional
 
 PLUGIN_PARAM_KEY = "federated_plugin"
 PLUGIN_KEY_NAME = "name"
@@ -58,7 +58,7 @@ class XGBClientRunner(AppRunner, FLComponent):
         self,
         data_loader_id: str,
         model_file_name: str,
-        metrics_writer_id: str = None,
+        metrics_writer_id: Optional[str] = None,
     ):
         FLComponent.__init__(self)
         self.model_file_name = model_file_name
@@ -241,5 +241,5 @@ class XGBClientRunner(AppRunner, FLComponent):
         # currently no way to stop the runner
         pass
 
-    def is_stopped(self) -> Tuple[bool, int]:
+    def is_stopped(self) -> tuple[bool, int]:
         return self._stopped, 0

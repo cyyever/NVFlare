@@ -14,7 +14,7 @@
 
 
 import collections
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.fl_constant import ReturnCode
 from nvflare.apis.fl_context import FLContext
@@ -45,7 +45,7 @@ class DhPSITaskHandler(TaskHandler):
         self.bloom_filter_fpr = None
         self.psi_client = None
         self.psi_server = None
-        self.intersects: Optional[List[str]] = None
+        self.intersects: Optional[list[str]] = None
         self.local_psi_handler: Optional[PSI] = None
         self.client_name = None
         self.items = None

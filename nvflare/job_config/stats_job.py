@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import List
 
 from nvflare import FedJob, FilterType
 from nvflare.apis.job_def import SERVER_SITE_NAME
@@ -59,7 +58,7 @@ class StatsJob(FedJob):
         stats_writer = self.get_stats_output_writer()
         self.to(stats_writer, server_name, id=self.writer_id)
 
-    def setup_clients(self, sites: List[str]):
+    def setup_clients(self, sites: list[str]):
         # Client side job config
         # Add client site
         for site_id in sites:

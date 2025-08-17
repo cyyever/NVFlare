@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any, List, Optional
+from typing import Any, Optional
 
 from pydantic import BaseModel, PositiveInt
 
@@ -24,7 +24,7 @@ from nvflare.recipe.spec import Recipe
 class _FedAvgValidator(BaseModel):
     name: str
     initial_model: Any
-    clients: Optional[List[str]]
+    clients: Optional[list[str]]
     num_clients: Optional[PositiveInt]
     min_clients: int
     num_rounds: int
@@ -44,7 +44,7 @@ class FedAvgRecipe(Recipe):
         *,
         name: str = "fedavg",
         initial_model: Any = None,
-        clients: Optional[List[str]] = None,
+        clients: Optional[list[str]] = None,
         num_clients: Optional[int] = None,
         min_clients: int = 0,
         num_rounds: int = 2,

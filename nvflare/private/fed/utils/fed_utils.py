@@ -18,7 +18,7 @@ import pkgutil
 import subprocess
 import sys
 import warnings
-from typing import List, Union
+from typing import Union, Optional
 
 from nvflare.apis.app_validation import AppValidator
 from nvflare.apis.client import Client
@@ -48,7 +48,7 @@ from ..simulator.simulator_const import SimulatorConstants
 from .app_authz import AppAuthzService
 
 
-def _check_secure_content(site_type: str) -> List[str]:
+def _check_secure_content(site_type: str) -> list[str]:
     """To check the security contents.
 
     Args:
@@ -225,13 +225,13 @@ def get_scope_info():
         return [], "processing_error"
 
 
-def fobs_initialize(workspace: Workspace = None, job_id: str = None):
+def fobs_initialize(workspace: Workspace = None, job_id: Optional[str] = None):
     nvflare_fobs_initialize()
 
     custom_fobs_initialize(workspace, job_id)
 
 
-def custom_fobs_initialize(workspace: Workspace = None, job_id: str = None):
+def custom_fobs_initialize(workspace: Workspace = None, job_id: Optional[str] = None):
     if workspace:
         site_custom_dir = workspace.get_client_custom_dir()
         decomposer_dir = os.path.join(site_custom_dir, ConfigVarName.DECOMPOSER_MODULE)
@@ -251,7 +251,7 @@ def nvflare_fobs_initialize():
     private_decomposers.register()
 
 
-def register_ext_decomposers(decomposer_module: Union[str, List[str]]):
+def register_ext_decomposers(decomposer_module: Union[str, list[str]]):
     if decomposer_module:
         if isinstance(decomposer_module, str):
             modules = [decomposer_module]
@@ -449,7 +449,7 @@ def get_job_launcher(job_meta: dict, fl_ctx: FLContext) -> JobLauncherSpec:
     return job_launcher[0]
 
 
-def execute_command_directly(args: List[str]) -> str:
+def execute_command_directly(args: list[str]) -> str:
     """Execute a command directly, without using shell"""
 
     result = subprocess.run(

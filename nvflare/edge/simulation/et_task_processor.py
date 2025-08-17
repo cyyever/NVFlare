@@ -15,7 +15,6 @@
 import base64
 import logging
 from abc import ABC, abstractmethod
-from typing import Dict
 
 from executorch.extension.training import _load_for_executorch_for_training_from_buffer, get_sgd_optimizer
 from torch.utils.data import DataLoader, Dataset
@@ -25,6 +24,7 @@ from nvflare.edge.model_protocol import ModelBufferType, ModelEncoding, ModelNat
 from nvflare.edge.simulation.device_task_processor import DeviceTaskProcessor
 from nvflare.edge.web.models.job_response import JobResponse
 from nvflare.edge.web.models.task_response import TaskResponse
+from typing import Optional
 
 log = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class ETTaskProcessor(DeviceTaskProcessor, ABC):
     def __init__(
         self,
         data_path: str,
-        training_config: Dict = None,
+        training_config: Optional[dict] = None,
     ):
         """Initialize the task processor.
 
@@ -134,7 +134,7 @@ class ETTaskProcessor(DeviceTaskProcessor, ABC):
         log.info(f"Shutting down job {self.job_name} (ID: {self.job_id})")
         # Add cleanup code here if needed
 
-    def run_training(self, et_model, total_epochs: int = 1) -> Dict:
+    def run_training(self, et_model, total_epochs: int = 1) -> dict:
         """Run training loop.
 
         Args:

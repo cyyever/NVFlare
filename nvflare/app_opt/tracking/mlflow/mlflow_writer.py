@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.apis.analytix import ANALYTIC_EVENT_TYPE, AnalyticsDataType, LogWriterName
 from nvflare.app_common.tracking.log_writer import LogWriter
@@ -75,7 +75,7 @@ class MLflowWriter(LogWriter):
         """
         self.write(tag=key, value=value, data_type=AnalyticsDataType.METRIC, global_step=step)
 
-    def log_metrics(self, metrics: Dict[str, float], step: Optional[int] = None) -> None:
+    def log_metrics(self, metrics: dict[str, float], step: Optional[int] = None) -> None:
         """Log multiple metrics for the current run.
 
         Args:

@@ -21,7 +21,6 @@ import subprocess
 import sys
 from enum import Enum
 from tempfile import TemporaryDirectory
-from typing import Dict, List
 
 from nvflare.fuel.utils.class_utils import get_component_init_parameters
 from nvflare.fuel.utils.log_utils import get_obj_logger
@@ -63,14 +62,14 @@ class FedJobConfig:
         self.meta_props = meta_props
         self.app_packages = []
 
-        self.fed_apps: Dict[str, FedAppConfig] = {}
-        self.deploy_map: Dict[str, str] = {}
-        self.resource_specs: Dict[str, Dict] = {}
+        self.fed_apps: dict[str, FedAppConfig] = {}
+        self.deploy_map: dict[str, str] = {}
+        self.resource_specs: dict[str, dict] = {}
 
         self.custom_modules = []
         self.logger = get_obj_logger(self)
 
-    def set_app_packages(self, app_packages: List[str]):
+    def set_app_packages(self, app_packages: list[str]):
         """Set app packages.
         When generating job config, code from these packages will not be included into "custom" folder.
 
@@ -108,7 +107,7 @@ class FedJobConfig:
 
         self.deploy_map[site_name] = app_name
 
-    def add_resource_spec(self, site_name: str, resource_spec: Dict):
+    def add_resource_spec(self, site_name: str, resource_spec: dict):
         if site_name in self.resource_specs.keys():
             raise RuntimeError(f"{site_name} resource specs already exist.")
         if not isinstance(resource_spec, dict):

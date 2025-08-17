@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.apis.dxo import DXO
 from nvflare.apis.event_type import EventType
@@ -49,7 +48,7 @@ class ListModelLocator(ModelLocator):
                 f"persistor_id component must be PTFileModelPersistor. " f"But got: {type(self.model_persistor)}"
             )
 
-    def get_model_names(self, fl_ctx: FLContext) -> List[str]:
+    def get_model_names(self, fl_ctx: FLContext) -> list[str]:
         """Returns the list of model names that should be included from server in cross site validation.add().
 
         Args:

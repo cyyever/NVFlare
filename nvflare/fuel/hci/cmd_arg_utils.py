@@ -17,12 +17,11 @@ import io
 import os
 import re
 import shlex
-from typing import List
 
 from nvflare.apis.utils.format_check import type_pattern_mapping
 
 
-def split_to_args(line: str) -> List[str]:
+def split_to_args(line: str) -> list[str]:
     if '"' in line:
         return shlex.split(line)
     else:
@@ -30,7 +29,7 @@ def split_to_args(line: str) -> List[str]:
         return line.split(" ")
 
 
-def parse_command_line(line: str) -> (str, List[str], str):
+def parse_command_line(line: str) -> (str, list[str], str):
     """Parse the command line and extract command args and command props, if any
 
     Args:
@@ -50,7 +49,7 @@ def parse_command_line(line: str) -> (str, List[str], str):
         return line, line.split(" "), props
 
 
-def join_args(segs: List[str]) -> str:
+def join_args(segs: list[str]) -> str:
     result = ""
     sep = ""
     for a in segs:
@@ -93,7 +92,7 @@ class ArgValidator(argparse.ArgumentParser):
         return usage_output
 
 
-def process_targets_into_str(targets: List[str]) -> str:
+def process_targets_into_str(targets: list[str]) -> str:
     if not isinstance(targets, list):
         raise SyntaxError("targets is not a list.")
     if not all(isinstance(t, str) for t in targets):

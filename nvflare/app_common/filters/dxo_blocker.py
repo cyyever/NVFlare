@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List, Union
+from typing import Union
 
 from nvflare.apis.dxo_filter import DXO, DXOFilter
 from nvflare.apis.filter import ContentBlockedException
@@ -21,7 +21,7 @@ from nvflare.apis.shareable import Shareable
 
 
 class DXOBlocker(DXOFilter):
-    def __init__(self, data_kinds: List[str], allow_data_kinds: bool = False):
+    def __init__(self, data_kinds: list[str], allow_data_kinds: bool = False):
         """Block certain kinds of DXO objects.
 
         Args:

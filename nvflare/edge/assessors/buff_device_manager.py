@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import random
-from typing import Dict, Set
 
 from nvflare.edge.assessors.device_manager import DeviceManager
 
@@ -46,7 +45,7 @@ class BuffDeviceManager(DeviceManager):
         self.current_selection_version = 0
         self.used_devices = {}
 
-    def update_available_devices(self, devices: Dict, fl_ctx) -> None:
+    def update_available_devices(self, devices: dict, fl_ctx) -> None:
         self.available_devices.update(devices)
         self.log_debug(
             fl_ctx,
@@ -80,7 +79,7 @@ class BuffDeviceManager(DeviceManager):
                 f"current selection has only {len(self.current_selection)} devices, which is less than the expected {self.device_selection_size} devices. Please check the configuration to make sure this is expected.",
             )
 
-    def remove_devices_from_selection(self, devices: Set[str], fl_ctx) -> None:
+    def remove_devices_from_selection(self, devices: set[str], fl_ctx) -> None:
         for device_id in devices:
             self.current_selection.pop(device_id, None)
 

@@ -15,6 +15,7 @@ import copy
 
 from ..fuel.utils import fobs
 from .fl_constant import ReservedKey, ReturnCode, ServerCommandKey
+from typing import Optional
 
 
 class ReservedHeaderKey(object):
@@ -44,7 +45,7 @@ class Shareable(dict):
     It is recommended that keys are strings. Values must be serializable.
     """
 
-    def __init__(self, data: dict = None):
+    def __init__(self, data: Optional[dict] = None):
         """Init the Shareable."""
         super().__init__()
         if data:
@@ -153,7 +154,7 @@ def make_reply(rc, headers=None) -> Shareable:
     return reply
 
 
-def make_copy(source: Shareable, exclude_headers: list = None) -> Shareable:
+def make_copy(source: Shareable, exclude_headers: Optional[list] = None) -> Shareable:
     """
     Make a copy from the source.
     The content (non-headers) will be kept intact. Headers will be deep-copied into the new instance.

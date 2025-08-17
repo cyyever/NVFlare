@@ -13,7 +13,6 @@
 # limitations under the License.
 
 from enum import Enum
-from typing import Tuple
 
 from nvflare.apis.controller_spec import ClientTask, Task, TaskCompletionStatus
 from nvflare.apis.fl_context import FLContext
@@ -69,7 +68,7 @@ class TaskManager(object):
         else:
             return TaskCheckStatus.NO_BLOCK
 
-    def check_task_exit(self, task: Task) -> Tuple[bool, TaskCompletionStatus]:
+    def check_task_exit(self, task: Task) -> tuple[bool, TaskCompletionStatus]:
         """Determine whether the task should exit.
 
         Args:

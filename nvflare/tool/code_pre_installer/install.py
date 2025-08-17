@@ -20,7 +20,6 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Dict
 from zipfile import ZipFile
 
 from nvflare.tool.code_pre_installer.constants import (
@@ -68,7 +67,7 @@ def install_requirements(requirements_file: Path):
         raise ValueError(f"Failed to install requirements: {e}")
 
 
-def _process_meta_json(meta_file: Path, site_name: str, base_dir: Path, job_name: str = "app") -> Dict[str, Path]:
+def _process_meta_json(meta_file: Path, site_name: str, base_dir: Path, job_name: str = "app") -> dict[str, Path]:
     """Process meta.json file to find matching app directories.
 
     Args:
@@ -101,7 +100,7 @@ def _process_meta_json(meta_file: Path, site_name: str, base_dir: Path, job_name
     return matched_apps
 
 
-def _find_app_dirs(application_dir: Path, site_name: str) -> Dict[str, Path]:
+def _find_app_dirs(application_dir: Path, site_name: str) -> dict[str, Path]:
     """Find all appropriate app directories based on meta.json deployment maps.
 
     Args:

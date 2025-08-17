@@ -15,7 +15,6 @@ import json
 import threading
 import time
 import uuid
-from typing import List
 
 from nvflare.fuel.f3.cellnet.defs import CellChannel
 from nvflare.fuel.f3.message import Message as CellMessage
@@ -223,7 +222,7 @@ class SessionManager(CommandModule):
             ],
         )
 
-    def handle_list_sessions(self, conn: Connection, args: List[str]):
+    def handle_list_sessions(self, conn: Connection, args: list[str]):
         """Lists sessions and the details in a table.
 
         Registered in the FedAdminServer with ``cmd_reg.register_module(sess_mgr)``.
@@ -245,7 +244,7 @@ class SessionManager(CommandModule):
                 ]
             )
 
-    def handle_check_session(self, conn: Connection, args: List[str]):
+    def handle_check_session(self, conn: Connection, args: list[str]):
         token = conn.get_token()
         if not token:
             conn.append_error("invalid_session")

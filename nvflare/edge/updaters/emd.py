@@ -14,7 +14,7 @@
 import copy
 import threading
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional, Union
+from typing import Any, Optional, Union
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_context import FLContext
@@ -36,9 +36,9 @@ class ModelAggrState:
     def __init__(self, aggregator: Aggregator, model_version: int):
         self.aggregator = aggregator
         self.model_version = model_version
-        self.devices: Dict[str, float] = {}
+        self.devices: dict[str, float] = {}
 
-    def accept(self, contribution: Shareable, devices: Dict[str, float], fl_ctx: FLContext) -> bool:
+    def accept(self, contribution: Shareable, devices: dict[str, float], fl_ctx: FLContext) -> bool:
         if not devices:
             raise ValueError("cannot accept contribution with no devices")
 
@@ -68,8 +68,8 @@ class EdgeModelUpdater(Updater):
         self.aggr_factory_id = aggr_factory_id
         self.max_model_versions = max_model_versions
         self.aggr_factory = None
-        self.aggr_states: Dict[int, ModelAggrState] = {}  # model_version => ModelAggrState
-        self.available_devices: Dict[str, Device] = {}  # device_id => Device
+        self.aggr_states: dict[int, ModelAggrState] = {}  # model_version => ModelAggrState
+        self.available_devices: dict[str, Device] = {}  # device_id => Device
         self._update_lock = threading.Lock()
         self.register_event_handler(EventType.START_RUN, self._emu_handle_start_run)
 

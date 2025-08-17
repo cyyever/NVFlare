@@ -18,7 +18,7 @@ import os
 import sys
 from enum import Enum
 from os.path import dirname, join
-from typing import Any, BinaryIO, Dict, Type, TypeVar, Union
+from typing import Any, BinaryIO, TypeVar, Union
 
 import msgpack
 
@@ -59,15 +59,15 @@ MSGPACK_TYPES = (type(None), bool, int, float, str, bytes, bytearray, memoryview
 T = TypeVar("T")
 
 log = logging.getLogger(__name__)
-_decomposers: Dict[str, Decomposer] = {}
-_dot_handlers: Dict[int, Decomposer] = {}  # decomposers that handle Datum Object Types (DOT)
+_decomposers: dict[str, Decomposer] = {}
+_dot_handlers: dict[int, Decomposer] = {}  # decomposers that handle Datum Object Types (DOT)
 _decomposers_registered = False
 # If this is enabled, FOBS will try to register generic decomposers automatically
 _enum_auto_registration = True
 _data_auto_registration = True
 
 
-def register(decomposer: Union[Decomposer, Type[Decomposer]]) -> None:
+def register(decomposer: Union[Decomposer, type[Decomposer]]) -> None:
     """Register a decomposer. It does nothing if decomposer is already registered for the type
 
     Args:
@@ -191,7 +191,7 @@ class Packer:
         return decomposer.recompose(data, self.manager)
 
 
-def register_data_classes(*data_classes: Type[T]) -> None:
+def register_data_classes(*data_classes: type[T]) -> None:
     """Register generic decomposers for data classes
 
     Args:
@@ -203,7 +203,7 @@ def register_data_classes(*data_classes: Type[T]) -> None:
         register(decomposer)
 
 
-def register_enum_types(*enum_types: Type[Enum]) -> None:
+def register_enum_types(*enum_types: type[Enum]) -> None:
     """Register generic decomposers for enum classes
 
     Args:

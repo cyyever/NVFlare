@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import json
-from typing import List
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_constant import FLContextKey, ReturnCode, ServerCommandKey, SystemComponents
@@ -52,7 +51,7 @@ def _get_resource_consumer(engine: ClientEngineInternalSpec):
 
 
 class CheckResourceProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.CHECK_RESOURCE]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -90,7 +89,7 @@ class CheckResourceProcessor(RequestProcessor):
 
 
 class StartJobProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.START_JOB]
 
     def process(self, req: Message, app_ctx) -> Message:
@@ -134,7 +133,7 @@ class StartJobProcessor(RequestProcessor):
 
 
 class CancelResourceProcessor(RequestProcessor):
-    def get_topics(self) -> List[str]:
+    def get_topics(self) -> list[str]:
         return [TrainingTopic.CANCEL_RESOURCE]
 
     def process(self, req: Message, app_ctx) -> Message:

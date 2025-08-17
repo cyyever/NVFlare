@@ -15,7 +15,7 @@
 import json
 import os
 from enum import Enum
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.apis.fl_constant import ConnPropKey, FLMetaKey
 from nvflare.fuel.utils.config_factory import ConfigFactory
@@ -119,12 +119,12 @@ class ClientConfig:
 
     """
 
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: Optional[dict] = None):
         if config is None:
             config = {}
         self.config = config
 
-    def get_config(self) -> Dict:
+    def get_config(self) -> dict:
         return self.config
 
     def get_pipe_channel_name(self, section: str) -> str:

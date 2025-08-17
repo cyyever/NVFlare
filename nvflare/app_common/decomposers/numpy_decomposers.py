@@ -14,7 +14,7 @@
 """Decomposers for types from app_common and Machine Learning libraries."""
 import os
 from abc import ABC
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 
@@ -77,7 +77,7 @@ class NumpyArrayDecomposer(ViaFileDecomposer):
             self.logger.error(f"exception dumping NP to file: {e}")
             raise e
 
-    def load_from_file(self, path: str, fobs_ctx: dict, meta: dict = None) -> Any:
+    def load_from_file(self, path: str, fobs_ctx: dict, meta: Optional[dict] = None) -> Any:
         result = {}
         with np.load(path, allow_pickle=False) as npz_obj:
             for k in npz_obj.files:

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import json
-from typing import List
 
 import psutil
 
@@ -98,7 +97,7 @@ class SystemCommandModule(CommandModule, CommandUtil):
             ],
         )
 
-    def authorize_configure_site_log(self, conn: Connection, args: List[str]):
+    def authorize_configure_site_log(self, conn: Connection, args: list[str]):
         if len(args) < 3:
             conn.append_error("syntax error: please provide target_type and config")
             return PreAuthzReturnCode.ERROR
@@ -201,7 +200,7 @@ class SystemCommandModule(CommandModule, CommandUtil):
             else:
                 conn.append_string(": No replies")
 
-    def report_resources(self, conn: Connection, args: List[str]):
+    def report_resources(self, conn: Connection, args: list[str]):
         if len(args) < 2:
             conn.append_error("syntax error: missing site names")
             return
@@ -227,7 +226,7 @@ class SystemCommandModule(CommandModule, CommandUtil):
         for k, v in site_resources.items():
             table.add_row([str(k), str(v)])
 
-    def report_env(self, conn: Connection, args: List[str]):
+    def report_env(self, conn: Connection, args: list[str]):
         message = new_message(conn, topic=SysCommandTopic.REPORT_ENV, body="", require_authz=True)
         replies = self.send_request_to_clients(conn, message)
         if not replies:
@@ -239,7 +238,7 @@ class SystemCommandModule(CommandModule, CommandUtil):
         for k, v in site_resources.items():
             table.add_row([str(k), str(v)], meta=v)
 
-    def dead_client(self, conn: Connection, args: List[str]):
+    def dead_client(self, conn: Connection, args: list[str]):
         if len(args) != 3:
             conn.append_error(f"Usage: {args[0]} client_name job_id")
             return

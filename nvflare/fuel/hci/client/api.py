@@ -21,7 +21,7 @@ import time
 import traceback
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 import nvflare.fuel.f3.streaming.file_downloader as downloader
 from nvflare.apis.fl_constant import ConnectionSecurity, FLContextKey, ProcessType, ReservedKey, ReturnCode
@@ -233,7 +233,7 @@ class AdminAPI(AdminAPISpec, StreamableEngine):
         self,
         user_name: str,
         admin_config: dict,
-        cmd_modules: Optional[List] = None,
+        cmd_modules: Optional[list] = None,
         debug: bool = False,
         auto_login_max_tries: int = 15,
         event_handlers=None,
@@ -967,7 +967,7 @@ class AdminAPI(AdminAPISpec, StreamableEngine):
         channel: str,
         topic: str,
         stream_ctx: StreamContext,
-        targets: List[str],
+        targets: list[str],
         producer: ObjectProducer,
         fl_ctx: FLContext,
         optional=False,

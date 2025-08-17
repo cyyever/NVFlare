@@ -14,7 +14,6 @@
 
 
 from collections import deque
-from typing import Dict, List
 
 from nvflare.app_common.resource_managers.auto_clean_resource_manager import AutoCleanResourceManager
 
@@ -30,7 +29,7 @@ class ListResourceManager(AutoCleanResourceManager):
 
     """
 
-    def __init__(self, resources: Dict[str, List], expiration_period: int = 30):
+    def __init__(self, resources: dict[str, list], expiration_period: int = 30):
         """Constructor
 
         Args:

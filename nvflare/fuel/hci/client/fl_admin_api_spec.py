@@ -14,13 +14,13 @@
 
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Callable, List, Optional
+from typing import Callable, Optional
 
 from nvflare.fuel.hci.client.api_status import APIStatus
 
 
 class FLAdminAPIResponse(dict):
-    def __init__(self, status: APIStatus, details: dict = None, raw: dict = None):
+    def __init__(self, status: APIStatus, details: Optional[dict] = None, raw: Optional[dict] = None):
         """Structure containing the response of calls to the api as key value pairs.
 
         The status key is the primary indicator of the success of a call and can contain APIStatus.SUCCESS or another
@@ -58,7 +58,7 @@ class TargetType(str, Enum):
 
 class FLAdminAPISpec(ABC):
     @abstractmethod
-    def check_status(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def check_status(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         """Checks and returns the FL status.
 
         If target_type is server, the call does not wait for the server to retrieve
@@ -103,7 +103,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def list_jobs(self, options: str = None) -> FLAdminAPIResponse:
+    def list_jobs(self, options: Optional[str] = None) -> FLAdminAPIResponse:
         """List the jobs in the system.
 
         Args:
@@ -151,7 +151,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def abort(self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def abort(self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         """Issue a command to abort training.
 
         Args:
@@ -165,7 +165,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def restart(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def restart(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         """Issue a command to restart the specified target.
 
         If the target is server, all FL clients will be restarted as well.
@@ -180,7 +180,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def shutdown(self, target_type: TargetType, targets: Optional[List[str]] = None) -> FLAdminAPIResponse:
+    def shutdown(self, target_type: TargetType, targets: Optional[list[str]] = None) -> FLAdminAPIResponse:
         """Issue a command to stop FL entirely for a specific FL client or specific FL clients.
 
         Note that the targets will not be able to start with an API command after shutting down.
@@ -195,7 +195,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def remove_client(self, targets: List[str]) -> FLAdminAPIResponse:
+    def remove_client(self, targets: list[str]) -> FLAdminAPIResponse:
         """Issue a command to remove a specific FL client or FL clients.
 
         Note that the targets will not be able to start with an API command after shutting down. Also, you will not be
@@ -230,7 +230,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def ls_target(self, target: str, options: str = None, path: str = None) -> FLAdminAPIResponse:
+    def ls_target(self, target: str, options: Optional[str] = None, path: Optional[str] = None) -> FLAdminAPIResponse:
         """Issue ls command to retrieve the contents of the path.
 
         Sends the shell command to get the directory listing of the target allowing for options that the ls command
@@ -250,7 +250,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def cat_target(self, target: str, options: str = None, file: str = None) -> FLAdminAPIResponse:
+    def cat_target(self, target: str, options: Optional[str] = None, file: Optional[str] = None) -> FLAdminAPIResponse:
         """Issue cat command.
 
         Sends the shell command to get the contents of the target's specified file allowing for options that the cat
@@ -270,7 +270,7 @@ class FLAdminAPISpec(ABC):
         pass
 
     @abstractmethod
-    def tail_target_log(self, target: str, options: str = None) -> FLAdminAPIResponse:
+    def tail_target_log(self, target: str, options: Optional[str] = None) -> FLAdminAPIResponse:
         """Returns the end of target's log allowing for options that the tail of admin client allows.
 
         The option "-n" can be used to specify the number of lines for example "-n 100", or "-c" can specify the
@@ -300,7 +300,7 @@ class FLAdminAPISpec(ABC):
 
     @abstractmethod
     def grep_target(
-        self, target: str, options: str = None, pattern: str = None, file: str = None
+        self, target: str, options: Optional[str] = None, pattern: Optional[str] = None, file: Optional[str] = None
     ) -> FLAdminAPIResponse:
         """Issue grep command.
 
@@ -323,7 +323,7 @@ class FLAdminAPISpec(ABC):
 
     @abstractmethod
     def show_stats(
-        self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None
+        self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None
     ) -> FLAdminAPIResponse:
         """Gets and shows stats from the Info Collector.
 
@@ -338,7 +338,7 @@ class FLAdminAPISpec(ABC):
 
     @abstractmethod
     def show_errors(
-        self, job_id: str, target_type: TargetType, targets: Optional[List[str]] = None
+        self, job_id: str, target_type: TargetType, targets: Optional[list[str]] = None
     ) -> FLAdminAPIResponse:
         """Gets and shows errors from the Info Collector.
 
@@ -379,8 +379,8 @@ class FLAdminAPISpec(ABC):
     def wait_until_server_status(
         self,
         interval: int = 20,
-        timeout: int = None,
-        callback: Callable[[FLAdminAPIResponse], bool] = None,
+        timeout: Optional[int] = None,
+        callback: Optional[Callable[[FLAdminAPIResponse], bool]] = None,
         fail_attempts: int = 3,
     ) -> FLAdminAPIResponse:
         """Wait until provided callback returns True.

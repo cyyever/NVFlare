@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import os
-from typing import Any
+from typing import Any, Optional
 
 from nvflare.apis.fl_component import FLComponent
 from nvflare.apis.fl_context import FLContext
@@ -27,7 +27,7 @@ class FileRetriever(ObjectRetriever):
     def __init__(
         self,
         source_dir: str,
-        topic: str = None,
+        topic: Optional[str] = None,
         stream_msg_optional=False,
         stream_msg_secure=False,
         dest_dir=None,

@@ -13,7 +13,6 @@
 # limitations under the License.
 import enum
 import logging
-from typing import List
 
 from nvflare.fuel.hci.conn import Connection
 from nvflare.fuel.hci.proto import MetaStatusValue, ReplyKeyword, make_meta
@@ -33,11 +32,11 @@ class PreAuthzReturnCode(enum.Enum):
     REQUIRE_AUTHZ = 2  # command preprocessed successfully, further authz required
 
 
-def command_handler_func_signature(conn: Connection, args: List[str]):
+def command_handler_func_signature(conn: Connection, args: list[str]):
     pass
 
 
-def command_authz_func_signature(conn: Connection, args: List[str]) -> PreAuthzReturnCode:
+def command_authz_func_signature(conn: Connection, args: list[str]) -> PreAuthzReturnCode:
     pass
 
 
@@ -46,7 +45,7 @@ class AuthzFilter(CommandFilter):
         """Filter for authorization of admin commands."""
         CommandFilter.__init__(self)
 
-    def pre_command(self, conn: Connection, args: List[str]):
+    def pre_command(self, conn: Connection, args: list[str]):
         cmd_entry = conn.get_prop(ConnProps.CMD_ENTRY, None)
         if not cmd_entry:
             return True

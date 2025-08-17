@@ -19,6 +19,7 @@ from nvflare.apis.shareable import Shareable
 from nvflare.app_common.abstract.model import make_model_learnable
 from nvflare.app_common.abstract.response_processor import ResponseProcessor
 from nvflare.app_common.app_constant import AppConstants
+from typing import Optional
 
 
 class WeightMethod(object):
@@ -32,7 +33,7 @@ class GlobalWeightsInitializer(ResponseProcessor):
         self,
         weights_prop_name: str = AppConstants.GLOBAL_MODEL,
         weight_method: str = WeightMethod.FIRST,
-        client_name: str = None,
+        client_name: Optional[str] = None,
     ):
         """Set global model weights based on specified weight setting method.
 

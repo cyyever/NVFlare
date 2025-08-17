@@ -13,7 +13,7 @@
 # limitations under the License.
 import threading
 import time
-from typing import List, Optional
+from typing import Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_constant import ServerCommandKey
@@ -77,7 +77,7 @@ class _ClientReq(object):
         self.req = req
 
 
-def check_client_replies(replies: List[ClientReply], client_sites: List[str], command: str):
+def check_client_replies(replies: list[ClientReply], client_sites: list[str], command: str):
     display_sites = ", ".join(client_sites)
     if not replies:
         raise RuntimeError(f"Failed to {command} to the clients {display_sites}: no replies.")

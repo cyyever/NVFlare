@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from typing import Any, List
+from typing import Any
 
 from nvflare.fuel.common.fqn import FQN
 
@@ -87,7 +87,7 @@ class Forest:
         self.nodes = {}  # name => Node
 
 
-def build_forest(objs: List[Any], get_name_f, get_fqn_f, **kwargs) -> Forest:
+def build_forest(objs: list[Any], get_name_f, get_fqn_f, **kwargs) -> Forest:
     """Builds a Forest from a list of objects.
     Each object must have a unique "name" and unique "fqn".
     This function builds trees based on the FQNs of the objects.

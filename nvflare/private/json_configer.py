@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import copy
-from typing import List, Union
+from typing import Union
 
 from nvflare.fuel.common.excepts import ComponentNotAuthorized, ConfigError
 from nvflare.fuel.utils.class_loader import load_class
@@ -37,9 +37,9 @@ class ConfigContext(object):
 class JsonConfigurator(JsonObjectProcessor, ComponentBuilder):
     def __init__(
         self,
-        config_file_name: Union[str, List[str]],
-        base_pkgs: List[str],
-        module_names: List[str],
+        config_file_name: Union[str, list[str]],
+        base_pkgs: list[str],
+        module_names: list[str],
         exclude_libs=True,
         num_passes=1,
         sys_vars=None,

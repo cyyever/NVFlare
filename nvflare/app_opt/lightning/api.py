@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import logging
-from typing import Dict
 
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import Callback
@@ -241,7 +240,7 @@ class FLCallback(Callback):
             raise RuntimeError(f"failed to send FL model: {e}")
 
 
-def _extract_metrics(metrics: Dict[str, Tensor]):
+def _extract_metrics(metrics: dict[str, Tensor]):
     result_metrics = {}
     for key, t in metrics.items():
         result_metrics[key] = t.item()

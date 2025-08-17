@@ -21,7 +21,7 @@ import time
 import traceback
 from datetime import datetime
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 try:
     import readline
@@ -73,7 +73,7 @@ class AdminClient(cmd.Cmd, EventHandler):
     def __init__(
         self,
         admin_config: dict,
-        cmd_modules: Optional[List] = None,
+        cmd_modules: Optional[list] = None,
         debug: bool = False,
         username: str = "",
         handlers=None,

@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import List
 
 from nvflare.fuel.hci.proto import ConfirmMethod
+from typing import Optional
 
 
 class CommandSpec(object):
@@ -63,7 +63,7 @@ class CommandSpec(object):
 
 
 class CommandModuleSpec(object):
-    def __init__(self, name: str, cmd_specs: List[CommandSpec], conn_props: dict = None):
+    def __init__(self, name: str, cmd_specs: list[CommandSpec], conn_props: Optional[dict] = None):
         """Specification for a command module containing a list of commands in the form of CommandSpec.
 
         Args:

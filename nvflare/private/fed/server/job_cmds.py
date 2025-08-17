@@ -16,7 +16,6 @@ import datetime
 import json
 import shutil
 import uuid
-from typing import Dict, List
 
 import nvflare.fuel.hci.file_transfer_defs as ftd
 from nvflare.apis.event_type import EventType
@@ -176,7 +175,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
             ],
         )
 
-    def authorize_job_file(self, conn: Connection, args: List[str]):
+    def authorize_job_file(self, conn: Connection, args: list[str]):
         """
         Args: cmd_name tx_id job_id file_name [end]
         """
@@ -188,7 +187,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         args_for_authz = [args[0], job_id]
         return self.authorize_job_id(conn, args_for_authz)
 
-    def authorize_job_id(self, conn: Connection, args: List[str]):
+    def authorize_job_id(self, conn: Connection, args: list[str]):
         if len(args) < 2:
             conn.append_error(
                 "syntax error: missing job_id", meta=make_meta(MetaStatusValue.SYNTAX_ERROR, "missing job_id")
@@ -219,7 +218,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         conn.set_prop(ConnProps.SUBMITTER_ROLE, job.meta.get(JobMetaKey.SUBMITTER_ROLE, ""))
         return PreAuthzReturnCode.REQUIRE_AUTHZ
 
-    def authorize_job(self, conn: Connection, args: List[str]):
+    def authorize_job(self, conn: Connection, args: list[str]):
         rc = self.authorize_job_id(conn, args)
         if rc == PreAuthzReturnCode.ERROR:
             return rc
@@ -232,13 +231,13 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
 
         return PreAuthzReturnCode.REQUIRE_AUTHZ
 
-    def authorize_configure_job_log(self, conn: Connection, args: List[str]):
+    def authorize_configure_job_log(self, conn: Connection, args: list[str]):
         if len(args) < 4:
             conn.append_error("syntax error: please provide job_id, target_type, and config")
             return PreAuthzReturnCode.ERROR
         return self.authorize_job(conn, args[:-1])
 
-    def delete_job_id(self, conn: Connection, args: List[str]):
+    def delete_job_id(self, conn: Connection, args: list[str]):
         job_id = args[1]
         engine = conn.app_ctx
         if not isinstance(engine, ServerEngine):
@@ -264,7 +263,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
 
         conn.append_success("")
 
-    def configure_job_log(self, conn: Connection, args: List[str]):
+    def configure_job_log(self, conn: Connection, args: list[str]):
         if len(args) < 4:
             conn.append_error("syntax error: please provide job_id, target_type, and config")
             return
@@ -313,7 +312,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
                 )
             )
 
-    def list_jobs(self, conn: Connection, args: List[str]):
+    def list_jobs(self, conn: Connection, args: list[str]):
         try:
             parser = _create_list_job_cmd_parser()
             parsed_args = parser.parse_args(args[1:])
@@ -366,7 +365,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
 
         conn.append_success("")
 
-    def delete_job(self, conn: Connection, args: List[str]):
+    def delete_job(self, conn: Connection, args: list[str]):
         job = conn.get_prop(self.JOB)
         if not job:
             conn.append_error(
@@ -397,7 +396,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
             return
         conn.append_success("", meta=make_meta(MetaStatusValue.OK))
 
-    def get_job_meta(self, conn: Connection, args: List[str]):
+    def get_job_meta(self, conn: Connection, args: list[str]):
         job_id = conn.get_prop(self.JOB_ID)
         engine = conn.app_ctx
         job_def_manager = engine.job_def_manager
@@ -414,7 +413,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
                     f"job {job_id} does not exist", meta=make_meta(MetaStatusValue.INVALID_JOB_ID, job_id)
                 )
 
-    def list_job_components(self, conn: Connection, args: List[str]):
+    def list_job_components(self, conn: Connection, args: list[str]):
         if len(args) < 2:
             conn.append_error("Usage: list_job_components job_id", meta=make_meta(MetaStatusValue.SYNTAX_ERROR))
             return
@@ -447,7 +446,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
                     f"job {job_id} does not exist", meta=make_meta(MetaStatusValue.INVALID_JOB_ID, job_id)
                 )
 
-    def abort_job(self, conn: Connection, args: List[str]):
+    def abort_job(self, conn: Connection, args: list[str]):
         engine = conn.app_ctx
         job_runner = engine.job_runner
 
@@ -482,7 +481,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
             )
             return
 
-    def clone_job(self, conn: Connection, args: List[str]):
+    def clone_job(self, conn: Connection, args: list[str]):
         job = conn.get_prop(self.JOB)
         job_id = conn.get_prop(self.JOB_ID)
         engine = conn.app_ctx
@@ -515,7 +514,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         conn.append_success("", meta=make_meta(status=MetaStatusValue.OK, extra={MetaKey.JOB_ID: new_job_id}))
 
     @staticmethod
-    def _job_match(job_meta: Dict, id_prefix: str, name_prefix: str, user_name: str) -> bool:
+    def _job_match(job_meta: dict, id_prefix: str, name_prefix: str, user_name: str) -> bool:
         return (
             ((not id_prefix) or job_meta.get("job_id").lower().startswith(id_prefix.lower()))
             and ((not name_prefix) or job_meta.get("name").lower().startswith(name_prefix.lower()))
@@ -523,7 +522,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         )
 
     @staticmethod
-    def _send_detail_list(conn: Connection, jobs: List[Job]):
+    def _send_detail_list(conn: Connection, jobs: list[Job]):
         list_of_jobs = []
         for job in jobs:
             JobCommandModule._set_duration(job)
@@ -532,7 +531,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         conn.append_string("", meta=make_meta(MetaStatusValue.OK, extra={MetaKey.JOBS: list_of_jobs}))
 
     @staticmethod
-    def _send_summary_list(conn: Connection, jobs: List[Job]):
+    def _send_summary_list(conn: Connection, jobs: list[Job]):
         table = conn.append_table(["Job ID", "Name", "Status", "Submit Time", "Run Duration"], name=MetaKey.JOBS)
         for job in jobs:
             JobCommandModule._set_duration(job)
@@ -561,7 +560,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
             duration = datetime.datetime.now() - start_time
             job.meta[JobMetaKey.DURATION.value] = str(duration)
 
-    def submit_job(self, conn: Connection, args: List[str]):
+    def submit_job(self, conn: Connection, args: list[str]):
         folder_name = args[1]
         zip_file_name = conn.get_prop(ConnProps.FILE_LOCATION)
         if not zip_file_name:
@@ -624,7 +623,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         job_download_dir = self.tx_path(conn, tx_id)
         shutil.rmtree(job_download_dir, ignore_errors=True)
 
-    def _download_job_comps(self, conn: Connection, args: List[str], get_comps_f):
+    def _download_job_comps(self, conn: Connection, args: list[str], get_comps_f):
         """
         Job download uses binary protocol for more efficient download.
         - Retrieve job data from job store. This puts job files (meta, data, and workspace) in a transfer folder
@@ -678,7 +677,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
     def _get_default_job_components(self, job_def_manager, job_id, fl_ctx):
         return [(DATA, JOB_ZIP), (META, META_JSON), (WORKSPACE, WORKSPACE_ZIP)]
 
-    def download_job(self, conn: Connection, args: List[str]):
+    def download_job(self, conn: Connection, args: list[str]):
         """
         Job download uses binary protocol for more efficient download.
         - Retrieve job data from job store. This puts job files (meta, data, and workspace) in a transfer folder
@@ -687,7 +686,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         """
         self._download_job_comps(conn, args, self._get_default_job_components)
 
-    def download_job_components(self, conn: Connection, args: List[str]):
+    def download_job_components(self, conn: Connection, args: list[str]):
         """Download additional job components (e.g., ERRORLOG_site-1) for a specified job.
 
         Based on job download but downloads the additional components for a job that job download does
@@ -706,7 +705,7 @@ class JobCommandModule(CommandModule, CommandUtil, BinaryTransfer):
         else:
             return None
 
-    def do_app_command(self, conn: Connection, args: List[str]):
+    def do_app_command(self, conn: Connection, args: list[str]):
         # cmd job_id topic
         if len(args) != 3:
             cmd_entry = conn.get_prop(ConnProps.CMD_ENTRY)

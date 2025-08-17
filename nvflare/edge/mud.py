@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Model Update Definitions (MUD) - defines common structures used for model update exchanges
-from typing import Dict, Optional
+from typing import Optional
 
 from nvflare.apis.dxo import DXO
 from nvflare.apis.shareable import Shareable
@@ -41,7 +41,7 @@ class BaseState:
         model_version: int,
         model: DXO,
         device_selection_version: int,
-        device_selection: Dict[str, int],  # device_id => selection_id
+        device_selection: dict[str, int],  # device_id => selection_id
     ):
         """BaseState is the Base for on-device training
 
@@ -180,7 +180,7 @@ class BaseState:
 
 class Device:
 
-    def __init__(self, device_id: str, client_name: str, last_alive_time: float, props: Dict = None):
+    def __init__(self, device_id: str, client_name: str, last_alive_time: float, props: Optional[dict] = None):
         """Device object keeps device information to be communicated to the Server.
 
         Args:
@@ -214,7 +214,7 @@ class Device:
         }
 
     @staticmethod
-    def from_dict(d: Dict):
+    def from_dict(d: dict):
         """Convert the specified dict object to Device object
 
         Args:
@@ -233,7 +233,7 @@ class Device:
 
 class ModelUpdate:
 
-    def __init__(self, model_version: int, update: Shareable, devices: Dict[str, float]):
+    def __init__(self, model_version: int, update: Shareable, devices: dict[str, float]):
         """ModelUpdate specifies information of a model update.
 
         Args:
@@ -266,7 +266,7 @@ class ModelUpdate:
         }
 
     @staticmethod
-    def from_dict(d: Dict):
+    def from_dict(d: dict):
         """Convert the specified dict object to ModelUpdate object
 
         Args:
@@ -288,8 +288,8 @@ class StateUpdateReport:
         self,
         current_model_version: int,
         current_device_selection_version: int,
-        model_updates: Optional[Dict[int, ModelUpdate]],  # model_version => ModelUpdate
-        available_devices: Optional[Dict[str, Device]],  # device_id => Device
+        model_updates: Optional[dict[int, ModelUpdate]],  # model_version => ModelUpdate
+        available_devices: Optional[dict[str, Device]],  # device_id => Device
     ):
         """StateUpdateReport is sent from a client to its parent to report its state update.
 
@@ -370,7 +370,7 @@ class StateUpdateReply:
         model_version: int,
         model: DXO,
         device_selection_version: int,
-        device_selection: Optional[Dict[str, int]],
+        device_selection: Optional[dict[str, int]],
     ):
         """StateUpdateReply is the reply to the child's StateUpdateReport.
         The child processes StateUpdateReply to adjust its Base State.
