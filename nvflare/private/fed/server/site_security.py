@@ -50,7 +50,7 @@ class SiteSecurity:
             else:
                 exceptions = fl_ctx.get_prop(FLContextKey.EXCEPTIONS)
                 if exceptions and isinstance(exceptions, dict):
-                    for handler_name, ex in exceptions.items():
+                    for ex in exceptions.values():
                         if isinstance(ex, NotAuthorized):
                             logger.error(f"NotAuthorized to execute. Reason: {ex}")
                             fl_ctx.remove_prop(FLContextKey.AUTHORIZATION_RESULT)

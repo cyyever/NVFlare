@@ -65,7 +65,7 @@ class BaseClientDeployer:
         elif "Gzip" == self.client_config.get("compression"):
             compression = grpc.Compression.Gzip
 
-        for _, processor in self.components.items():
+        for processor in self.components.values():
             if isinstance(processor, RequestProcessor):
                 self.req_processors.append(processor)
 

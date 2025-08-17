@@ -32,7 +32,7 @@ def get_all_sp(project):
 def get_primary_sp(project):
     psp = {}
     with data_store_lock:
-        for _, sp in data_store["SP"].items():
+        for sp in data_store["SP"].values():
             if sp["primary"] and sp["project"] == project:
                 psp = sp
                 break

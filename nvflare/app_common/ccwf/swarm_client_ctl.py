@@ -179,7 +179,7 @@ class Gatherer(FLComponent):
             if not self.min_resps_received_time:
                 # see how many responses I have received
                 num_resps_received = 0
-                for _, ts in self.trainer_statuses.items():
+                for ts in self.trainer_statuses.values():
                     if ts.reply_time:
                         num_resps_received += 1
                 if num_resps_received >= self.min_responses_required:
@@ -245,7 +245,7 @@ class Gatherer(FLComponent):
 
     def is_done(self):
         unfinished = 0
-        for c, s in self.trainer_statuses.items():
+        for s in self.trainer_statuses.values():
             if not s.reply_time:
                 unfinished += 1
         if unfinished == 0:

@@ -303,12 +303,12 @@ class NetManager(CommandModule):
         result = self.agent.start_stress_test(targets=targets, num_rounds=num_tries, timeout=timeout)
 
         total_errors = 0
-        for t, v in result.items():
+        for v in result.values():
             if not isinstance(v, dict):
                 continue
             err_dict = v.get("errors")
             cell_errs = 0
-            for _, c in err_dict.items():
+            for c in err_dict.values():
                 cell_errs += c
             total_errors += cell_errs
             if cell_errs == 0:

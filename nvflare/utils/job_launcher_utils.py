@@ -108,7 +108,7 @@ def generate_server_command(fl_ctx) -> str:
 
 def extract_job_image(job_meta, site_name):
     deploy_map = job_meta.get(JobMetaKey.DEPLOY_MAP, {})
-    for _, participants in deploy_map.items():
+    for participants in deploy_map.values():
         for item in participants:
             if isinstance(item, dict):
                 sites = item.get(JobConstants.SITES)

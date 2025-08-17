@@ -352,7 +352,7 @@ class SimulatorRunner(FLComponent):
 
     def _extract_client_names_from_meta(self, meta):
         client_names = []
-        for _, participants in meta.get(JobMetaKey.DEPLOY_MAP, {}).items():
+        for participants in meta.get(JobMetaKey.DEPLOY_MAP, {}).values():
             for p in participants:
                 if p.upper() != ALL_SITES and p != SiteType.SERVER:
                     client_names.append(p)
@@ -362,7 +362,7 @@ class SimulatorRunner(FLComponent):
         no_app_clients = []
         for name in client_names:
             name_matched = False
-            for _, participants in meta.get(JobMetaKey.DEPLOY_MAP, {}).items():
+            for participants in meta.get(JobMetaKey.DEPLOY_MAP, {}).values():
                 if len(participants) == 1 and participants[0].upper() == ALL_SITES:
                     name_matched = True
                     break

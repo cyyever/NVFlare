@@ -242,7 +242,7 @@ class CommandRegister(object):
             # already finalized
             return
 
-        for scope_name, scope in self.scopes.items():
+        for scope in self.scopes.values():
             for cmd_name, entry in scope.entries.items():
                 assert isinstance(entry, CommandEntry)
                 self._add_cmd_entry(cmd_name, entry)

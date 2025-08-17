@@ -234,7 +234,7 @@ class MultiProcessExecutor(Executor):
                 topic=MultiProcessCommandNames.INITIALIZE,
                 request=request,
             )
-            for name, reply in replies.items():
+            for reply in replies.values():
                 if reply.get_header(MessageHeaderKey.RETURN_CODE) != F3ReturnCode.OK:
                     self.log_exception(fl_ctx, "error initializing multi_process executor")
                     raise ValueError(reply.get_header(MessageHeaderKey.ERROR))

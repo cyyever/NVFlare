@@ -137,7 +137,7 @@ class TrainingCommandModule(CommandModule, CommandUtil):
         if not isinstance(engine, ServerEngine):
             raise TypeError("engine must be ServerEngine but got {}".format(type(engine)))
 
-        for _, job in engine.job_runner.running_jobs.items():
+        for job in engine.job_runner.running_jobs.values():
             if not job.run_aborted:
                 conn.append_error(
                     "There are still jobs running. Please let them finish or abort_job before shutdown.",

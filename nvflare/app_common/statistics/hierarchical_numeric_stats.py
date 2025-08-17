@@ -560,7 +560,7 @@ def get_client_hierarchy(hierarchy_config: dict, client_name: str, path=None) ->
         path = []
 
     if isinstance(hierarchy_config, dict):
-        for key, value in hierarchy_config.items():
+        for value in hierarchy_config.values():
             if isinstance(value, list):
                 result = get_client_hierarchy(value, client_name, path)
                 if result:

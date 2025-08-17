@@ -98,7 +98,7 @@ def init_security_content_service(workspace_dir):
 def component_security_check(fl_ctx: FLContext):
     exceptions = fl_ctx.get_prop(FLContextKey.EXCEPTIONS)
     if exceptions:
-        for _, exception in exceptions.items():
+        for exception in exceptions.values():
             if isinstance(exception, UnsafeComponentError):
                 print(f"Unsafe component configured, could not start {fl_ctx.get_identity_name()}!!")
                 raise RuntimeError(exception)

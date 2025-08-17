@@ -279,13 +279,13 @@ class HierarchicalStatisticsController(StatisticsController):
                     for key, metric in value.items():
                         if key == StC.STATS_HISTOGRAM:
                             for ds in metric:
-                                for name, val in metric[ds].items():
+                                for name in metric[ds].keys():
                                     hist: Histogram = metric[ds][name]
                                     buckets = StatisticsController._apply_histogram_precision(hist.bins, self.precision)
                                     metric[ds][name] = buckets
                         else:
                             for ds in metric:
-                                for name, val in metric[ds].items():
+                                for name in metric[ds].keys():
                                     metric[ds][name] = round(metric[ds][name], self.precision)
                     continue
                 if isinstance(value, list):

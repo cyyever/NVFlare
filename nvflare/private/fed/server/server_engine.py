@@ -295,7 +295,7 @@ class ServerEngine(ServerEngineInternalSpec, StreamableEngine):
     def get_job_clients(self, client_sites):
         job_clients = {}
         if client_sites:
-            for site, dispatch_info in client_sites.items():
+            for site in client_sites.keys():
                 client = self.get_client_from_name(site)
                 if client:
                     job_clients[client.token] = client
@@ -442,7 +442,7 @@ class ServerEngine(ServerEngineInternalSpec, StreamableEngine):
         if self.cell:
             self.run_manager.cell = self.cell
 
-        for _, widget in self.widgets.items():
+        for widget in self.widgets.values():
             self.run_manager.add_handler(widget)
 
     def get_cell(self):

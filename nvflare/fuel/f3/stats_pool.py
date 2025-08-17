@@ -191,7 +191,7 @@ class HistPool(StatsPool):
             has_values = [False for _ in range(len(self.ranges))]
 
             # determine bins that have values in any category
-            for _, bins in self.cat_bins.items():
+            for bins in self.cat_bins.values():
                 for i in range(len(self.ranges)):
                     if bins[i]:
                         has_values[i] = True
@@ -316,7 +316,7 @@ class CounterPool(StatsPool):
             headers = ["category"]
             eff_counter_names = []
             for cn in self.counter_names:
-                for _, counters in self.cat_counters.items():
+                for counters in self.cat_counters.values():
                     v = counters.get(cn, 0)
                     if v > 0:
                         eff_counter_names.append(cn)

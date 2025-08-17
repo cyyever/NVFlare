@@ -64,7 +64,7 @@ def _safe_save(state_dict, filename: str) -> Optional[dict]:
 
     """
     to_removes = _remove_duplicate_names(state_dict)
-    for kept_name, to_remove_group in to_removes.items():
+    for to_remove_group in to_removes.values():
         for to_remove in to_remove_group:
             del state_dict[to_remove]
     state_dict = {k: v.contiguous() for k, v in state_dict.items()}

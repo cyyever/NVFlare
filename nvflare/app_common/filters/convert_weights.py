@@ -94,7 +94,7 @@ class ConvertWeights(DXOFilter):
                 return None
 
             new_weights = dxo.data
-            for k, _ in new_weights.items():
+            for k in new_weights.keys():
                 if k in base_weights:
                     new_weights[k] -= base_weights[k]
             dxo.data_kind = DataKind.WEIGHT_DIFF
@@ -105,7 +105,7 @@ class ConvertWeights(DXOFilter):
                 return None
 
             new_weights = dxo.data
-            for k, _ in new_weights.items():
+            for k in new_weights.keys():
                 if k in base_weights:
                     new_weights[k] += base_weights[k]
             dxo.data_kind = DataKind.WEIGHTS
