@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import re
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.dxo import DataKind
 from nvflare.apis.dxo_filter import DXO, DXOFilter

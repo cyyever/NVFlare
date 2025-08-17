@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import json
+from typing import Optional
 
 from nvflare.edge.models.model import DeviceModel
 from nvflare.edge.tools.edge_recipe import (
@@ -24,7 +25,6 @@ from nvflare.edge.tools.edge_recipe import (
 )
 from nvflare.edge.tools.et_job import ETJob
 from nvflare.job_config.file_source import FileSource
-from typing import Optional
 
 _TRAINER_NAME = "trainer"
 _DEVICE_CONFIG_FILE_NAME = "device_config.json"

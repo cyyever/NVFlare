@@ -17,6 +17,7 @@ import re
 import shutil
 import sys
 import threading
+from typing import Optional
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_component import FLComponent
@@ -45,7 +46,6 @@ from .client_executor import JobExecutor
 from .client_run_manager import ClientRunInfo
 from .client_status import ClientStatus
 from .fed_client import FederatedClient
-from typing import Optional
 
 
 def _remove_custom_path():

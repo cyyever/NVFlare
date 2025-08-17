@@ -16,13 +16,13 @@ import shlex
 import subprocess
 import sys
 import threading
+from typing import Optional
 
 from nvflare.apis.fl_constant import FLContextKey
 from nvflare.apis.fl_context import FLContext
 from nvflare.apis.workspace import Workspace
 from nvflare.fuel.utils.log_utils import get_obj_logger
 from nvflare.fuel.utils.validation_utils import check_object_type, check_str
-from typing import Optional
 
 
 class StopMethod:

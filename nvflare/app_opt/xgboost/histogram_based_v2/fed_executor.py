@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import uuid
+from typing import Optional
 
 from nvflare.apis.fl_context import FLContext
 from nvflare.app_opt.xgboost.histogram_based_v2.adaptors.grpc_client_adaptor import GrpcClientAdaptor
@@ -19,7 +20,6 @@ from nvflare.app_opt.xgboost.histogram_based_v2.runners.xgb_client_runner import
 
 from .executor import XGBExecutor
 from .sec.client_handler import ClientSecurityHandler
-from typing import Optional
 
 
 class FedXGBHistogramExecutor(XGBExecutor):

@@ -128,7 +128,9 @@ def format_log_message(fqcn: str, message: Message, log: str) -> str:
     return " ".join(context) + f"] {log}"
 
 
-def encode_payload(message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: Optional[dict] = None) -> int:
+def encode_payload(
+    message: Message, encoding_key=MessageHeaderKey.PAYLOAD_ENCODING, fobs_ctx: Optional[dict] = None
+) -> int:
     """Encode the payload of the specified message.
 
     Args:

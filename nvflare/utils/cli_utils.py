@@ -248,7 +248,7 @@ def hocon_to_string(target_fmt: ConfigFormat, dst_config: ConfigTree):
 
 
 def save_configs(app_configs: dict[str, tuple], keep_origin_format: bool = True):
-    for (dst_config, dst_path) in app_configs.values():
+    for dst_config, dst_path in app_configs.values():
         save_config(dst_config, dst_path, keep_origin_format)
 
 

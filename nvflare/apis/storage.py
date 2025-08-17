@@ -13,7 +13,7 @@
 # limitations under the License.
 from abc import ABC, abstractmethod
 from enum import Enum
-from typing import Union, Optional
+from typing import Optional, Union
 
 DATA = "data"
 JOB_ZIP = "job.zip"

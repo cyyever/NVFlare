@@ -13,8 +13,9 @@
 # limitations under the License.
 
 
-from nvflare.fuel.hci.proto import ConfirmMethod
 from typing import Optional
+
+from nvflare.fuel.hci.proto import ConfirmMethod
 
 
 class CommandSpec(object):

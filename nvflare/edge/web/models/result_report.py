@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Optional
+
 from nvflare.edge.constants import EdgeApiStatus
 from nvflare.edge.web.models.base_model import BaseModel, EdgeProtoKey
 from nvflare.edge.web.models.device_info import DeviceInfo
 from nvflare.edge.web.models.user_info import UserInfo
-from typing import Optional
 
 
 class ResultReport(BaseModel):

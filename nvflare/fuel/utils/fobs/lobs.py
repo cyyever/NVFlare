@@ -15,7 +15,7 @@ import io
 import os.path
 import struct
 import uuid
-from typing import Any, BinaryIO, Union, Optional
+from typing import Any, BinaryIO, Optional, Union
 
 from nvflare.fuel.utils.config_service import ConfigService
 from nvflare.fuel.utils.fobs import deserialize, get_dot_handler, serialize

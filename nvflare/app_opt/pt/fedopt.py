@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import time
+from typing import Optional
 
 import torch
 
@@ -25,7 +26,6 @@ from nvflare.app_common.abstract.model import ModelLearnableKey, make_model_lear
 from nvflare.app_common.app_constant import AppConstants
 from nvflare.app_common.shareablegenerators.full_model_shareable_generator import FullModelShareableGenerator
 from nvflare.security.logging import secure_format_exception
-from typing import Optional
 
 
 class PTFedOptModelShareableGenerator(FullModelShareableGenerator):

@@ -16,7 +16,7 @@ import concurrent.futures
 import copy
 import threading
 import uuid
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.signal import Signal
 from nvflare.fuel.f3.cellnet.core_cell import CoreCell, TargetMessage

@@ -14,6 +14,7 @@
 
 import time
 from datetime import datetime
+from typing import Optional
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, Task
@@ -43,7 +44,6 @@ from nvflare.fuel.utils.validation_utils import (
     validate_candidates,
 )
 from nvflare.security.logging import secure_format_traceback
-from typing import Optional
 
 
 class ClientStatus:

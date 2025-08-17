@@ -100,7 +100,9 @@ class Recipe(ABC):
         """
         self.job.to_server(filter, filter_type=FilterType.TASK_RESULT, tasks=tasks)
 
-    def export(self, job_dir: str, server_exec_params: Optional[dict] = None, client_exec_params: Optional[dict] = None):
+    def export(
+        self, job_dir: str, server_exec_params: Optional[dict] = None, client_exec_params: Optional[dict] = None
+    ):
         """Export the recipe to a job definition.
 
         Args:
@@ -119,7 +121,9 @@ class Recipe(ABC):
 
         self.job.export_job(job_dir)
 
-    def execute(self, env: ExecEnv, server_exec_params: Optional[dict] = None, client_exec_params: Optional[dict] = None) -> Any:
+    def execute(
+        self, env: ExecEnv, server_exec_params: Optional[dict] = None, client_exec_params: Optional[dict] = None
+    ) -> Any:
         """Execute the recipe in a specified execution environment.
 
         Args:

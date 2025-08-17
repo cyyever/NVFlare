@@ -13,9 +13,9 @@
 # limitations under the License.
 
 from abc import ABC, abstractmethod
+from typing import Optional
 
 from nvflare.apis.client_engine_spec import ClientEngineSpec
-from typing import Optional
 
 
 class ClientEngineInternalSpec(ClientEngineSpec, ABC):

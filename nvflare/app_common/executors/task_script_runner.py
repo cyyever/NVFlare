@@ -16,12 +16,12 @@ import os
 import runpy
 import sys
 import traceback
+from typing import Optional
 
 from nvflare.client.in_process.api import TOPIC_ABORT
 from nvflare.fuel.data_event.data_bus import DataBus
 from nvflare.fuel.data_event.event_manager import EventManager
 from nvflare.fuel.utils.log_utils import get_module_logger
-from typing import Optional
 
 print_fn = builtins.print
 
@@ -29,7 +29,9 @@ print_fn = builtins.print
 class TaskScriptRunner:
     logger = get_module_logger(__module__, __qualname__)
 
-    def __init__(self, custom_dir: str, script_path: str, script_args: Optional[str] = None, redirect_print_to_log=True):
+    def __init__(
+        self, custom_dir: str, script_path: str, script_args: Optional[str] = None, redirect_print_to_log=True
+    ):
         """Wrapper for function given function path and args
 
         Args:

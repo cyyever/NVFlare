@@ -20,7 +20,7 @@ import os
 import re
 from logging import Logger
 from logging.handlers import RotatingFileHandler
-from typing import Union, Optional
+from typing import Optional, Union
 
 from nvflare.apis.workspace import Workspace
 

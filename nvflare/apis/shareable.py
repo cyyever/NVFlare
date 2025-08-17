@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import copy
+from typing import Optional
 
 from ..fuel.utils import fobs
 from .fl_constant import ReservedKey, ReturnCode, ServerCommandKey
-from typing import Optional
 
 
 class ReservedHeaderKey(object):

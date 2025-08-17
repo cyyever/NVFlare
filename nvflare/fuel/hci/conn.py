@@ -13,11 +13,12 @@
 # limitations under the License.
 
 
+from typing import Optional
+
 from nvflare.fuel.common.ctx import BaseContext
 
 from .proto import Buffer, ProtoKey
 from .table import Table
-from typing import Optional
 
 
 class Connection(BaseContext):

@@ -20,12 +20,12 @@ import shutil
 import tempfile
 import uuid
 from pathlib import Path
+from typing import Optional
 
 from nvflare.apis.storage import DATA, META, StorageException, StorageSpec
 from nvflare.apis.utils.format_check import validate_class_methods_args
 from nvflare.fuel.utils.zip_utils import zip_directory_to_file
 from nvflare.security.logging import secure_format_exception
-from typing import Optional
 
 log = logging.getLogger(__name__)
 

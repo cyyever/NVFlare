@@ -14,6 +14,7 @@
 
 import multiprocessing
 import os
+from typing import Optional
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import Task
@@ -28,7 +29,6 @@ from nvflare.fuel.utils.network_utils import get_open_ports
 from nvflare.security.logging import secure_format_exception, secure_format_traceback
 
 from .constants import XGB_TRAIN_TASK, XGBShareableHeader
-from typing import Optional
 
 
 class XGBFedController(Controller):

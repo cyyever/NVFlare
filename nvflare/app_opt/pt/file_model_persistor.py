@@ -16,6 +16,7 @@ import json
 import os
 import re
 from collections import OrderedDict
+from typing import Optional
 
 import torch
 
@@ -30,7 +31,6 @@ from nvflare.app_common.model_desc import ModelDescriptor
 from nvflare.app_opt.pt.decomposers import TensorDecomposer
 from nvflare.app_opt.pt.model_persistence_format_manager import PTModelPersistenceFormatManager
 from nvflare.fuel.utils import fobs
-from typing import Optional
 
 
 class PTFileModelPersistor(ModelPersistor):

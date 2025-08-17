@@ -13,12 +13,12 @@
 # limitations under the License.
 import os.path
 import tempfile
+from typing import Optional
 
 from nvflare.fuel.flare_api.flare_api import new_insecure_session
 from nvflare.job_config.api import FedJob
 
 from .spec import ExecEnv
-from typing import Optional
 
 
 class ProdEnv(ExecEnv):

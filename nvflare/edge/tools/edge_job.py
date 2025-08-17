@@ -13,6 +13,7 @@
 # limitations under the License.
 import json
 import os.path
+from typing import Optional
 
 from nvflare.edge.assessor import Assessor
 from nvflare.edge.controllers.sage import ScatterAndGatherForEdge
@@ -25,7 +26,6 @@ from nvflare.edge.widgets.tpo_runner import TPORunner
 from nvflare.fuel.utils.validation_utils import check_object_type, check_positive_int, check_positive_number, check_str
 from nvflare.job_config.api import FedJob
 from nvflare.job_config.file_source import FileSource
-from typing import Optional
 
 
 class EdgeJob(FedJob):

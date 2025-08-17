@@ -15,7 +15,7 @@
 import gc
 import random
 from abc import ABC, abstractmethod
-from typing import Callable, Union, Optional
+from typing import Callable, Optional, Union
 
 from nvflare.apis.client import Client
 from nvflare.apis.controller_spec import ClientTask, OperatorMethod, Task, TaskOperatorKey
