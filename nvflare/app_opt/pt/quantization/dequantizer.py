@@ -89,13 +89,12 @@ class ModelDequantizer(DXOFilter):
                     if quantization_type == "blockwise8":
                         if source_data_format == "numpy":
                             # first convert numpy array to tensor if numpy
-                            quantized = torch.as_tensor(values).cuda()
-                            absmax = torch.as_tensor(quant_state[param_name]["absmax"]).cuda()
-                            code = torch.as_tensor(quant_state[param_name]["code"]).cuda()
-                        elif source_data_format == "torch":
-                            quantized = values.cuda()
-                            absmax = quant_state[param_name]["absmax"].cuda()
-                            code = quant_state[param_name]["code"].cuda()
+                            quantized = torch.as_tensor(values)
+                            absmax = torch.as_tensor(quant_state[param_name]["absmax"])
+                            code = torch.as_tensor(quant_state[param_name]["code"])
+                        quantized = quantized.cuda()
+                        absmax = absmax.cuda()
+                        code = code.cuda()
                         # de-quantize
                         dequantized = dequantize_blockwise(quantized, absmax=absmax, code=code)
                     else:
