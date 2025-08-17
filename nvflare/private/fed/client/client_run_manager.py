@@ -125,7 +125,7 @@ class ClientRunManager(ClientEngineExecutorSpec, StreamableEngine):
         self.run_info = ClientRunInfo(job_id=job_id)
 
         self.widgets = {WidgetID.INFO_COLLECTOR: InfoCollector(), WidgetID.FED_EVENT_RUNNER: ClientFedEventRunner()}
-        for _, widget in self.widgets.items():
+        for widget in self.widgets.values():
             self.handlers.append(widget)
 
         self.logger = get_obj_logger(self)

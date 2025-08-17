@@ -295,7 +295,7 @@ def get_cli_config(cmd_args: Any, app_names: List[str]) -> Dict[str, Dict[str, D
 
         if app_cli_config_dict:
             key = CONFIG_FED_CLIENT_CONF
-            for _, cli_config_dict in app_cli_config_dict.items():
+            for cli_config_dict in app_cli_config_dict.values():
 
                 if key in cli_config_dict:
                     cli_config_dict[key].update({APP_SCRIPT_KEY: script})

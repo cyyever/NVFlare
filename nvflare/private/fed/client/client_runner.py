@@ -798,7 +798,7 @@ class ClientRunner(TBI):
                     raise TypeError("collector must be GroupInfoCollector, but got {}".format(type(collector)))
                 with self.task_lock:
                     current_tasks = []
-                    for _, task in self.running_tasks.items():
+                    for task in self.running_tasks.values():
                         current_tasks.append(task.name)
 
                 collector.set_info(

@@ -393,7 +393,7 @@ class ObjDownloader:
             now = time.time()
             expired_tx = []
             with cls._tx_lock:
-                for tid, tx in cls._tx_table.items():
+                for tx in cls._tx_table.values():
                     assert isinstance(tx, _Transaction)
                     if now - tx.last_active_time > tx.timeout:
                         expired_tx.append(tx)

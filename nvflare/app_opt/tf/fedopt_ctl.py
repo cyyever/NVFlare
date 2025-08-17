@@ -100,7 +100,7 @@ class FedOpt(FedAvg):
         to apply gradients.
         """
         tf_params_list = []
-        for k, v in params.items():
+        for v in params.values():
             if negate:
                 v = -1 * v
             tf_params_list.append(tf.Variable(v))

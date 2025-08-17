@@ -328,14 +328,14 @@ class NetAgent:
 
     @staticmethod
     def _check_monitor(m: SubnetMonitor):
-        for member_fqcn, member in m.members.items():
+        for member in m.members.values():
             m.put_member_offline(member)
 
     def _monitor_subnet(self):
         while not self.asked_to_close:
             with self.monitor_lock:
                 monitors = copy.copy(self.monitors)
-            for _, m in monitors.items():
+            for m in monitors.values():
                 self._check_monitor(m)
             time.sleep(0.5)
 
@@ -483,7 +483,7 @@ class NetAgent:
         if cell.bb_int_connector and cell.bb_int_connector.connect_url == url:
             return "int_connect"
         if cell.adhoc_connectors:
-            for _, h in cell.adhoc_connectors.items():
+            for h in cell.adhoc_connectors.values():
                 if h.connect_url == url:
                     return "adhoc_connect"
         return "none"

@@ -233,7 +233,7 @@ class FedAdminServer(AdminServer):
         """
         result = {}
         if requests:
-            for token, _ in requests.items():
+            for token in requests.keys():
                 result[token] = None
 
             with self.sai.new_context() as fl_ctx:
@@ -261,7 +261,7 @@ class FedAdminServer(AdminServer):
             A list of ClientReply
         """
 
-        for _, request in requests.items():
+        for request in requests.values():
             # with self.sai.new_context() as fl_ctx:
             self.sai.fire_event(EventType.BEFORE_SEND_ADMIN_COMMAND, fl_ctx)
             shared_fl_ctx = gen_new_peer_ctx(fl_ctx)

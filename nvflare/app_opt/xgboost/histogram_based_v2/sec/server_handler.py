@@ -182,7 +182,7 @@ class ServerSecurityHandler(SecurityHandler):
 
         result = None
 
-        for rank, vector in self.aggr_result_dict.items():
+        for vector in self.aggr_result_dict.values():
             if not result:
                 result = vector
             else:

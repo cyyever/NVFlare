@@ -670,7 +670,7 @@ class FederatedServer(BaseServer):
 
                 exceptions = fl_ctx.get_prop(FLContextKey.EXCEPTIONS)
                 if exceptions:
-                    for _, exception in exceptions.items():
+                    for exception in exceptions.values():
                         if isinstance(exception, NotAuthenticated):
                             raise exception
 

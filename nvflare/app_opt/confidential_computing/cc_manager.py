@@ -144,7 +144,7 @@ class CCManager(FLComponent):
         elif event_type == EventType.AFTER_CHECK_CLIENT_RESOURCES:
             client_resource_result = fl_ctx.get_prop(FLContextKey.RESOURCE_CHECK_RESULT)
             if client_resource_result:
-                for site_name, check_result in client_resource_result.items():
+                for check_result in client_resource_result.values():
                     is_resource_enough, reason = check_result
                     if (
                         not is_resource_enough
@@ -213,7 +213,7 @@ class CCManager(FLComponent):
             for job_id in running_jobs:
                 job_participants = run_processes[job_id].get(RunProcessKey.PARTICIPANTS)
                 participants = []
-                for _, client in job_participants.items():
+                for client in job_participants.values():
                     participants.append(client.name)
 
                 participants_tokens = self._collect_participants_tokens(participants)

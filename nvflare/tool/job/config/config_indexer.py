@@ -305,7 +305,7 @@ def update_index_comp_name(key_index: KeyIndex):
 def add_default_values(excluded_keys, key_indices: Dict):
     results = key_indices.copy()
 
-    for key, key_index_list in key_indices.items():
+    for key_index_list in key_indices.values():
         for key_index in key_index_list:
             if key_index:
                 add_class_defaults_to_key(excluded_keys, key_index, key_indices, results)

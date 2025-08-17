@@ -562,7 +562,7 @@ def has_client_config_file(app_config_dir):
 
 
 def save_merged_configs(app_merged_conf, job_folder, tmp_job_dir):
-    for app_name, merged_conf in app_merged_conf.items():
+    for merged_conf in app_merged_conf.values():
         for file, (config, excluded_key_List, key_indices) in merged_conf.items():
             if job_folder == tmp_job_dir:
                 dst_path = file

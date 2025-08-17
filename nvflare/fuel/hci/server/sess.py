@@ -115,7 +115,7 @@ class SessionManager(CommandModule):
                 break
 
             dead_sess = None
-            for _, sess in self.sessions.items():
+            for sess in self.sessions.values():
                 time_passed = time.time() - sess.last_active_time
                 # print('time passed: {} secs'.format(time_passed))
                 if time_passed > self.idle_timeout:
@@ -178,7 +178,7 @@ class SessionManager(CommandModule):
     def get_sessions(self):
         result = []
         with self.sess_update_lock:
-            for _, s in self.sessions.items():
+            for s in self.sessions.values():
                 result.append(s)
         return result
 

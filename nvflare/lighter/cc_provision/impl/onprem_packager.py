@@ -30,7 +30,7 @@ BUILD_IMAGE_CMD = "build_cvm_image.sh"
 
 def update_log_filenames(config, new_log_root: str = "/applog"):
     handlers = config.get("handlers", {})
-    for handler_name, handler_cfg in handlers.items():
+    for handler_cfg in handlers.values():
         filename = handler_cfg.get("filename")
         if filename:
             handler_cfg["filename"] = os.path.join(new_log_root, filename)

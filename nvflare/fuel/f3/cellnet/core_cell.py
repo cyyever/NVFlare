@@ -1339,7 +1339,7 @@ class CoreCell(MessageReceiver, EndpointMonitor):
             timeout = self.max_timeout
         result = {}
         try:
-            for _, tm in target_msgs.items():
+            for tm in target_msgs.values():
                 request = tm.message
                 request.add_headers(
                     {
@@ -2057,13 +2057,13 @@ class CoreCell(MessageReceiver, EndpointMonitor):
     def _check_bulk(self):
         while not self.asked_to_stop:
             with self.bulk_lock:
-                for _, sender in self.bulk_senders.items():
+                for sender in self.bulk_senders.values():
                     sender.send()
             time.sleep(self.bulk_check_interval)
 
         # force everything to be flushed
         with self.bulk_lock:
-            for _, sender in self.bulk_senders.items():
+            for sender in self.bulk_senders.values():
                 sender.send()
 
     def state_change(self, endpoint: Endpoint):
