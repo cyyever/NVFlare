@@ -49,7 +49,7 @@ class ModelDequantizer(DXOFilter):
         n_bytes_after = 0
         n_bytes_meta = 0
         n_quant_params = 0
-        for i, param_name in enumerate(params.keys()):
+        for param_name in params:
             source_data_type = source_datatype[param_name]
 
             # get the bits information
