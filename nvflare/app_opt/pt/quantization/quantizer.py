@@ -88,7 +88,7 @@ class ModelQuantizer(DXOFilter):
 
             source_datatype[param_name] = source_data_type
 
-            if self.quantization_type != "AdaQuant":
+            if self.quantization_type != "adaquant":
                 # get the bits information
                 source_data_bits = int(re.findall(r"\d+", source_data_type)[0])
                 quantization_bits = int(re.findall(r"\d+", self.quantization_type)[0])
@@ -140,7 +140,7 @@ class ModelQuantizer(DXOFilter):
                 # add values
                 values = self.to_source_data(quantized, source_data_format)
                 params[param_name] = values
-            elif self.quantization_type == "AdaQuant":
+            elif self.quantization_type == "adaquant":
                 # if numpy, first convert numpy array to tensor
                 values_tensor = self.to_torch_tensor(values).cpu()
                 old_values_tensor = values_tensor
@@ -193,6 +193,7 @@ class ModelQuantizer(DXOFilter):
                             "norm": norm,
                             "offset": offset,
                         }
+                        n_bytes_meta += sign_tensor.nbytes
                     else:
                         params[param_name] = values
             n_bytes_after += params[param_name].nbytes
