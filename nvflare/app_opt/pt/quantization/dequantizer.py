@@ -57,17 +57,18 @@ class ModelDequantizer(DXOFilter):
         for param_name in params:
             source_data_type = source_datatype[param_name]
 
-            # get the bits information
-            source_date_bits = int(re.findall(r"\d+", source_data_type)[0])
-            quantization_bits = int(re.findall(r"\d+", quantization_type)[0])
+            if quantization_type != "adaquant":
+                # get the bits information
+                source_date_bits = int(re.findall(r"\d+", source_data_type)[0])
+                quantization_bits = int(re.findall(r"\d+", quantization_type)[0])
 
-            # only dequantize if the quantization type is lower than the source data type
-            if quantization_bits >= source_date_bits:
-                self.log_info(
-                    fl_ctx,
-                    f"Skipping dequantization for {param_name}, quantization bit {quantization_type} >= source data bit {source_data_type}",
-                )
-                continue
+                # only dequantize if the quantization type is lower than the source data type
+                if quantization_bits >= source_date_bits:
+                    self.log_info(
+                        fl_ctx,
+                        f"Skipping dequantization for {param_name}, quantization bit {quantization_type} >= source data bit {source_data_type}",
+                    )
+                    continue
             values = params[param_name]
             n_bytes_before += values.nbytes
             if param_name not in quant_state:
@@ -106,7 +107,7 @@ class ModelDequantizer(DXOFilter):
                     dequantized = dequantize_4bit(quantized, quant_state=quantized_state)
 
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
-            elif quantization_type == "AdaQuant":
+            elif quantization_type == "adaquant":
                 quantized_state_dict = quant_state[param_name]
                 offset = quantized_state_dict["offset"]
                 if "tensor_shape" in quantized_state_dict:
@@ -115,7 +116,7 @@ class ModelDequantizer(DXOFilter):
                     sign_tensor = quantized_state_dict["sign_tensor"]
                     norm = quantized_state_dict["norm"]
                     quantization_level = quantized_state_dict["quantization_level"]
-                    quantized_tensor = torch.from_numpy(quantized_state_dict["quantized_tensor"].astype(dtype=np.int64))
+                    quantized_tensor = self.to_torch_tensor(values).to(dtype=torch.int64)
                     sign_tensor = (torch.from_numpy(np.unpackbits(sign_tensor)).float() * 2 - 1)[
                         : np.prod(quantized_tensor.shape)
                     ].reshape(quantized_tensor.shape)
