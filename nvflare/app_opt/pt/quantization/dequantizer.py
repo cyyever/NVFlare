@@ -70,6 +70,9 @@ class ModelDequantizer(DXOFilter):
                 continue
             values = params[param_name]
             n_bytes_before += values.nbytes
+            if param_name not in quant_state:
+                n_bytes_after += values.nbytes
+                continue
             for item in quant_state[param_name].values():
                 if isinstance(item, (np.ndarray, torch.Tensor)):
                     n_bytes_meta += item.nbytes
@@ -102,6 +105,21 @@ class ModelDequantizer(DXOFilter):
                 else:
                     dequantized = dequantize_4bit(quantized, quant_state=quantized_state)
 
+                params[param_name] = self.to_source_data(dequantized, source_data_format)
+            elif quantization_type == "AdaQuant":
+                quantized_state_dict = quant_state[param_name]
+                offset = quantized_state_dict["offset"]
+                if "tensor_shape" in quantized_state_dict:
+                    dequantized = torch.zeros(quantized_state_dict["tensor_shape"], dtype=torch.float64) - offset
+                else:
+                    sign_tensor = quantized_state_dict["sign_tensor"]
+                    norm = quantized_state_dict["norm"]
+                    quantization_level = quantized_state_dict["quantization_level"]
+                    quantized_tensor = torch.from_numpy(quantized_state_dict["quantized_tensor"].astype(dtype=np.int64))
+                    sign_tensor = (torch.from_numpy(np.unpackbits(sign_tensor)).float() * 2 - 1)[
+                        : np.prod(quantized_tensor.shape)
+                    ].reshape(quantized_tensor.shape)
+                    dequantized = (quantized_tensor * norm * sign_tensor / quantization_level) - offset
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
 
             # assign back

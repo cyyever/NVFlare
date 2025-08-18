@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import math
 import re
 from typing import Any, Optional, Union
 
@@ -87,17 +88,18 @@ class ModelQuantizer(DXOFilter):
 
             source_datatype[param_name] = source_data_type
 
-            # get the bits information
-            source_data_bits = int(re.findall(r"\d+", source_data_type)[0])
-            quantization_bits = int(re.findall(r"\d+", self.quantization_type)[0])
+            if self.quantization_type != "AdaQuant":
+                # get the bits information
+                source_data_bits = int(re.findall(r"\d+", source_data_type)[0])
+                quantization_bits = int(re.findall(r"\d+", self.quantization_type)[0])
 
-            # only quantize if the quantization type is lower than the source data type
-            if quantization_bits >= source_data_bits:
-                self.log_info(
-                    fl_ctx,
-                    f"Skipping quantization for {param_name}, quantization bit {self.quantization_type} >= source data bit {source_data_type}",
-                )
-                continue
+                # only quantize if the quantization type is lower than the source data type
+                if quantization_bits >= source_data_bits:
+                    self.log_info(
+                        fl_ctx,
+                        f"Skipping quantization for {param_name}, quantization bit {self.quantization_type} >= source data bit {source_data_type}",
+                    )
+                    continue
             # add the number of bytes of the values
             n_bytes_before += values.nbytes
             n_quant_params += 1
@@ -138,6 +140,61 @@ class ModelQuantizer(DXOFilter):
                 # add values
                 values = self.to_source_data(quantized, source_data_format)
                 params[param_name] = values
+            elif self.quantization_type == "AdaQuant":
+                # if numpy, first convert numpy array to tensor
+                values_tensor = self.to_torch_tensor(values).cpu()
+                old_values_tensor = values_tensor
+
+                def get_offset(tensor: torch.Tensor) -> float:
+                    max_value = tensor.max().item()
+                    min_value = tensor.min().item()
+                    if min_value >= 0:
+                        return -(min_value + max_value) / 2
+                    if max_value <= 0:
+                        return (min_value + max_value) / 2
+                    if max_value >= -min_value:
+                        return -(max_value - math.fabs(min_value)) / 2
+                    return (math.fabs(min_value) - max_value) / 2
+
+                old_tensor_shape = old_values_tensor.shape
+                values_tensor = values_tensor.to(dtype=torch.float64).view(-1)
+                offset = get_offset(values_tensor)
+                values_tensor = values_tensor + offset
+                norm = torch.linalg.norm(values_tensor, ord=float("inf")).item()
+                if norm == 0.0:
+                    params[param_name] = torch.tensor([0], dtype=torch.bool)
+                    quant_state[param_name] = {
+                        "offset": offset,
+                        "tensor_shape": old_tensor_shape,
+                    }
+                else:
+                    element_bits = old_values_tensor.element_size() * 8
+                    weight = 0.01
+                    quantization_level = int(max(1, math.sqrt(norm * element_bits * math.log(4) / weight)))
+                    new_dtype = None
+                    if quantization_level < 2**element_bits:
+                        if quantization_level < 2**8:
+                            new_dtype = np.uint8
+                        elif quantization_level < 2**16:
+                            new_dtype = np.uint16
+                        elif quantization_level < 2**32:
+                            new_dtype = np.uint32
+                    if new_dtype is not None:
+                        sign_tensor = np.packbits(((values_tensor.sign() + 1) / 2).to(dtype=torch.bool).numpy())
+                        normalized_abs_tensor = values_tensor.abs() / norm
+                        quantized_tensor = (
+                            (normalized_abs_tensor * quantization_level).round().clamp(0, quantization_level)
+                        )
+                        quantized_tensor = quantized_tensor.reshape(old_tensor_shape).numpy().astype(dtype=new_dtype)
+                        params[param_name] = quantized_tensor
+                        quant_state[param_name] = {
+                            "quantization_level": quantization_level,
+                            "sign_tensor": sign_tensor,
+                            "norm": norm,
+                            "offset": offset,
+                        }
+                    else:
+                        params[param_name] = values
             n_bytes_after += params[param_name].nbytes
 
         self.log_info(
