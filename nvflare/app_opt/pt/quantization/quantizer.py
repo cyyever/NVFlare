@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import copy
 import math
 import re
 from typing import Any, Optional, Union
@@ -248,11 +249,15 @@ class ModelQuantizer(DXOFilter):
             new_dxo = dxo
         else:
             # apply quantization
-            quantized_params, quant_state, source_datatype = self.quantization(params=dxo.data, fl_ctx=fl_ctx)
+            params = dxo.data
+            quantized_params, quant_state, source_datatype = self.quantization(
+                params=copy.deepcopy(params), fl_ctx=fl_ctx
+            )
             # Compose new DXO with quantized data
             # Add quant_state to the new DXO meta
             new_dxo = DXO(data_kind=dxo.data_kind, data=quantized_params, meta=dxo.meta)
             new_dxo.set_meta_prop(key=MetaKey.PROCESSED_ALGORITHM, value=self.quantization_type)
+            new_dxo.set_meta_prop(key="old_params", value=params)
             new_dxo.set_meta_prop(key="quant_state", value=quant_state)
             new_dxo.set_meta_prop(key="source_datatype", value=source_datatype)
             new_dxo.set_meta_prop(key="quantized_flag", value=True)
