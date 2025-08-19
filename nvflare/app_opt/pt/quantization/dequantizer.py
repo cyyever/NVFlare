@@ -108,6 +108,7 @@ class ModelDequantizer(DXOFilter):
 
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
             elif quantization_type == "adaquant":
+                print(values)
                 quantized_state_dict = quant_state[param_name]
                 offset = quantized_state_dict["offset"]
                 if "tensor_shape" in quantized_state_dict:
@@ -178,6 +179,7 @@ class ModelDequantizer(DXOFilter):
         if quantization_type.upper() not in QUANTIZATION_TYPE:
             raise ValueError(f"Invalid quantization type: {quantization_type}, valid: {QUANTIZATION_TYPE}")
         source_datatype = dxo.get_meta_prop(key="source_datatype", default=None)
+        old_params = dxo.get_meta_prop(key="old_params", default=None)
         dequantized_params = self.dequantization(
             params=dxo.data,
             quant_state=dxo.meta["quant_state"],
@@ -185,6 +187,18 @@ class ModelDequantizer(DXOFilter):
             source_datatype=source_datatype,
             fl_ctx=fl_ctx,
         )
+        if old_params is not None:
+            total_bytes = 0
+            weighted_distance = 0
+            for name, param in old_params.items():
+                total_bytes += param.nbytes
+                dequantized_param = dequantized_params[name]
+                weighted_distance += torch.norm(param.view(-1) - dequantized_param.view(-1)).item() * param.nbytes
+            self.log_info(
+                fl_ctx,
+                f"Mean quantization error is {weighted_distance/total_bytes}",
+            )
+
         # Compose new DXO with dequantized data
         dxo.data = dequantized_params
         dxo.remove_meta_props(
@@ -192,6 +206,7 @@ class ModelDequantizer(DXOFilter):
                 MetaKey.PROCESSED_ALGORITHM,
                 "quant_state",
                 "source_datatype",
+                "old_params",
                 "quantized_flag",
             ]
         )
