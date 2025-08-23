@@ -27,7 +27,7 @@ class AdaQuantizer:
         values_tensor = values_tensor.cpu()
         old_values_tensor = values_tensor
 
-        old_tensor_shape = old_values_tensor.shape
+        old_tensor_shape = list(old_values_tensor.shape)
         values_tensor = values_tensor.to(dtype=torch.float64).view(-1)
         offset = self.get_offset(values_tensor)
         values_tensor = values_tensor + offset
@@ -63,7 +63,7 @@ class AdaQuantizer:
         return quantized_tensor, quant_state | {
             "quantization_level": quantization_level,
             "sign_tensor": sign_tensor,
-            "old_tensor_shape": old_tensor_shape,
+            "tensor_shape": old_tensor_shape,
             "norm": norm,
         }
 
