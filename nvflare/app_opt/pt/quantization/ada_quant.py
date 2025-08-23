@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import math
-from typing import Tuple, Union
+from typing import Union
 
 import numpy as np
 import torch
@@ -23,9 +23,7 @@ class AdaQuantizer:
     def __init__(self, weight: float = 0.01) -> None:
         self.weight = weight
 
-    def quantize(
-        self, values_tensor: torch.Tensor
-    ) -> Union[torch.Tensor, Tuple[Union[torch.Tensor, np.ndarray], dict]]:
+    def quantize(self, values_tensor: torch.Tensor) -> tuple[Union[torch.Tensor, np.ndarray], dict]:
         values_tensor = values_tensor.cpu()
         old_values_tensor = values_tensor
 
@@ -56,7 +54,7 @@ class AdaQuantizer:
             else:
                 raise RuntimeError(f"Invalid element_bits {new_element_bits}")
         if new_dtype is None:
-            return old_values_tensor
+            return old_values_tensor, {}
 
         sign_tensor = np.packbits(((values_tensor.sign() + 1) / 2).to(dtype=torch.bool).numpy())
         normalized_abs_tensor = values_tensor.abs() / norm
