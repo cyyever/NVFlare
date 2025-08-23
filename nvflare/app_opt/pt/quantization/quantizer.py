@@ -148,8 +148,6 @@ class ModelQuantizer(DXOFilter):
                 params[param_name], value_quant_state = AdaQuantizer().quantize(values_tensor)
                 if value_quant_state:
                     quant_state[param_name] = value_quant_state
-                    if "sign_tensor" in quant_state[param_name]:
-                        n_bytes_meta += quant_state[param_name]["sign_tensor"].nbytes
 
                 dequantized_param = AdaQuantizer().dequantized(
                     self.to_torch_tensor(params[param_name]), value_quant_state
@@ -222,7 +220,6 @@ class ModelQuantizer(DXOFilter):
             # Add quant_state to the new DXO meta
             new_dxo = DXO(data_kind=dxo.data_kind, data=quantized_params, meta=dxo.meta)
             new_dxo.set_meta_prop(key=MetaKey.PROCESSED_ALGORITHM, value=self.quantization_type)
-            new_dxo.set_meta_prop(key="old_params", value=params)
             new_dxo.set_meta_prop(key="quant_state", value=quant_state)
             new_dxo.set_meta_prop(key="source_datatype", value=source_datatype)
             new_dxo.set_meta_prop(key="quantized_flag", value=True)
