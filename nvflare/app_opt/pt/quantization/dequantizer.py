@@ -111,13 +111,15 @@ class ModelDequantizer(DXOFilter):
                 print(values)
                 quantized_state_dict = quant_state[param_name]
                 offset = quantized_state_dict["offset"]
-                if "tensor_shape" in quantized_state_dict:
+                if "norm" not in quantized_state_dict:
                     dequantized = torch.zeros(quantized_state_dict["tensor_shape"], dtype=torch.float64) - offset
                 else:
                     sign_tensor = quantized_state_dict["sign_tensor"]
                     norm = quantized_state_dict["norm"]
                     quantization_level = quantized_state_dict["quantization_level"]
-                    quantized_tensor = self.to_torch_tensor(values).to(dtype=torch.int64)
+                    quantized_tensor = (
+                        self.to_torch_tensor(values).to(dtype=torch.int64).reshape(quantized_state_dict["tensor_shape"])
+                    )
                     sign_tensor = (torch.from_numpy(np.unpackbits(sign_tensor)).float() * 2 - 1)[
                         : np.prod(quantized_tensor.shape)
                     ].reshape(quantized_tensor.shape)
@@ -196,7 +198,7 @@ class ModelDequantizer(DXOFilter):
                 weighted_distance += torch.norm(param.view(-1) - dequantized_param.view(-1)).item() * param.nbytes
             self.log_info(
                 fl_ctx,
-                f"Mean quantization error is {weighted_distance/total_bytes}",
+                f"Mean quantization error is {weighted_distance / total_bytes}",
             )
 
         # Compose new DXO with dequantized data
