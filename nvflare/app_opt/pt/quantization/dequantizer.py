@@ -173,7 +173,6 @@ class ModelDequantizer(DXOFilter):
         if quantization_type.upper() not in QUANTIZATION_TYPE:
             raise ValueError(f"Invalid quantization type: {quantization_type}, valid: {QUANTIZATION_TYPE}")
         source_datatype = dxo.get_meta_prop(key="source_datatype", default=None)
-        old_params = dxo.get_meta_prop(key="old_params", default=None)
         dequantized_params = self.dequantization(
             params=dxo.data,
             quant_state=dxo.meta["quant_state"],
@@ -181,18 +180,6 @@ class ModelDequantizer(DXOFilter):
             source_datatype=source_datatype,
             fl_ctx=fl_ctx,
         )
-        if old_params is not None:
-            total_norm = 0
-            weighted_distance = 0
-            for name, param in old_params.items():
-                param_norm = torch.linalg.norm(param.view(-1))
-                total_norm += param_norm
-                dequantized_param = dequantized_params[name]
-                weighted_distance += torch.linalg.norm(param.view(-1) - dequantized_param.view(-1)).item() * param_norm
-            self.log_info(
-                fl_ctx,
-                f"Mean quantization error is {weighted_distance / total_norm}",
-            )
 
         # Compose new DXO with dequantized data
         dxo.data = dequantized_params

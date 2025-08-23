@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import math
-from typing import Union
+from typing import Any, Optional, Union
 
 import numpy as np
 import torch
@@ -32,17 +32,36 @@ class AdaQuantizer:
         offset = self.get_offset(values_tensor)
         values_tensor = values_tensor + offset
         norm = values_tensor.abs().max()
-        # print(values_tensor.max().item(), values_tensor.min().item())
-        quant_state = {"offset": offset}
 
+        quant_state = {"offset": offset}
+        res = self.get_number_of_quantization_levels(
+            element_size=old_values_tensor.element_size(), values_tensor=values_tensor
+        )
+        if res is None:
+            return old_values_tensor, {}
+        norm, quantization_level, new_dtype = res
         if norm == 0.0:
             return torch.tensor([0], dtype=torch.bool), quant_state | {
                 "tensor_shape": old_tensor_shape,
             }
-        element_bits = old_values_tensor.element_size() * 8
-        quantization_level = int(max(1, math.sqrt(norm * element_bits * math.log(4) / self.weight)))
+
+        normalized_abs_tensor = values_tensor.abs() / norm
+        quantized_tensor = (normalized_abs_tensor * quantization_level).round().clamp(0, quantization_level)
+        quantized_tensor = quantized_tensor.numpy().astype(dtype=new_dtype)
+        return quantized_tensor, quant_state | {
+            "quantization_level": quantization_level,
+            "tensor_shape": old_tensor_shape,
+            "norm": norm,
+        }
+
+    def get_number_of_quantization_levels(
+        self, element_size: int, values_tensor: torch.Tensor
+    ) -> Optional[tuple[float, int, Any]]:
+        norm = values_tensor.abs().max().item()
+        element_bits = element_size * 8
+        quantization_level = math.ceil(max(1, math.sqrt(norm * element_bits * math.log(4) / self.weight)))
         new_element_bits = math.ceil(math.log2(quantization_level))
-        # print("new element_bits is", new_element_bits)
+        print("new element_bits is", new_element_bits)
         quantization_level = int(2**new_element_bits) - 1
         # print("quantization_level is", quantization_level)
         new_dtype = None
@@ -54,39 +73,19 @@ class AdaQuantizer:
             else:
                 raise RuntimeError(f"Invalid element_bits {new_element_bits}")
         if new_dtype is None:
-            return old_values_tensor, {}
-
-        sign_tensor = np.packbits(((values_tensor.sign() + 1) / 2).to(dtype=torch.bool).numpy())
-        normalized_abs_tensor = values_tensor.abs() / norm
-        quantized_tensor = (normalized_abs_tensor * quantization_level).round().clamp(0, quantization_level)
-        quantized_tensor = quantized_tensor.numpy().astype(dtype=new_dtype)
-        return quantized_tensor, quant_state | {
-            "quantization_level": quantization_level,
-            "sign_tensor": sign_tensor,
-            "tensor_shape": old_tensor_shape,
-            "norm": norm,
-        }
+            return None
+        return norm, quantization_level, new_dtype
 
     def dequantized(self, quantized_tensor: torch.Tensor, quant_state: dict) -> torch.Tensor:
         offset = quant_state["offset"]
         if "norm" not in quant_state:
             return torch.zeros(quant_state["tensor_shape"], dtype=torch.float64) - offset
-        sign_tensor = quant_state["sign_tensor"]
         norm = quant_state["norm"]
         quantization_level = quant_state["quantization_level"]
         quantized_tensor = quantized_tensor.to(dtype=torch.float64).reshape(quant_state["tensor_shape"])
-        sign_tensor = (torch.from_numpy(np.unpackbits(sign_tensor)).float() * 2 - 1)[
-            : np.prod(quantized_tensor.shape)
-        ].reshape(quantized_tensor.shape)
-        return (quantized_tensor * norm * sign_tensor / quantization_level) - offset
+
+        return (quantized_tensor * norm / quantization_level) - offset
 
     def get_offset(self, tensor: torch.Tensor) -> float:
-        max_value = tensor.max().item()
         min_value = tensor.min().item()
-        if min_value >= 0:
-            return -(min_value + max_value) / 2
-        if max_value <= 0:
-            return (min_value + max_value) / 2
-        if max_value >= -min_value:
-            return -(max_value - math.fabs(min_value)) / 2
-        return (math.fabs(min_value) - max_value) / 2
+        return -min_value
