@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import copy
-import math
 import re
 from typing import Any, Optional, Union
 
@@ -26,6 +25,8 @@ from nvflare.apis.dxo_filter import DXOFilter
 from nvflare.apis.fl_context import FLContext
 from nvflare.apis.shareable import Shareable
 from nvflare.app_opt.pt.quantization.constant import DATA_TYPE, QUANTIZATION_TYPE
+
+from .ada_quant import AdaQuantizer
 
 
 class ModelQuantizer(DXOFilter):
@@ -144,65 +145,9 @@ class ModelQuantizer(DXOFilter):
             elif self.quantization_type == "adaquant":
                 # if numpy, first convert numpy array to tensor
                 values_tensor = self.to_torch_tensor(values).cpu()
-                old_values_tensor = values_tensor
-
-                def get_offset(tensor: torch.Tensor) -> float:
-                    max_value = tensor.max().item()
-                    min_value = tensor.min().item()
-                    if min_value >= 0:
-                        return -(min_value + max_value) / 2
-                    if max_value <= 0:
-                        return (min_value + max_value) / 2
-                    if max_value >= -min_value:
-                        return -(max_value - math.fabs(min_value)) / 2
-                    return (math.fabs(min_value) - max_value) / 2
-
-                old_tensor_shape = old_values_tensor.shape
-                values_tensor = values_tensor.to(dtype=torch.float64).view(-1)
-                offset = get_offset(values_tensor)
-                values_tensor = values_tensor + offset
-                norm = values_tensor.abs().max()
-                # print(values_tensor.max().item(), values_tensor.min().item())
-                quant_state[param_name] = {"offset": offset}
-
-                if norm == 0.0:
-                    params[param_name] = torch.tensor([0], dtype=torch.bool)
-                    quant_state[param_name] |= {
-                        "tensor_shape": old_tensor_shape,
-                    }
-                else:
-                    element_bits = old_values_tensor.element_size() * 8
-                    weight = 0.01
-                    quantization_level = int(max(1, math.sqrt(norm * element_bits * math.log(4) / weight)))
-                    new_element_bits = math.ceil(math.log2(quantization_level))
-                    # print("new element_bits is", new_element_bits)
-                    quantization_level = int(2**new_element_bits) - 1
-                    # print("quantization_level is", quantization_level)
-                    new_dtype = None
-                    if new_element_bits < element_bits:
-                        if new_element_bits <= 8:
-                            new_dtype = np.uint8
-                        elif new_element_bits <= 16:
-                            new_dtype = "<u2"
-                        else:
-                            raise RuntimeError(f"Invalid element_bits {new_element_bits}")
-                    if new_dtype is not None:
-                        sign_tensor = np.packbits(((values_tensor.sign() + 1) / 2).to(dtype=torch.bool).numpy())
-                        normalized_abs_tensor = values_tensor.abs() / norm
-                        quantized_tensor = (
-                            (normalized_abs_tensor * quantization_level).round().clamp(0, quantization_level)
-                        )
-                        quantized_tensor = quantized_tensor.numpy().astype(dtype=new_dtype)
-                        params[param_name] = quantized_tensor
-                        quant_state[param_name] = {
-                            "quantization_level": quantization_level,
-                            "sign_tensor": sign_tensor,
-                            "old_tensor_shape": old_tensor_shape,
-                            "norm": norm,
-                        }
-                        n_bytes_meta += sign_tensor.nbytes
-                    else:
-                        params[param_name] = values
+                params[param_name], quant_state[param_name] = AdaQuantizer().quantize(values_tensor)
+                if "sign_tensor" in quant_state[param_name]:
+                    n_bytes_meta += quant_state[param_name]["sign_tensor"].nbytes
             n_bytes_after += params[param_name].nbytes
 
         self.log_info(

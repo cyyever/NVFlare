@@ -25,6 +25,8 @@ from nvflare.apis.fl_context import FLContext
 from nvflare.apis.shareable import Shareable
 from nvflare.app_opt.pt.quantization.constant import QUANTIZATION_TYPE
 
+from .ada_quant import AdaQuantizer
+
 
 class ModelDequantizer(DXOFilter):
     def __init__(self):
@@ -108,22 +110,7 @@ class ModelDequantizer(DXOFilter):
 
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
             elif quantization_type == "adaquant":
-                print(values)
-                quantized_state_dict = quant_state[param_name]
-                offset = quantized_state_dict["offset"]
-                if "norm" not in quantized_state_dict:
-                    dequantized = torch.zeros(quantized_state_dict["tensor_shape"], dtype=torch.float64) - offset
-                else:
-                    sign_tensor = quantized_state_dict["sign_tensor"]
-                    norm = quantized_state_dict["norm"]
-                    quantization_level = quantized_state_dict["quantization_level"]
-                    quantized_tensor = (
-                        self.to_torch_tensor(values).to(dtype=torch.int64).reshape(quantized_state_dict["tensor_shape"])
-                    )
-                    sign_tensor = (torch.from_numpy(np.unpackbits(sign_tensor)).float() * 2 - 1)[
-                        : np.prod(quantized_tensor.shape)
-                    ].reshape(quantized_tensor.shape)
-                    dequantized = (quantized_tensor * norm * sign_tensor / quantization_level) - offset
+                dequantized = AdaQuantizer().dequantized(self.to_torch_tensor(values), quant_state[param_name])
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
 
             # assign back
