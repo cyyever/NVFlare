@@ -110,7 +110,12 @@ class ModelDequantizer(DXOFilter):
 
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
             elif quantization_type == "adaquant":
-                dequantized = AdaQuantizer().dequantized(self.to_torch_tensor(values), quant_state[param_name])
+                values_tensor = self.to_torch_tensor(values)
+
+                if param_name not in quant_state:
+                    dequantized = values_tensor
+                else:
+                    dequantized = AdaQuantizer().dequantized(values_tensor, quant_state[param_name])
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
 
             # assign back
@@ -177,15 +182,16 @@ class ModelDequantizer(DXOFilter):
             fl_ctx=fl_ctx,
         )
         if old_params is not None:
-            total_bytes = 0
+            total_norm = 0
             weighted_distance = 0
             for name, param in old_params.items():
-                total_bytes += param.nbytes
+                param_norm = torch.linalg.norm(param.view(-1))
+                total_norm += param_norm
                 dequantized_param = dequantized_params[name]
-                weighted_distance += torch.norm(param.view(-1) - dequantized_param.view(-1)).item() * param.nbytes
+                weighted_distance += torch.linalg.norm(param.view(-1) - dequantized_param.view(-1)).item() * param_norm
             self.log_info(
                 fl_ctx,
-                f"Mean quantization error is {weighted_distance / total_bytes}",
+                f"Mean quantization error is {weighted_distance / total_norm}",
             )
 
         # Compose new DXO with dequantized data

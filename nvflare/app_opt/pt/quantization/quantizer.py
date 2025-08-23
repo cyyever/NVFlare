@@ -145,9 +145,23 @@ class ModelQuantizer(DXOFilter):
             elif self.quantization_type == "adaquant":
                 # if numpy, first convert numpy array to tensor
                 values_tensor = self.to_torch_tensor(values).cpu()
-                params[param_name], quant_state[param_name] = AdaQuantizer().quantize(values_tensor)
-                if "sign_tensor" in quant_state[param_name]:
-                    n_bytes_meta += quant_state[param_name]["sign_tensor"].nbytes
+                params[param_name], value_quant_state = AdaQuantizer().quantize(values_tensor)
+                if value_quant_state:
+                    quant_state[param_name] = value_quant_state
+                    if "sign_tensor" in quant_state[param_name]:
+                        n_bytes_meta += quant_state[param_name]["sign_tensor"].nbytes
+
+                dequantized_param = AdaQuantizer().dequantized(
+                    self.to_torch_tensor(params[param_name]), value_quant_state
+                )
+                param_norm = torch.linalg.norm(values_tensor.view(-1))
+                total_norm = param_norm
+                weighted_distance = torch.linalg.norm(values_tensor.view(-1) - dequantized_param.view(-1)).item()
+                self.log_info(
+                    fl_ctx,
+                    f"Mean quantization error is {weighted_distance / total_norm}",
+                )
+
             n_bytes_after += params[param_name].nbytes
 
         self.log_info(
