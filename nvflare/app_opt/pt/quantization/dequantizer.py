@@ -111,7 +111,6 @@ class ModelDequantizer(DXOFilter):
                 params[param_name] = self.to_source_data(dequantized, source_data_format)
             elif quantization_type == "adaquant":
                 values_tensor = self.to_torch_tensor(values)
-
                 if param_name not in quant_state:
                     dequantized = values_tensor
                 else:

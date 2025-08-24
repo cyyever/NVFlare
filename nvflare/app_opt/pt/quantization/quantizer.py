@@ -145,20 +145,25 @@ class ModelQuantizer(DXOFilter):
             elif self.quantization_type == "adaquant":
                 # if numpy, first convert numpy array to tensor
                 values_tensor = self.to_torch_tensor(values).cpu()
-                params[param_name], value_quant_state = AdaQuantizer().quantize(values_tensor)
-                if value_quant_state:
-                    quant_state[param_name] = value_quant_state
+                quantized, quantized_state_dict = AdaQuantizer().quantize(values_tensor)
+                params[param_name] = self.to_source_data(quantized, source_data_format)
 
-                dequantized_param = AdaQuantizer().dequantized(
-                    self.to_torch_tensor(params[param_name]), value_quant_state
-                )
-                param_norm = torch.linalg.norm(values_tensor.view(-1))
-                total_norm = param_norm
-                weighted_distance = torch.linalg.norm(values_tensor.view(-1) - dequantized_param.view(-1)).item()
-                self.log_info(
-                    fl_ctx,
-                    f"Mean quantization error is {weighted_distance / total_norm}",
-                )
+                if quantized_state_dict:
+                    quant_state[param_name] = quantized_state_dict
+
+                for state_name, state in quantized_state_dict.items():
+                    if isinstance(state, (torch.Tensor, np.ndarray)):
+                        n_bytes_meta += state.nbytes
+                # dequantized_param = AdaQuantizer().dequantized(
+                #     self.to_torch_tensor(params[param_name]), value_quant_state
+                # )
+                # param_norm = torch.linalg.norm(values_tensor.view(-1))
+                # total_norm = param_norm
+                # weighted_distance = torch.linalg.norm(values_tensor.view(-1) - dequantized_param.view(-1)).item()
+                # self.log_info(
+                #     fl_ctx,
+                #     f"Mean quantization error is {weighted_distance / total_norm}",
+                # )
 
             n_bytes_after += params[param_name].nbytes
 
