@@ -65,6 +65,12 @@ def main():
     else:
         raise ValueError(f"Invalid train_mode: {train_mode}, only SFT and PEFT are supported.")
 
+    if args.quantize_mode:
+        # If using quantization, add quantize filters.
+        quantizer = ModelQuantizer(quantization_type=args.quantize_mode)
+        dequantizer = ModelDequantizer()
+        job.to(dequantizer, "server", tasks=["train"], filter_type=FilterType.TASK_RESULT)
+
     # Define the FedAvg controller workflow and send to server
     controller = FedAvg(
         num_clients=num_clients,
@@ -73,11 +79,7 @@ def main():
     job.to(controller, "server")
 
     if args.quantize_mode:
-        # If using quantization, add quantize filters.
-        quantizer = ModelQuantizer(quantization_type=args.quantize_mode)
-        dequantizer = ModelDequantizer()
         job.to(quantizer, "server", tasks=["train"], filter_type=FilterType.TASK_DATA)
-        job.to(dequantizer, "server", tasks=["train"], filter_type=FilterType.TASK_RESULT)
 
     # Define the model persistor and send to server
     if train_mode.lower() == "sft":
