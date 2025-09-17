@@ -79,7 +79,7 @@ def create_admin_server(fl_server: FederatedServer, server_conf=None, args=None)
 
 
 def version_check():
-    if sys.version_info >= (3, 13):
+    if sys.version_info >= (3, 14):
         raise RuntimeError(
             "Python versions 3.13 and above are not yet supported. Please use Python version between 3.8 and 3.12."
         )
