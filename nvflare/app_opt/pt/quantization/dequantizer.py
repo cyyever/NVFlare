@@ -187,11 +187,9 @@ class ModelDequantizer(DXOFilter):
                 MetaKey.PROCESSED_ALGORITHM,
                 "quant_state",
                 "source_datatype",
-                "old_params",
                 "quantized_flag",
             ]
         )
-        dxo.update_shareable(shareable)
         self.log_info(fl_ctx, f"Dequantized back to {source_datatype}")
 
         return dxo
