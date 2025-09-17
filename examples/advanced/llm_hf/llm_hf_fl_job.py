@@ -115,14 +115,14 @@ def main():
                 script=train_script,
                 script_args=script_args,
                 server_expected_format=server_expected_format,
-                launch_external_process=True,
+                launch_external_process=False,
             )
         else:
             runner = ScriptRunner(
                 script=train_script,
                 script_args=script_args,
                 server_expected_format=server_expected_format,
-                launch_external_process=True,
+                launch_external_process=False,
                 command=f"python3 -m torch.distributed.run --nnodes=1 --nproc_per_node={len(gpus[i])} --master_port={ports[i]}",
             )
         job.to(runner, site_name, tasks=["train"])
