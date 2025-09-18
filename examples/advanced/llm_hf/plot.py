@@ -1,0 +1,45 @@
+import pandas
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+loss = {
+    "Round": [0, 1, 2, 3, 4],
+    "FLOAT16": [
+        2.542977809906006,
+        1.785860538482666,
+        1.7768937349319458,
+        1.7765766382217407,
+        1.7799557447433472,
+    ],
+    "FLOAT4": [
+        2.880049467086792,
+        1.9248440265655518,
+        1.9041017293930054,
+        1.8973793983459473,
+        1.894836664199829,
+    ],
+    "NORMFLOAT4": [
+        2.707158088684082,
+        1.8648680448532104,
+        1.8497788906097412,
+        1.8457902669906616,
+        1.8462167978286743,
+    ],
+    "ADAQUANT": [
+        3.9254233837127686,
+        2.0198545455932617,
+        1.994623064994812,
+        1.9854929447174072,
+        1.955665946006775,
+    ],
+}
+df = pandas.DataFrame(loss)
+dfl = pandas.melt(df, ["Round"])
+
+
+sns.lineplot(data=dfl, x="Round", y="validation loss", hue="variable")
+
+plt.title("Validation loss of different quantization schemes")
+plt.xlabel("Round")
+plt.show()
