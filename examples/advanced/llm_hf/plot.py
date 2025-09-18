@@ -35,11 +35,12 @@ loss = {
     ],
 }
 df = pandas.DataFrame(loss)
-dfl = pandas.melt(df, ["Round"])
+dfl = pandas.melt(df, ["Round"], value_name="Test Loss", var_name="Scheme")
+print(dfl)
 
 
-sns.lineplot(data=dfl, x="Round", y="validation loss", hue="variable")
+sns.lineplot(data=dfl, x="Round", y="Test Loss", hue="Scheme")
 
-plt.title("Validation loss of different quantization schemes")
+# plt.title("Test loss of different quantization schemes")
 plt.xlabel("Round")
 plt.show()
