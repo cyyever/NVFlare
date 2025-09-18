@@ -33,10 +33,16 @@ loss = {
         1.9854929447174072,
         1.955665946006775,
     ],
+    "BLOCKWISE8": [
+        2.5443713665008545,
+        1.7876044511795044,
+        1.7765042781829834,
+        1.775207757949829,
+        1.7779940366744995,
+    ],
 }
 df = pandas.DataFrame(loss)
 dfl = pandas.melt(df, ["Round"], value_name="Test Loss", var_name="Scheme")
-print(dfl)
 
 
 sns.lineplot(data=dfl, x="Round", y="Test Loss", hue="Scheme")
