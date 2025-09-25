@@ -39,7 +39,7 @@ _GENERATE_CERT_RESERVED_EXTENSION_OIDS = {
 
 
 class Identity:
-    def __init__(self, name: str, org: str = None, role: str = None):
+    def __init__(self, name: str, org: Optional[str] = None, role: Optional[str] = None):
         self.name = name
         self.org = org
         self.role = role

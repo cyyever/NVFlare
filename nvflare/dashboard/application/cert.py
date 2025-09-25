@@ -32,8 +32,8 @@ class Entity:
     """Class for keeping track of each certificate owner."""
 
     name: str
-    org: str = None
-    role: str = None
+    org: Optional[str] = None
+    role: Optional[str] = None
 
 
 @dataclass
@@ -41,8 +41,8 @@ class CertPair:
     """Class for serialized private key and certificate."""
 
     owner: Entity = None
-    ser_pri_key: str = None
-    ser_cert: str = None
+    ser_pri_key: Optional[str] = None
+    ser_cert: Optional[str] = None
 
 
 def _pack(entity, pri_key, cert, passphrase=None):
