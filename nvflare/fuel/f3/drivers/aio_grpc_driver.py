@@ -56,8 +56,6 @@ class _ConnCtx:
 
 class AioStreamSession(Connection):
 
-    seq_num = 0
-
     def __init__(self, aio_ctx: AioContext, connector: ConnectorInfo, conn_props: dict, context=None, channel=None):
         super().__init__(connector)
         self.aio_ctx = aio_ctx
@@ -70,6 +68,8 @@ class AioStreamSession(Connection):
         self.channel = channel  # for client side
         self.read_task = None
         self.lock = threading.Lock()
+        self.seq_num = 0
+        self.seq_lock = threading.Lock()
 
         conf = CommConfigurator()
         if conf.get_bool_var("simulate_unstable_network", default=False):
@@ -116,8 +116,9 @@ class AioStreamSession(Connection):
 
     def send_frame(self, frame: BytesAlike):
         try:
-            AioStreamSession.seq_num += 1
-            seq = AioStreamSession.seq_num
+            with self.seq_lock:
+                self.seq_num += 1
+                seq = self.seq_num
             f = Frame(seq=seq, data=bytes(frame))
             self.aio_ctx.run_coro(self.oq.put(f))
         except Exception as ex:

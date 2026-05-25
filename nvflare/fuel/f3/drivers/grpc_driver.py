@@ -47,8 +47,6 @@ GRPC_DEFAULT_OPTIONS = [
 
 class StreamConnection(Connection):
 
-    seq_num = 0
-
     def __init__(self, oq: QQ, connector: ConnectorInfo, conn_props: dict, side: str, context=None, channel=None):
         super().__init__(connector)
         self.side = side
@@ -59,6 +57,8 @@ class StreamConnection(Connection):
         self.channel = channel  # for client side
         self.lock = threading.Lock()
         self.logger = get_obj_logger(self)
+        self.seq_num = 0
+        self.seq_lock = threading.Lock()
 
     def get_conn_properties(self) -> dict:
         return self.conn_props
@@ -83,8 +83,9 @@ class StreamConnection(Connection):
 
     def send_frame(self, frame: Union[bytes, bytearray, memoryview]):
         try:
-            StreamConnection.seq_num += 1
-            seq = StreamConnection.seq_num
+            with self.seq_lock:
+                self.seq_num += 1
+                seq = self.seq_num
             self.logger.debug(f"{self.side}: queued frame #{seq}")
             self.oq.append(Frame(seq=seq, data=bytes(frame)))
         except BaseException as ex:
