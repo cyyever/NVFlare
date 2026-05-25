@@ -1808,6 +1808,12 @@ class CoreCell(MessageReceiver, EndpointMonitor):
                         message,
                     )
                     return
+                if waiter.reply_time.get(req_destination) is not None:
+                    self.log_warning(
+                        f"duplicate reply for {rid} from {req_destination} - dropped",
+                        message,
+                    )
+                    return
                 waiter.received_replies[req_destination] = message
                 waiter.reply_time[req_destination] = now
                 time_taken = now - waiter.send_time
