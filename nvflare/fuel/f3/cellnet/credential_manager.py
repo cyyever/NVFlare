@@ -64,18 +64,19 @@ class CredentialManager:
             self.ca_cert = self.read_file(ca_cert_path)
             self.local_cert = self.read_file(local_cert_path)
             self.local_key = self.read_file(local_key_path)
-            self.cell_cipher = SimpleCellCipher(self.get_ca_cert(), self.get_local_key(), self.get_local_cert())
-
-        if not self.local_cert:
-            log.debug("Certificate is not configured, secure message is not supported")
-            self.cell_cipher = None
-        else:
-            self.cell_cipher = SimpleCellCipher(self.get_ca_cert(), self.get_local_key(), self.get_local_cert())
+            if not self.local_cert:
+                log.debug("Certificate is not configured, secure message is not supported")
+                self.cell_cipher = None
+            else:
+                self.cell_cipher = SimpleCellCipher(self.get_ca_cert(), self.get_local_key(), self.get_local_cert())
 
     def encrypt(self, target_cert: bytes, payload: bytes) -> bytes:
 
         if not self.cell_cipher:
             raise RuntimeError("Secure message not supported, Cell not running in secure mode")
+
+        if not target_cert:
+            raise RuntimeError("Cannot encrypt: target certificate is missing")
 
         return self.cell_cipher.encrypt(payload, x509.load_pem_x509_certificate(target_cert))
 
@@ -83,6 +84,9 @@ class CredentialManager:
 
         if not self.cell_cipher:
             raise RuntimeError("Secure message not supported, Cell not running in secure mode")
+
+        if not origin_cert:
+            raise RuntimeError("Cannot decrypt: origin certificate is missing")
 
         return self.cell_cipher.decrypt(cipher, x509.load_pem_x509_certificate(origin_cert))
 
